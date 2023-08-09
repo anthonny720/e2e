@@ -38,7 +38,7 @@ const RawMaterial = () => {
         dispatch(get_storage_areas())
         dispatch(get_pallets())
         dispatch(get_data(lot))
-        get_output_items(lot)
+        dispatch(get_output_items(lot))
     }, []);
 
     const handleReport = () => {
