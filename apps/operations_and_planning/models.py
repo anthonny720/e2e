@@ -1,7 +1,7 @@
 from datetime import timedelta, date
 
-from django.db import models, transaction
-from django.db.models import Sum, Min, Max, F
+from django.db import models
+from django.db.models import Sum, Min, Max
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 from django.utils import timezone
@@ -61,23 +61,8 @@ class Product(ItemsProxy):
 
     def save(self, *args, **kwargs):
         self.name = str.capitalize(
-            self.raw_material.name
-            + " "
-            + self.condition.name
-            + " "
-            + self.family.name
-            + " "
-            + self.subfamily.name
-            + " "
-            + self.cut.name
-            + " "
-            + self.container.name
-            + " "
-            + self.packing.name
-            + " "
-            + str(self.net_weight)
-            + " kg "
-            + self.brand
+            self.raw_material.name + " " + self.condition.name + " " + self.family.name + " " + self.subfamily.name + " " + self.cut.name + " " + self.container.name + " " + self.packing.name + " " + str(
+                self.net_weight) + " kg " + self.brand
 
         )
         self.slug = slugify(self.name)
@@ -101,9 +86,6 @@ class Material(ItemsProxy):
 
         if creating_new_instance:
             Stock.objects.create(product=self, quantity=0, date=timezone.now())
-
-
-
 
     def __str__(self):
         return self.name
@@ -137,19 +119,14 @@ class Stock(models.Model):
     def __str__(self):
         return f'Stock: {self.product.sap} - {self.quantity} und'
 
-
-
-
     def update_material_price(self):
         stock_entries = StockEntry.objects.filter(stock__gt=0, purchase_item__material=self.product)
         total_cost = sum(entry.price_per_unit * entry.stock for entry in stock_entries)
         total_quantity = sum(entry.stock for entry in stock_entries)
         if total_quantity > 0:
-            unit_price = total_cost / total_quantity # Calculate the unit price
-            self.product.price = unit_price # Update the product price
-            self.product.save() # Save the product
-
-
+            unit_price = total_cost / total_quantity  # Calculate the unit price
+            self.product.price = unit_price  # Update the product price
+            self.product.save()  # Save the product
 
     def get_price(self):
         try:
@@ -159,10 +136,7 @@ class Stock(models.Model):
 
     def get_expected_quantity(self):
         try:
-            items = PurchaseItems.objects.filter(
-                purchase__status=Purchase.StatusChoices.PENDING,
-                material=self.product
-            )
+            items = PurchaseItems.objects.filter(purchase__status=Purchase.StatusChoices.PENDING, material=self.product)
             return sum(item.quantity for item in items)
         except Exception as e:
             return 0
@@ -173,11 +147,8 @@ class Stock(models.Model):
             three_months_ago = today - timedelta(days=3 * 30)  # Subtract 3 months from the current date
 
             # Filter stock exits in the last 3 months related to this specific product
-            stock_exits_last_three_months = StockExit.objects.filter(
-                stock_entry__purchase_item__material=self.product,
-                date__gte=three_months_ago,
-                date__lte=today
-            )
+            stock_exits_last_three_months = StockExit.objects.filter(stock_entry__purchase_item__material=self.product,
+                                                                     date__gte=three_months_ago, date__lte=today)
 
             # Calculate the total quantity of stock exits in the last 3 months
             total_exits = stock_exits_last_three_months.aggregate(Sum('quantity'))['quantity__sum']
@@ -194,10 +165,9 @@ class Stock(models.Model):
 
     def get_lead_time(self):
         try:
-            purchase = PurchaseItems.objects.filter(
-                purchase__status=Purchase.StatusChoices.RECEIVED,
-                material=self.product
-            ).order_by('-purchase__order_date').first().purchase
+            purchase = PurchaseItems.objects.filter(purchase__status=Purchase.StatusChoices.RECEIVED,
+                                                    material=self.product).order_by(
+                '-purchase__order_date').first().purchase
 
             return purchase
         except Exception as e:
@@ -261,13 +231,8 @@ class Stock(models.Model):
 
             purchase_items = purchase.items_purchase.all()
             for item in purchase_items:
-                StockEntry.objects.create(
-                    purchase_item=item,
-                    date=timezone.now(),
-                    quantity=item.quantity,
-                    price_per_unit=item.price_per_unit,
-                    stock=item.quantity
-                )
+                StockEntry.objects.create(purchase_item=item, date=timezone.now(), quantity=item.quantity,
+                                          price_per_unit=item.price_per_unit, stock=item.quantity)
 
         except Purchase.DoesNotExist:
             raise ValueError('La orden de compra no existe.')
@@ -276,6 +241,7 @@ class Stock(models.Model):
 @receiver(post_save, sender=Stock)
 def update_material_price(sender, instance, **kwargs):
     instance.update_material_price()
+
 
 class StockEntry(models.Model):
     class Meta:
@@ -308,7 +274,6 @@ class StockEntry(models.Model):
             raise ValueError(str(e))
 
 
-
 class StockReEntry(models.Model):
     class Meta:
         verbose_name = 'Reingreso de stock'
@@ -321,10 +286,6 @@ class StockReEntry(models.Model):
 
     def __str__(self):
         return f'Reingreso de {self.quantity} unidades de {self.stock_entry.purchase_item.material} el {self.date}'
-
-
-
-
 
 
 class StockExit(models.Model):
@@ -392,12 +353,8 @@ class Purchase(models.Model):
     currency = models.ForeignKey(Currency, verbose_name='Moneda', related_name='purchase_currency',
                                  on_delete=models.PROTECT, blank=True, null=True)
     items = models.ManyToManyField(Material, through='PurchaseItems', related_name='purchases_items')
-    status = models.CharField(
-        max_length=20,
-        choices=StatusChoices.choices,
-        default=StatusChoices.PENDING,
-        verbose_name='Estado'
-    )
+    status = models.CharField(max_length=20, choices=StatusChoices.choices, default=StatusChoices.PENDING,
+                              verbose_name='Estado')
     drive = models.URLField(verbose_name='Drive URL', blank=True)
 
     def __str__(self):
@@ -450,20 +407,9 @@ class SalesOrder(models.Model):
         NATIONAL = 'national', 'Nacional'
         INTERNATIONAL = 'international', 'Internacional'
 
-    MONTH_CHOICES = [
-        ('01', 'Enero'),
-        ('02', 'Febrero'),
-        ('03', 'Marzo'),
-        ('04', 'Abril'),
-        ('05', 'Mayo'),
-        ('06', 'Junio'),
-        ('07', 'Julio'),
-        ('08', 'Agosto'),
-        ('09', 'Septiembre'),
-        ('10', 'Octubre'),
-        ('11', 'Noviembre'),
-        ('12', 'Diciembre'),
-    ]
+    MONTH_CHOICES = [('01', 'Enero'), ('02', 'Febrero'), ('03', 'Marzo'), ('04', 'Abril'), ('05', 'Mayo'),
+                     ('06', 'Junio'), ('07', 'Julio'), ('08', 'Agosto'), ('09', 'Septiembre'), ('10', 'Octubre'),
+                     ('11', 'Noviembre'), ('12', 'Diciembre'), ]
 
     class ManagementChoices(models.TextChoices):
         ONE = '30', '30 %'
@@ -490,9 +436,7 @@ class SalesOrder(models.Model):
     quantity = models.DecimalField(verbose_name='Cantidad', max_digits=8, decimal_places=2, default=0)
     price_per_unit = models.DecimalField(verbose_name='Precio unitario', max_digits=4, decimal_places=2)
 
-    market = models.CharField(max_length=13,
-                              choices=MarketChoices.choices,
-                              default=MarketChoices.NATIONAL,
+    market = models.CharField(max_length=13, choices=MarketChoices.choices, default=MarketChoices.NATIONAL,
                               verbose_name='Mercado')
     raw_material = models.DecimalField(verbose_name='Materia Prima', max_digits=9, decimal_places=2, default=0,
                                        blank=True)
@@ -542,20 +486,12 @@ class SalesOrder(models.Model):
             query = self.production_planning_sale.all().order_by('date')
             payload = []
             for item in query:
-                payload.append({
-                    'id': item.id,
-                    'date': item.date,
-                    'raw_material': item.raw_material,
-                    'performance': item.performance,
-                    'capacity': item.capacity,
-                    'expected': item.expected,
-                    'stock_start': item.stock_start,
-                    'stock_end': item.stock_end,
-                    'process_plant_name': item.process_plant.display_name,
-                    'process_plant': item.process_plant.id,
-                    'missing': item.get_missing(),
-                    'surplus': item.surplus()
-                })
+                payload.append({'id': item.id, 'date': item.date, 'raw_material': item.raw_material,
+                                'performance': item.performance, 'capacity': item.capacity, 'expected': item.expected,
+                                'stock_start': item.stock_start, 'stock_end': item.stock_end,
+                                'process_plant_name': item.process_plant.display_name,
+                                'process_plant': item.process_plant.id, 'missing': item.get_missing(),
+                                'surplus': item.surplus()})
             return payload
         except Exception as e:
             return [str(e)]
@@ -621,8 +557,7 @@ class ProductionPlanning(models.Model):
     def __str__(self):
         return str(self.id)
 
-    def save(
-            self, force_insert=False, force_update=False, using=None, update_fields=None):
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         self.expected = self.raw_material * (self.performance / 100)
         self.stock_end = self.stock_start + self.expected
         super().save(force_insert, force_update, using, update_fields)
@@ -652,3 +587,5 @@ class ProductionPlanning(models.Model):
                 return 0
         except:
             return 0
+
+

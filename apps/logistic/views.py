@@ -15,7 +15,7 @@ from apps.logistic.serializers import LotSerializer, ILotSerializer, MotionsSeri
 from apps.management.models import Location
 from apps.production.models import ProcessPineapple, MOD
 from apps.quality_assurance.models import Pineapple, Banano, Mango, Blueberry, Goldenberry
-from apps.util.permissions import RawMaterialEditorPermission, LogisticsEditorPermission,  \
+from apps.util.permissions import RawMaterialEditorPermission, LogisticsEditorPermission, \
     PlanningLogisticEditorPermission, CollectionEditorPermission
 
 
@@ -364,6 +364,3 @@ class ListOutputItemsView(APIView):
         except Exception as e:
             error_message = 'Se ha producido un error inesperado en el servidor. Por favor, inténtelo de nuevo más tarde.'
             return Response({'error': error_message, 'detail': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
-

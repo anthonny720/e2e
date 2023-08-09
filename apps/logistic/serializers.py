@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from apps.logistic.models import ILot, Lot, Pallets, Output, RegisterOutput
+from apps.logistic.models import ILot, Lot, Pallets, Output, RegisterOutput, Records
 from .models import Motions
 
 class SummaryLotSerializer(serializers.ModelSerializer):
@@ -160,3 +160,13 @@ class SummaryOutputSerializer(serializers.ModelSerializer):
     class Meta:
         model = RegisterOutput
         fields = ('output', 'date', 'item', 'kg', 'net_weight')
+
+
+
+class RecordsMPSerializer(serializers.ModelSerializer):
+    year=serializers.CharField(source='get_year',read_only=True)
+    month=serializers.CharField(source='get_month',read_only=True)
+    week=serializers.CharField(source='get_week',read_only=True)
+    class Meta:
+        model = Records
+        fields = '__all__'

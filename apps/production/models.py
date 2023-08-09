@@ -28,6 +28,8 @@ class BaseProcess(models.Model):
         else:
             return self.stock.lot.lot + ' - ' + str(self.stock.kg) + ' Kg'
 
+
+
     def get_stock_logistic(self):
         try:
             return decimal.Decimal(self.stock.kg)

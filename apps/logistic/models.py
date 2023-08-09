@@ -1,5 +1,5 @@
-import decimal
 from _decimal import Decimal
+
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.db.models.signals import post_save
@@ -66,8 +66,7 @@ class Lot(models.Model):
         ORGANIC = 'O', 'Orgánico'
         CONVENTIONAL = 'C', 'Convencional'
 
-    maquila = models.ForeignKey(Outsourcing, on_delete=models.CASCADE, null=True, blank=True,
-                                verbose_name="Packing")
+    maquila = models.ForeignKey(Outsourcing, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Packing")
     product = models.ForeignKey(Product, on_delete=models.PROTECT, related_name="product_lot", verbose_name="Producto")
     provider = models.ForeignKey(Provider, on_delete=models.PROTECT, related_name="provider_lot",
                                  verbose_name="Proveedor")
@@ -102,7 +101,8 @@ class Lot(models.Model):
                                          verbose_name='Porcentaje de Descuento Precio')
     discount_price_soles = models.DecimalField(decimal_places=2, max_digits=4, default=0.00, blank=True, null=True,
                                                verbose_name='Soles Descuento Precio')
-    service_downloads = models.DecimalField(decimal_places=3, max_digits=4, default=0.00, blank=True, null=True, verbose_name='Servicio de descarga')
+    service_downloads = models.DecimalField(decimal_places=3, max_digits=4, default=0.00, blank=True, null=True,
+                                            verbose_name='Servicio de descarga')
     transport = models.ForeignKey(Transport, on_delete=models.PROTECT, related_name="carrier_lot",
                                   verbose_name="Empresa de transporte", blank=True, null=True)
     merma = models.DecimalField(decimal_places=3, max_digits=11, default=0, blank=True, null=True, verbose_name="Merma",
@@ -122,13 +122,12 @@ class Lot(models.Model):
     class Meta:
         verbose_name = "Lote de Materia Prima"
         verbose_name_plural = "Lotes de Materia Prima"
-        ordering = ['-id','-entry_date',]
+        ordering = ['-id', '-entry_date', ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._meta.get_field('discount').editable = get_user_model().is_superuser
         self._meta.get_field('discount_description').editable = get_user_model().is_superuser
-
 
     def get_final_price(self):
         try:
@@ -141,14 +140,70 @@ class Lot(models.Model):
             discount = net_weight * (float(self.discount) / 100) if self.discount else 0
             discount_price = net_weight_quality * (float(self.discount_price) / 100) if self.discount_price else 0
             service_downloads = net_weight * float(self.service_downloads) if self.service_downloads else 0
-            usable_weight = net_weight - float(discount)-float(discount_price)
-            price_final= (usable_weight * float(price_camp)) + (discount_price*float(price_soles)) + float(freight) + float(service_downloads)
-            return round(price_final,2)
+            usable_weight = net_weight - float(discount) - float(discount_price)
+            price_final = (usable_weight * float(price_camp)) + (discount_price * float(price_soles)) + float(
+                freight) + float(service_downloads)
+            return round(price_final, 2)
         except Exception as e:
             return 0
 
+    def get_update_record_mp(self):
+        try:
+            obj, created = Records.objects.get_or_create(lot=self.lot)
+            obj.lot = self.lot
+            obj.category = self.product.name
+            if self.maquila:
+                obj.plant = self.maquila.business_name
+            obj.departure_date = self.departure_date
+            obj.entry_date = self.entry_date
+            obj.unload_date = self.download_date
+            obj.variety = self.variety
+            obj.condition = self.get_condition_display()
+            if self.transport:
+                obj.transport = self.transport.business_name
+            obj.carrier_guide = self.carrier_guide
+            obj.supplier_guide = self.provider_guide
+            obj.invoice = self.invoice
+            if self.provider:
+                obj.supplier = self.provider.business_name
+            obj.origin = self.origin
+            obj.plot = self.get_parcels_name()
+            obj.average_crates = round(self.get_avg_box(), 2) if self.get_avg_box() else 0
+            obj.crates_quantity = self.get_total_boxes()
+            obj.gross_weight = self.get_total_brute_weight()
+            obj.tare = self.get_total_tare()
+            obj.net_weight = self.get_total_net_weight()
+            obj.guide_weight = self.guide_weight
+            obj.net_weight_difference_with_guide = self.get_net_difference()
+            obj.rejection_percentage = self.discount
+            obj.rejected_weight = self.get_kg_rejected()
+            obj.usable_weight = self.get_kg_usable()
+            obj.discount_percentage = self.discount_price
+            obj.discount = self.discount_price_soles
+            obj.field_price = self.price_camp
+            obj.plant_price = round(self.get_final_price() / self.get_total_net_weight(),
+                                    2) if self.get_total_net_weight() else 0
+            obj.freight = self.freight
+            obj.palletizing_per_kg = self.service_downloads
+            obj.total_to_pay_to_plant = self.get_final_price()
+            obj.save()
+        except Exception as e:
+            print(e)
+
     def __str__(self):
         return self.lot
+
+    def get_kg_rejected(self):
+        try:
+            return round(float(self.get_total_net_weight()) * (float(self.discount) / 100), 4)
+        except:
+            return 0
+
+    def get_kg_usable(self):
+        try:
+            return round(float(self.get_total_net_weight()) - float(self.get_kg_rejected()), 4)
+        except:
+            return 0
 
     def get_condition_name(self):
         return self.get_condition_display()
@@ -330,6 +385,11 @@ class Lot(models.Model):
             return 0
 
 
+@receiver(post_save, sender=Lot)
+def my_callback(sender, instance, *args, **kwargs):
+    instance.get_update_record_mp()
+
+
 class ILot(models.Model):
     class Meta:
         verbose_name = 'Información de Lotes'
@@ -359,9 +419,7 @@ class ILot(models.Model):
                                  related_name="i_lot")
     history = HistoricalRecords()
 
-    def save(
-            self, force_insert=False, force_update=False, using=None, update_fields=None
-    ):
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         self.tare = self.get_total_tare()
         super(ILot, self).save()
 
@@ -422,6 +480,7 @@ class ILot(models.Model):
 def my_callback(sender, instance, *args, **kwargs):
     instance.lot.update_stock()
     instance.lot.save()
+    instance.lot.get_update_record_mp()
 
 
 class Output(models.Model):
@@ -483,3 +542,65 @@ class RegisterOutput(models.Model):
             return self.kg - self.item.tare
         except:
             return 0
+
+
+class Records(models.Model):
+    category = models.CharField(max_length=50, verbose_name='Categoria', blank=True, null=True)
+    lot = models.CharField(max_length=50, verbose_name='Lote', blank=True, null=True, unique=True)
+    plant = models.CharField(max_length=50, verbose_name='Planta', blank=True, null=True)
+    departure_date = models.DateField(verbose_name='Fecha de salida Campo', blank=True, null=True)
+    entry_date = models.DateField(verbose_name='Fecha de entrada', blank=True, null=True)
+    unload_date = models.DateField(verbose_name='Fecha de descarga', blank=True, null=True)
+    variety = models.CharField(max_length=50, verbose_name='Variedad', blank=True, null=True)
+    condition = models.CharField(max_length=50, verbose_name='Condicion', blank=True, null=True)
+    transport = models.CharField(max_length=100, verbose_name='Transporte', blank=True, null=True)
+    carrier_guide = models.CharField(max_length=50, verbose_name='Guia de transportista', blank=True, null=True)
+    supplier_guide = models.CharField(max_length=50, verbose_name='Guia de proveedor', blank=True, null=True)
+    invoice = models.CharField(max_length=50, verbose_name='Factura', blank=True, null=True)
+    supplier = models.CharField(max_length=100, verbose_name='Proveedor', blank=True, null=True)
+    origin = models.CharField(max_length=100, verbose_name='Procedencia', blank=True, null=True)
+    plot = models.CharField(max_length=200, verbose_name='Parcela', blank=True, null=True)
+    average_crates = models.FloatField(verbose_name='Promedio jabas', blank=True, null=True)
+    crates_quantity = models.PositiveIntegerField(verbose_name='Cantidad de jabas', blank=True, null=True)
+    gross_weight = models.FloatField(verbose_name='Peso bruto', blank=True, null=True)
+    tare = models.FloatField(verbose_name='Tara', blank=True, null=True)
+    net_weight = models.FloatField(verbose_name='Peso neto', blank=True, null=True)
+    guide_weight = models.FloatField(verbose_name='Peso guia', blank=True, null=True)
+    net_weight_difference_with_guide = models.FloatField(verbose_name='Diferencia netos con guia', blank=True,
+                                                         null=True)
+    rejection_percentage = models.FloatField(verbose_name='% Rechazo', blank=True, null=True)
+    rejected_weight = models.FloatField(verbose_name='Kg rechazados', blank=True, null=True)
+    usable_weight = models.FloatField(verbose_name='Kg aprovechables', blank=True, null=True)
+    discount_percentage = models.FloatField(verbose_name='% Descuento S/', blank=True, null=True)
+    discount = models.FloatField(verbose_name='Descuento S/', blank=True, null=True)
+    field_price = models.FloatField(verbose_name='Precio Campo', blank=True, null=True)
+    plant_price = models.FloatField(verbose_name='Precio planta', blank=True, null=True)
+    freight = models.FloatField(verbose_name='Flete', blank=True, null=True)
+    palletizing_per_kg = models.FloatField(verbose_name='Estiba/kg', blank=True, null=True)
+    total_to_pay_to_plant = models.FloatField(verbose_name='Total a pagar planta', blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'Registro de ingresos'
+        verbose_name_plural = 'Registro de ingresos'
+        ordering = ['-entry_date']
+
+    def __str__(self):
+        return str(self.id)
+
+    def get_year(self):
+        try:
+            return self.entry_date.strftime('%Y')
+        except:
+            return ""
+
+    def get_month(self):
+        try:
+            return self.entry_date.strftime('%B')
+        except:
+            return ""
+
+    def get_week(self):
+        try:
+            return self.entry_date.isocalendar()[1]
+        except:
+            return ''

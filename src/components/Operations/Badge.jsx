@@ -6,9 +6,7 @@ const Badge = ({data}) => {
     const get_kg_usable = () => {
         try {
             return sumBy(data, (o) => {
-                const netWeight = parseFloat(o?.net_weight);
-                const discount = parseFloat(o?.discount) / 100;
-                return netWeight * (1 - discount);
+                return parseFloat(o?.usable_weight);
             });
         } catch (e) {
             return 0;
@@ -20,7 +18,7 @@ const Badge = ({data}) => {
     const get_price = () => {
         try {
             return sumBy(data, (o) => {
-                return parseFloat(o?.price_final);
+                return parseFloat(o?.total_to_pay_to_plant);
             });
         } catch (e) {
             return 0;

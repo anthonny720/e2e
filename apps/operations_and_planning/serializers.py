@@ -68,12 +68,14 @@ class StockEntrySerializer(serializers.ModelSerializer):
         model = StockEntry
         fields = '__all__'
 
+
 class StockReEntrySerializer(serializers.ModelSerializer):
     stock_entry = StockEntrySerializer(read_only=True)
 
     class Meta:
         model = StockReEntry
         fields = '__all__'
+
 
 class StockExitSerializer(serializers.ModelSerializer):
     stock_entry = StockEntrySerializer(read_only=True)
@@ -96,6 +98,7 @@ class PurchaseItemSerializer(serializers.ModelSerializer):
     material_name = serializers.CharField(source='material.name', read_only=True)
     material_sap = serializers.CharField(source='material.sap', read_only=True)
     currency_name = serializers.CharField(source='purchase.currency.name', read_only=True)
+
     class Meta:
         model = PurchaseItems
         fields = '__all__'
@@ -151,7 +154,7 @@ class SalesOrderDetailSerializer(serializers.ModelSerializer):
 
     def get_recipe(self, obj):
         return obj.get_recipe()
-    
+
     def get_planning(self, obj):
         return obj.get_planning()
 
@@ -163,26 +166,14 @@ class SalesOrderShortSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SalesOrder
-        fields = (
-            'id',
-            'month',
-            'year',
-            'customer',
-            'full_container_load_name',
-            'sku',
-            'quantity',
-            'raw_material',
-            'performance',
-            'capacity',
-            'planning'
-        )
+        fields = ('id', 'month', 'year', 'customer', 'full_container_load_name', 'sku', 'quantity', 'raw_material',
+                  'performance', 'capacity', 'planning')
 
     def get_planning(self, obj):
         return obj.get_planning()
 
 
 class ProductionPlanningSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = ProductionPlanning
         fields = '__all__'

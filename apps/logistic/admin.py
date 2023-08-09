@@ -2,7 +2,7 @@ from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
 from simple_history.admin import SimpleHistoryAdmin
 
-from apps.logistic.models import Lot, Pallets, Boxes, Motions, ILot, Output, RegisterOutput
+from apps.logistic.models import Lot, Pallets, Boxes, Motions, ILot, Output, RegisterOutput, Records
 
 
 # Register your models here.
@@ -22,7 +22,7 @@ class LotAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
 
 @admin.register(ILot)
 class ILotAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
-    list_display = ('number', 'weight', 'tare',  'lot', 'location',)
+    list_display = ('number', 'weight', 'tare', 'lot', 'location',)
     list_filter = ('lot__product', 'lot__provider', 'lot__maquila',)
     search_fields = ('number', 'lot__lot',)
     ordering = ['lot__date_entry']
@@ -64,3 +64,9 @@ class RegisterOutputAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
     date_hierarchy = 'date'
     ordering = ['-date']
     list_per_page = 30
+
+
+@admin.register(Records)
+class RecordsAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
+    list_display = ('lot',)
+    list_per_page = 25
