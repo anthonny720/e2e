@@ -1,5 +1,5 @@
 import React from 'react';
-import {map} from "lodash";
+import {map,size} from "lodash";
 import Humanize from "humanize-plus";
 
 const TableHistoryMP = ({data, reference}) => {
@@ -23,7 +23,7 @@ const TableHistoryMP = ({data, reference}) => {
                     </tr>
                     </thead>
                     <tbody>
-                    {data && data.map((item, index) => {
+                    {data && size(data)>0 && data!==null && data !== undefined && data.map((item, index) => {
                         return (<tr className="h-12 border-gray-300  border-b " key={index}>
                             <td className="text-sm whitespace-nowrap text-gray-800 leading-4 text-center font-light ">{item?.week}</td>
                             <td className="text-sm  whitespace-nowrap text-gray-800 leading-4 text-center font-light ">{item?.month}</td>
