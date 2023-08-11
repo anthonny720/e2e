@@ -1,13 +1,10 @@
-import React, {useEffect} from 'react';
-import {map, sumBy} from "lodash";
+import React from 'react';
+import {map} from "lodash";
 import Humanize from "humanize-plus";
 
 const TableHistoryMP = ({data, reference}) => {
 
-
-    const columns = ['Semana', 'Mes', 'Año', 'Lote', 'Planta', 'Fecha de salida Campo', 'Fecha de entrada', 'Fecha de descarga', 'Variedad', 'Condicion', 'Transporte', 'Guia de transportista', 'Guia de proveedor', 'Factura', 'Proveedor', 'Procedencia', 'Parcela', 'Promedio jabas', 'Cantidad de jabas', 'Peso bruto', 'Tara', 'Peso neto', 'Peso guia', 'Diferencia netos con guia', '% Rechazo', 'Kg rechazados', 'Kg aprovechables', '% Descuento S/', 'Descuento S/', 'Precio Campo',  'Precio planta', 'Flete', 'Flete/kg','Estiba/kg', 'Total a pagar planta']
-
-
+    const columns = ['Semana', 'Mes', 'Año', 'Lote', 'Planta', 'Fecha de salida Campo', 'Fecha de entrada', 'Fecha de descarga', 'Variedad', 'Condicion', 'Transporte', 'Guia de transportista', 'Guia de proveedor', 'Factura', 'Proveedor', 'Procedencia', 'Parcela', 'Promedio jabas', 'Cantidad de jabas', 'Peso bruto', 'Tara', 'Peso neto', 'Peso guia', 'Diferencia netos con guia', '% Rechazo', 'Kg rechazados', 'Kg aprovechables', '% Descuento S/', 'Descuento S/', 'Precio Campo', 'Precio planta', 'Flete', 'Flete/kg', 'Estiba/kg', 'Total a pagar planta']
 
 
     return (<div className="w-full">
@@ -71,13 +68,11 @@ const TableHistoryMP = ({data, reference}) => {
                             <td className="text-sm  px-4 whitespace-nowrap text-gray-800 leading-4 text-center font-light ">{Humanize.formatNumber(item?.discount_percentage, 2)}</td>
                             <td className="text-sm  px-4 whitespace-nowrap text-gray-800 leading-4 text-center font-light ">{Humanize.formatNumber(item?.discount, 2)}</td>
                             <td className="text-sm  px-4 whitespace-nowrap text-gray-800 leading-4 text-center font-light ">{Humanize.formatNumber(item?.field_price, 2)}</td>
-                            <td className="text-sm  px-4 whitespace-nowrap text-gray-800 leading-4 text-center font-light ">{Humanize.formatNumber(item?.plant_price ,2)}</td>
-                            <td className="text-sm  px-4 whitespace-nowrap text-gray-800 leading-4 text-center font-light ">{Humanize.formatNumber(item?.freight , 2)}</td>
-                            <td className="text-sm  px-4 whitespace-nowrap text-gray-800 leading-4 text-center font-light ">{Humanize.formatNumber((item?.freight / item?.net_weight) ||0, 2)}</td>
+                            <td className="text-sm  px-4 whitespace-nowrap text-gray-800 leading-4 text-center font-light ">{Humanize.formatNumber(item?.plant_price, 2)}</td>
+                            <td className="text-sm  px-4 whitespace-nowrap text-gray-800 leading-4 text-center font-light ">{Humanize.formatNumber(item?.freight, 2)}</td>
+                            <td className="text-sm  px-4 whitespace-nowrap text-gray-800 leading-4 text-center font-light ">{Humanize.formatNumber((item?.freight / item?.net_weight) || 0, 2)}</td>
                             <td className="text-sm  px-4 whitespace-nowrap text-gray-800 leading-4 text-center font-light ">{Humanize.formatNumber(item?.palletizing_per_kg, 3)}</td>
-                                                        <td className="text-sm  px-4 whitespace-nowrap text-gray-800 leading-4 text-center font-light ">{Humanize.formatNumber(item?.total_to_pay_to_plant , 2)}</td>
-
-
+                            <td className="text-sm  px-4 whitespace-nowrap text-gray-800 leading-4 text-center font-light ">{Humanize.formatNumber(item?.total_to_pay_to_plant, 2)}</td>
 
 
                         </tr>)

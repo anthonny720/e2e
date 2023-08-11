@@ -33,8 +33,8 @@ const Report = () => {
 
     return (<Layout>
         <Helmet>
-                <title>Historial de ingresos</title>
-            </Helmet>
+            <title>Historial de ingresos</title>
+        </Helmet>
         <div className={"flex gap-4 w-full flex-col  md:flex-col   md:px-16 mt-8 px-4"}>
             <div className={"bg-white w-full rounded-lg p-4 mt-2"}>
                 <h1 className={"text-black font-bold text-start  pt-4 text-2xl overflow-scroll scrollbar-hide"}>Ingresos {category}</h1>
