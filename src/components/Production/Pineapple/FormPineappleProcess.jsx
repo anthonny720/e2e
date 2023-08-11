@@ -12,11 +12,11 @@ const FormProcessPineapple = ({close, data, category, params}) => {
 
     const dispatch = useDispatch()
     const columns = [
-        {name: 'rejection', title: 'Rechazo (kg)', type: 'text', maxLength: 5},
-        {name: 'crown', title: 'Corona (kg)', type: 'text', maxLength: 5},
-        {name: 'shell_trunk', title: 'Cáscara y tronco (kg)', type: 'text', maxLength: 5},
-        {name: 'pulp', title: 'Pulpa', type: 'text', maxLength: 5},
-        {name: 'brix', title: 'Brix', type: 'text', maxLength: 5},
+        {name: 'rejection', title: 'Rechazo (kg)', type: 'text', maxLength: 7},
+        {name: 'crown', title: 'Corona (kg)', type: 'text', maxLength: 7},
+        {name: 'shell_trunk', title: 'Cáscara y tronco (kg)', type: 'text', maxLength: 7},
+        {name: 'pulp', title: 'Pulpa', type: 'text', maxLength: 7},
+        {name: 'brix', title: 'Brix', type: 'text', maxLength: 7},
     ]
 
 

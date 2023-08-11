@@ -4,7 +4,6 @@ from datetime import timedelta
 from django.db import models
 from django.utils import timezone
 from simple_history.models import HistoricalRecords
-from django.db.models import Q
 
 from apps.collection.models import Product
 from apps.logistic.models import Output
@@ -22,13 +21,12 @@ class BaseProcess(models.Model):
     stock = models.ForeignKey(Output, on_delete=models.PROTECT, verbose_name='Stock', related_name='process',
                               blank=True, null=True)
     brix = models.DecimalField(max_digits=4, decimal_places=2, verbose_name='Brix', blank=True, default=0)
+
     def __str__(self):
         if self.stock.date:
             return self.stock.date.strftime('%d/%m/%Y') + " " + self.stock.lot.lot + ' - ' + str(self.stock.kg) + ' Kg'
         else:
             return self.stock.lot.lot + ' - ' + str(self.stock.kg) + ' Kg'
-
-
 
     def get_stock_logistic(self):
         try:
@@ -61,7 +59,7 @@ class ProcessPineapple(BaseProcess):
     class Meta:
         verbose_name = 'Proceso Piña'
         verbose_name_plural = 'Proceso Piña'
-        ordering = ['-date','-stock__lot__id']
+        ordering = ['-date', '-stock__lot__id']
 
     def get_percent_rejection(self):
         try:
@@ -147,7 +145,7 @@ class BasePackingProcess(models.Model):
 
     def get_mod_day(self):
         try:
-            result=[]
+            result = []
             total_conditioning = 0
             total_packing = 0
             total_kg = 0
@@ -157,17 +155,16 @@ class BasePackingProcess(models.Model):
                     total_conditioning += mod.get_total_cost_conditioning()
                     total_packing += mod.get_total_cost_packing()
                     total_kg += mod.get_total_kg()
-                result.append({'total_conditioning':total_conditioning,'total_packing':total_packing,'total_kg':total_kg})
+                result.append(
+                    {'total_conditioning': total_conditioning, 'total_packing': total_packing, 'total_kg': total_kg})
             return result
         except:
             return []
 
-
-
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         try:
-            self.bags_price = round(self.bags.price * self.bags_qt,2)
-            self.boxes_price = round(self.boxes.price * self.boxes_qt,2)
+            self.bags_price = round(self.bags.price * self.bags_qt, 2)
+            self.boxes_price = round(self.boxes.price * self.boxes_qt, 2)
         except:
             pass
         return super().save(force_insert, force_update, using, update_fields)
@@ -183,7 +180,7 @@ class PackingProcessPineapple(BasePackingProcess):
     class Meta:
         verbose_name = 'Proceso de Envasado Piña'
         verbose_name_plural = 'Procesos de Envasado Piña'
-        ordering = ['-date','-lot__stock__lot__id']
+        ordering = ['-date', '-lot__stock__lot__id']
 
     lot = models.ForeignKey(ProcessPineapple, on_delete=models.PROTECT, verbose_name='Lote', related_name='lot_process',
                             blank=True, null=True)
@@ -215,33 +212,25 @@ class MOD(models.Model):
 
     date = models.DateField(verbose_name='Fecha', default=timezone.now)
     process = models.ManyToManyField(Output, verbose_name='Proceso', blank=True)
-    conditioning_people = models.IntegerField(
-        verbose_name='Personas de Acondicionamiento', default=0)
+    conditioning_people = models.IntegerField(verbose_name='Personas de Acondicionamiento', default=0)
     conditioning_hours = models.TimeField(verbose_name='Horas de Acondicionamiento', default='00:00')
-    conditioning_people_night = models.IntegerField(
-        verbose_name='Personas de Acondicionamiento Noche', default=0)
+    conditioning_people_night = models.IntegerField(verbose_name='Personas de Acondicionamiento Noche', default=0)
     conditioning_hours_night = models.TimeField(verbose_name='Horas de Acondicionamiento Noche', default='00:00')
-    conditioning_people_25 = models.IntegerField(
-        verbose_name='Personas de Acondicionamiento 25%', default=0)
+    conditioning_people_25 = models.IntegerField(verbose_name='Personas de Acondicionamiento 25%', default=0)
     conditioning_hours_25 = models.TimeField(verbose_name='Horas de Acondicionamiento 25%', default='00:00')
-    conditioning_people_35 = models.IntegerField(
-        verbose_name='Personas de Acondicionamiento 35%', default=0)
+    conditioning_people_35 = models.IntegerField(verbose_name='Personas de Acondicionamiento 35%', default=0)
     conditioning_hours_35 = models.TimeField(verbose_name='Horas de Acondicionamiento 35%', default='00:00')
     supervisor_name_conditioning = models.CharField(max_length=100, verbose_name='Nombre del Supervisor', blank=True,
                                                     null=True)
     controller_name_conditioning = models.CharField(max_length=100, verbose_name='Nombre del Controller', blank=True,
                                                     null=True)
-    packing_people_day = models.IntegerField(verbose_name='Personas de Empaque Día',
-                                             default=0)
-    packing_people_night = models.IntegerField(verbose_name='Personas de Empaque Noche',
-                                               default=0)
+    packing_people_day = models.IntegerField(verbose_name='Personas de Empaque Día', default=0)
+    packing_people_night = models.IntegerField(verbose_name='Personas de Empaque Noche', default=0)
     packing_hours_day = models.TimeField(verbose_name='Horas de Empaque Día', default='00:00')
     packing_hours_night = models.TimeField(verbose_name='Horas de Empaque Noche', default='00:00')
-    packing_people_25 = models.IntegerField(verbose_name='Personas de Empaque 25%',
-                                            default=0)
+    packing_people_25 = models.IntegerField(verbose_name='Personas de Empaque 25%', default=0)
     packing_hours_25 = models.TimeField(verbose_name='Horas de Empaque 25%', default='00:00')
-    packing_people_35 = models.IntegerField(verbose_name='Personas de Empaque 35%',
-                                            default=0)
+    packing_people_35 = models.IntegerField(verbose_name='Personas de Empaque 35%', default=0)
     packing_hours_35 = models.TimeField(verbose_name='Horas de Empaque 35%', default='00:00')
     supervisor_name_packing = models.CharField(max_length=100, verbose_name='Nombre del Supervisor', blank=True,
                                                null=True)
@@ -257,9 +246,7 @@ class MOD(models.Model):
                                              verbose_name="Costo por Hora Extra 35%")
     history = HistoricalRecords()
 
-    def save(
-            self, force_insert=False, force_update=False, using=None, update_fields=None
-    ):
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         if not self.pk:
             try:
                 cost = CostProduction.objects.last()
@@ -308,33 +295,28 @@ class MOD(models.Model):
         try:
             total_time = self.conditioning_hours.hour + (self.conditioning_hours.minute / 60)
 
-            return round(
-                (self.conditioning_people * decimal.Decimal(total_time)) * self.cost_hour_day,
-                2)
+            return round((self.conditioning_people * decimal.Decimal(total_time)) * self.cost_hour_day, 2)
         except Exception as e:
             return 0
 
     def get_cmo_conditioning_night(self):
         try:
             total_time = self.conditioning_hours_night.hour + (self.conditioning_hours_night.minute / 60)
-            return round((self.conditioning_people_night * decimal.Decimal(
-                total_time)) * self.cost_hour_night, 2)
+            return round((self.conditioning_people_night * decimal.Decimal(total_time)) * self.cost_hour_night, 2)
         except Exception as e:
             return 0
 
     def get_cmo_conditioning_25(self):
         try:
             total_time = self.conditioning_hours_25.hour + (self.conditioning_hours_25.minute / 60)
-            return round((self.conditioning_people_25 * decimal.Decimal(
-                total_time)) * self.cost_hour_extra_25, 2)
+            return round((self.conditioning_people_25 * decimal.Decimal(total_time)) * self.cost_hour_extra_25, 2)
         except Exception as e:
             return 0
 
     def get_cmo_conditioning_35(self):
         try:
             total_time = self.conditioning_hours_35.hour + (self.conditioning_hours_35.minute / 60)
-            return round((self.conditioning_people_35 * decimal.Decimal(
-                total_time)) * self.cost_hour_extra_35, 2)
+            return round((self.conditioning_people_35 * decimal.Decimal(total_time)) * self.cost_hour_extra_35, 2)
         except Exception as e:
             return 0
 
@@ -365,42 +347,36 @@ class MOD(models.Model):
     def get_productivity_conditioning(self):
         try:
             total_hours = self.get_total_hours_conditioning().total_seconds() / 3600
-            return round(
-                (decimal.Decimal(self.get_total_process_kg()) / self.conditioning_people) / decimal.Decimal(
-                    total_hours), 2) if total_hours != 0 else 0
+            return round((decimal.Decimal(self.get_total_process_kg()) / self.conditioning_people) / decimal.Decimal(
+                total_hours), 2) if total_hours != 0 else 0
         except Exception as e:
             return 0
 
     def get_cmo_packing_day(self):
         try:
             total_time = self.packing_hours_day.hour + (self.packing_hours_day.minute / 60)
-            return round(
-                (self.packing_people_day * decimal.Decimal(total_time)) * self.cost_hour_day,
-                2)
+            return round((self.packing_people_day * decimal.Decimal(total_time)) * self.cost_hour_day, 2)
         except Exception as e:
             return 0
 
     def get_cmo_packing_night(self):
         try:
             total_time = self.packing_hours_night.hour + (self.packing_hours_night.minute / 60)
-            return round((self.packing_people_night * decimal.Decimal(
-                total_time)) * self.cost_hour_night, 2)
+            return round((self.packing_people_night * decimal.Decimal(total_time)) * self.cost_hour_night, 2)
         except Exception as e:
             return 0
 
     def get_cmo_packing_25(self):
         try:
             total_time = self.packing_hours_25.hour + (self.packing_hours_25.minute / 60)
-            return round((self.packing_people_25 * decimal.Decimal(
-                total_time)) * self.cost_hour_extra_25, 2)
+            return round((self.packing_people_25 * decimal.Decimal(total_time)) * self.cost_hour_extra_25, 2)
         except Exception as e:
             return 0
 
     def get_cmo_packing_35(self):
         try:
             total_time = self.packing_hours_35.hour + (self.packing_hours_35.minute / 60)
-            return round((self.packing_people_35 * decimal.Decimal(
-                total_time)) * self.cost_hour_extra_35, 2)
+            return round((self.packing_people_35 * decimal.Decimal(total_time)) * self.cost_hour_extra_35, 2)
         except Exception as e:
             return 0
 
@@ -431,6 +407,8 @@ class MOD(models.Model):
     def get_productivity_packing(self):
         try:
             total_hours = (self.get_total_hours_packing().total_seconds() / 3600)
-            return round((self.get_total_kg() / decimal.Decimal(self.packing_people_day)) / decimal.Decimal(total_hours), 2) if total_hours != 0 else 0
+            return round(
+                (self.get_total_kg() / decimal.Decimal(self.packing_people_day)) / decimal.Decimal(total_hours),
+                2) if total_hours != 0 else 0
         except Exception as e:
             return 0
