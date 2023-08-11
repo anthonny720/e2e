@@ -4,7 +4,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
 import Badge from "../../../components/Operations/Badge";
 import Filter from "../../../components/Operations/Filter";
+/*
 import TableHistoryMP from "../../../components/Operations/Table";
+*/
 import Layout from "../../../hocs/Layout";
 import {get_records_mp} from "../../../redux/actions/operations";
 import {get_providers_category} from "../../../redux/actions/collection";
@@ -41,8 +43,8 @@ const Report = () => {
                 <Badge data={data ? data : []}/>
                 <Filter action={get_records_mp} category={category}
                         providers={providers ? providers : []} reference={tableRef.current}/>
-                <TableHistoryMP reference={tableRef}
-                                data={data ? data : []}/>
+                {/*<TableHistoryMP reference={tableRef}*/}
+                {/*                data={data ? data : []}/>*/}
             </div>
         </div>
 
