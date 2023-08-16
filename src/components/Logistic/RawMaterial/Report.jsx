@@ -693,6 +693,18 @@ const ReportViewer = ({data}) => {
                                         <Text>TOTAL DE J. MADERA</Text>
                                         <Text>{data?.boxes?.box_ma}</Text>
                                     </View>}
+                                {data?.boxes?.box_industry > 0 &&
+
+                                    <View style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        flexDirection: "row",
+                                        width: "100%",
+                                        padding: "4px"
+                                    }}>
+                                        <Text>TOTAL DE J. INDUSTRIALES</Text>
+                                        <Text>{data?.boxes?.box_industry}</Text>
+                                    </View>}
 
                             </View>
                             <View style={{borderWidth: "1px",}}>
