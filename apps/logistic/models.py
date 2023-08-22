@@ -181,8 +181,8 @@ class Lot(models.Model):
             obj.discount_percentage = self.discount_price
             obj.discount = self.discount_price_soles
             obj.field_price = self.price_camp
-            obj.plant_price = round(self.get_final_price() / self.get_total_net_weight(),
-                                    2) if self.get_total_net_weight() else 0
+            obj.plant_price = round(self.get_final_price() / self.get_kg_usable(),
+                                    2) if self.get_kg_usable() else 0
             obj.freight = self.freight
             obj.palletizing_per_kg = self.service_downloads
             obj.total_to_pay_to_plant = self.get_final_price()
