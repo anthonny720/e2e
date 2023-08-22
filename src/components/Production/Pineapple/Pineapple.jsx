@@ -8,8 +8,6 @@ import FormProcessPineapple from "./FormPineappleProcess";
 import {useDispatch, useSelector} from "react-redux";
 import {add_packing_process} from "../../../redux/actions/production";
 import FormProcessPackingPineapple from "./FormPineapplePacking";
-import FormPineappleCost from "./FormPineappleCost";
-import {Helmet} from "react-helmet";
 
 
 const PineappleProcess = ({params, category, reference}) => {
@@ -45,14 +43,6 @@ const PineappleProcess = ({params, category, reference}) => {
         dispatch(add_packing_process(category, form, params))
     }
 
-    const handleAddCost = (data) => {
-        setIsOpen(true)
-        setContent(<div>
-            <FormPineappleCost
-                data={data} close={openModal} params={params} category={category}/>
-        </div>)
-    }
-
 
     return (<>
 
@@ -61,7 +51,7 @@ const PineappleProcess = ({params, category, reference}) => {
 
             <Tabs table1={<TableProduction reference={reference} update={handleUpdateProcess}
                                            add_packing={handleAddPacking}/>}
-                  table2={<TablePacking reference={reference} update={handleUpdatePackingProcess} add_cost={handleAddCost}/>}/>
+                  table2={<TablePacking reference={reference} update={handleUpdatePackingProcess}/>}/>
         </div>
 
     </>);

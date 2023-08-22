@@ -43,7 +43,7 @@ import Parcels from "./containers/pages/Collection/Parcels";
 import Analysis from "./containers/pages/Quality/Analysis";
 import Users from "./containers/pages/Settings/Users";
 import Report from "./containers/pages/Operations/Report";
-import Costs from "./containers/pages/Finances/Costs";
+import KPI from "./containers/pages/BI/KPI";
 import Samples from "./containers/pages/Sales/Samples";
 import Form from "./containers/pages/Sales/Form";
 import Process from "./containers/pages/Production/Process";
@@ -133,8 +133,8 @@ const App = () => {
                         <Route exact path="/planning/settings/tax" element={<Tax/>}/>
                         <Route exact path="/planning/settings/unit-of-measurement" element={<UnitMeasurement/>}/>
 
-                        {/*Finance*/}
-                        <Route exact path="finance/costs" element={<Costs/>}/>
+                        {/*BI*/}
+                        <Route exact path="/planning/kpi" element={<KPI/>}/>
 
                         {/*Sales*/}
                         <Route path="sales/samples" element={<Samples/>}/>

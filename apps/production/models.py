@@ -138,7 +138,6 @@ class BasePackingProcess(models.Model):
                              blank=True, null=True)
     information = models.CharField(max_length=100, verbose_name='Información', blank=True, null=True)
 
-    disable = models.BooleanField(verbose_name='Deshabilitado', default=False)
 
     def __str__(self):
         return self.date.strftime('%d/%m/%Y')

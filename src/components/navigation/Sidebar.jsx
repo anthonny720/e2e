@@ -6,10 +6,9 @@ import {
     faArrowTrendUp,
     faBoxes,
     faBrain,
-    faCoins,
+    faChartSimple,
     faCompass,
     faCookieBite,
-    faDollarSign,
     faDollyBox,
     faFire,
     faFlask,
@@ -19,7 +18,6 @@ import {
     faLeaf,
     faMagnifyingGlassChart,
     faMicrochip,
-    faMicroscope,
     faMoneyCheckDollar,
     faSackDollar,
     faUsers
@@ -29,42 +27,24 @@ import {size} from "lodash/collection";
 
 const Sidebar = () => {
     const menus = [{
-        name: "Acopio",
-        link: '/collection',
-        icon: faLeaf,
-        submenus: [{
-            name: "Parcelas",
-            link: "/collection/parcels",
-            icon: faCompass
+        name: "Acopio", link: '/collection', icon: faLeaf, submenus: [{
+            name: "Parcelas", link: "/collection/parcels", icon: faCompass
         },]
     }, {
         name: "Logística",
         link: "/logistic",
         icon: faDollyBox,
         submenus: [{name: "Movimiento de jabas", link: "/logistic/motion", icon: faBoxes}, {
-            name: "Stock MP",
-            link: "/logistic/stock",
-            icon: faArrowTrendUp
+            name: "Stock MP", link: "/logistic/stock", icon: faArrowTrendUp
         }]
     }, {
-        name: "Producción",
-        link: "/production",
-        icon: faIndustry,
-        submenus: [{
-            name: "Acondicionado",
-            link: "/production/process",
-            icon: faHandsAslInterpreting
-        },
-            {
-                name: "MOD",
-                link: "/production/mod",
-                icon: faSackDollar
-            },
-            {
-                name: "Hornos",
-                link: "/production/ovens",
-                icon: faFire
-            }]
+        name: "Producción", link: "/production", icon: faIndustry, submenus: [{
+            name: "Acondicionado", link: "/production/process", icon: faHandsAslInterpreting
+        }, {
+            name: "MOD", link: "/production/mod", icon: faSackDollar
+        }, {
+            name: "Hornos", link: "/production/ovens", icon: faFire
+        }]
     }, {
         name: "Calidad",
         link: "/quality-assurance",
@@ -81,19 +61,20 @@ const Sidebar = () => {
         link: "/planning",
         icon: faBrain,
         margin: false,
-        submenus: [{name: "S&OP", link: "/planning", icon: faMicrochip},]
+        submenus: [{name: "S&OP", link: "/planning", icon: faMicrochip}, {
+            name: "KPI",
+            link: "/planning/kpi",
+            icon: faChartSimple
+        }
+
+        ]
     }, {
-        name: "Finanzas",
-        link: "/finance",
-        icon: faDollarSign,
-        margin: false,
-        submenus: [{name: "Costos", link: "/finance/costs", icon: faCoins},]
-    },
-        {
-            name: "Configuración", link: "/settings", icon: faGears, margin: true, submenus: [
-                {name: "Usuarios", link: "/settings/users", icon: faUsers}
-            ]
-        }];
+        name: "Configuración",
+        link: "/settings",
+        icon: faGears,
+        margin: true,
+        submenus: [{name: "Usuarios", link: "/settings/users", icon: faUsers}]
+    }];
     const [openSidebar, setOpen] = useState(false);
     return (<div
         className={`bg-white bg-opacity-10    ${openSidebar ? "w-72" : "w-16"} scrollbar-hide max-h-screen overflow-y-scroll scrollbar-hide duration-500 text-gray-100 px-4`}>

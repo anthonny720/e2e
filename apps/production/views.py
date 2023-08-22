@@ -148,9 +148,6 @@ class BasePackingProcessDetailView(UpdateAPIView):
     def patch(self, request, *args, **kwargs):
         try:
             packing_process = self.model_class.objects.get(id=kwargs["id"])
-
-            if packing_process.disable:
-                return Response({'message': 'El registro se encuentra bloqueado para su edición.'}, status=status.HTTP_400_BAD_REQUEST)
             serializer = self.serializer_class(packing_process, data=request.data, partial=True)
             serializer.is_valid(raise_exception=True)
             serializer.save()

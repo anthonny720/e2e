@@ -2,10 +2,9 @@ import React from 'react';
 import {map} from "lodash";
 import Humanize from "humanize-plus";
 import {useSelector} from "react-redux";
-import {CurrencyDollarIcon} from "@heroicons/react/20/solid";
 import {Helmet} from "react-helmet";
 
-const TablePacking = ({update, reference,add_cost}) => {
+const TablePacking = ({update, reference}) => {
     const data = useSelector(state => state.Production.packing_process)
 
 
@@ -38,12 +37,7 @@ const TablePacking = ({update, reference,add_cost}) => {
 
                                 className="md:sticky cursor-pointer md:left-0 text-sm px-6 text-black font-bold  bg-white  text-center whitespace-nowrap">
                                 <div className={"flex items-center gap-4"}>
-                                    {!item?.disable &&
-
-                                    <CurrencyDollarIcon
-                                        onClick={() => add_cost(item)}
-                                        className={"h-4 w-4 text-green-400"}/>}
-                                <p onClick={() => update(item, 'packing')}>{item?.lot_name}</p>
+                                    <p onClick={() => update(item, 'packing')}>{item?.lot_name}</p>
 
                                 </div>
 

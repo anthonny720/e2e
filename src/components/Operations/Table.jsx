@@ -70,7 +70,7 @@ const TableHistoryMP = ({data, reference}) => {
                             <td className="text-sm  px-4 whitespace-nowrap text-gray-800 leading-4 text-center font-light ">{Humanize.formatNumber(item?.field_price, 2)}</td>
                             <td className="text-sm  px-4 whitespace-nowrap text-gray-800 leading-4 text-center font-light ">{Humanize.formatNumber(item?.plant_price, 2)}</td>
                             <td className="text-sm  px-4 whitespace-nowrap text-gray-800 leading-4 text-center font-light ">{Humanize.formatNumber(item?.freight, 2)}</td>
-                            <td className="text-sm  px-4 whitespace-nowrap text-gray-800 leading-4 text-center font-light ">{Humanize.formatNumber((item?.freight / item?.net_weight) || 0, 2)}</td>
+                            <td className="text-sm  px-4 whitespace-nowrap text-gray-800 leading-4 text-center font-light ">{Humanize.formatNumber((item?.freight / item?.usable_weight) || 0, 2)}</td>
                             <td className="text-sm  px-4 whitespace-nowrap text-gray-800 leading-4 text-center font-light ">{Humanize.formatNumber(item?.palletizing_per_kg, 3)}</td>
                             <td className="text-sm  px-4 whitespace-nowrap text-gray-800 leading-4 text-center font-light ">{Humanize.formatNumber(item?.total_to_pay_to_plant, 2)}</td>
 

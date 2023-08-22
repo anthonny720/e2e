@@ -6,8 +6,8 @@ import {useSelector} from "react-redux";
 export const Footer = () => {
     const alert = useSelector(state => state.Alert);
 
-    useEffect(() => {
 
+    useEffect(() => {
         alert?.text && alert?.type && toast(alert.text, {
             autoClose: 1000,
             hideProgressBar: false,
@@ -20,10 +20,10 @@ export const Footer = () => {
     }, [alert]);
 
 
+
     return (<footer className="bg-white" aria-labelledby="footer-heading">
             <ToastContainer autoClose={1000}/>
         </footer>
-
 
     )
 }
