@@ -10,13 +10,11 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from apps.logistic.models import Lot, ILot, Motions, Pallets, Output, RegisterOutput
-from apps.logistic.serializers import LotSerializer, ILotSerializer, MotionsSerializer, PalletsSerializer, \
-    OutputSerializer, LotSummarySerializer, RegisterOutputSerializer, SummaryOutputSerializer, LotUpdateSerializer
+from apps.logistic.serializers import LotSerializer, ILotSerializer, MotionsSerializer, PalletsSerializer, OutputSerializer, LotSummarySerializer, RegisterOutputSerializer, SummaryOutputSerializer, LotUpdateSerializer
 from apps.management.models import Location
 from apps.production.models import ProcessPineapple, MOD
 from apps.quality_assurance.models import Pineapple, Banano, Mango, Blueberry, Goldenberry
-from apps.util.permissions import RawMaterialEditorPermission, LogisticsEditorPermission, \
-    PlanningLogisticEditorPermission, CollectionEditorPermission
+from apps.util.permissions import RawMaterialEditorPermission, LogisticsEditorPermission, PlanningLogisticEditorPermission, CollectionEditorPermission
 
 
 class ListPalletsView(APIView):
@@ -74,7 +72,7 @@ class ListCreateLotView(APIView):
             return Response({'error': error_message, 'detail': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([PlanningLogisticEditorPermission | CollectionEditorPermission])
+@permission_classes([RawMaterialEditorPermission | CollectionEditorPermission])
 class DetailLotView(APIView):
 
     def get(self, request, *args, **kwargs):

@@ -19,7 +19,7 @@ from .models import (Material, Product, Recipe, Stock, StockEntry, StockExit, Pu
 from ..logistic.models import Records
 from ..logistic.serializers import RecordsMPSerializer
 from ..util.permissions import AnalystEditorPermission, PlanningLogisticEditorPermission, \
-    PlanningProductionEditorPermission
+    PlanningProductionEditorPermission, LogisticsEditorPermission
 
 months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
 
@@ -234,7 +234,7 @@ class ListStockView(BaseListView, NoPostMixin):
         return latest_stocks
 
 
-@permission_classes([PlanningLogisticEditorPermission])
+@permission_classes([LogisticsEditorPermission])
 class ListStockReEntryView(BaseListView, NoPostMixin):
     model = StockReEntry
     serializer_class = StockReEntrySerializer
@@ -242,7 +242,7 @@ class ListStockReEntryView(BaseListView, NoPostMixin):
     date_query = 'date'
 
 
-@permission_classes([PlanningLogisticEditorPermission])
+@permission_classes([LogisticsEditorPermission])
 class ListStockEntryView(BaseListView, NoPostMixin):
     model = StockEntry
     serializer_class = StockEntrySerializer
@@ -276,7 +276,7 @@ class ListStockEntryView(BaseListView, NoPostMixin):
             return Response({'message': error_message, 'detail': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([PlanningLogisticEditorPermission])
+@permission_classes([LogisticsEditorPermission])
 class ListStockExitView(APIView):
     model = StockExit
     serializer_class = StockExitSerializer
@@ -340,7 +340,7 @@ class ListStockAvailableView(BaseListView):
             return Response({'message': error_message, 'detail': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([PlanningLogisticEditorPermission])
+@permission_classes([LogisticsEditorPermission])
 class ListPurchasesView(BaseListView):
     model = Purchase
     serializer_class = PurchaseSerializer
@@ -348,25 +348,25 @@ class ListPurchasesView(BaseListView):
     date_query = 'order_date'
 
 
-@permission_classes([PlanningLogisticEditorPermission])
+@permission_classes([LogisticsEditorPermission])
 class DetailPurchaseView(BaseDetailView):
     model = Purchase
     serializer_class = PurchaseDetailSerializer
 
 
-@permission_classes([PlanningLogisticEditorPermission])
+@permission_classes([LogisticsEditorPermission])
 class ListPurchaseItemView(BaseListView):
     model = PurchaseItems
     serializer_class = PurchaseItemSerializer
 
 
-@permission_classes([PlanningLogisticEditorPermission])
+@permission_classes([LogisticsEditorPermission])
 class DetailPurchaseItemView(BaseDetailView, NoGetMixin):
     model = PurchaseItems
     serializer_class = PurchaseItemSerializer
 
 
-@permission_classes([PlanningLogisticEditorPermission])
+@permission_classes([LogisticsEditorPermission])
 class UpdateTransferStockReceivedView(APIView):
     model = Stock
 

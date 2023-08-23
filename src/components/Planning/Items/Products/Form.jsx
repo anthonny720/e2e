@@ -43,7 +43,6 @@ const FormProduct = ({
         payload: cuts, name: 'cut', title: 'Corte', subtitle: 'Seleccione un corte',
     }, {payload: packings, name: 'packing', title: 'Empaque', subtitle: 'Seleccione un empaque',},
         {payload: containers, name: 'container', title: 'Envase', subtitle: 'Seleccione un envase',}
-
     ]
 
 
@@ -51,6 +50,7 @@ const FormProduct = ({
 
     const columns = [{name: 'net_weight', title: 'Peso neto', type: 'text', maxLength: 5,},
         {name: 'weight_box', title: 'Peso neto (caja)', type: 'text', maxLength: 5,},
+        {name: 'certification', title: 'Certificación', type: 'text', maxLength: 50,},
         {
         name: 'brand', title: 'Marca', type: 'text', maxLength: 50,
     }, {
@@ -136,6 +136,7 @@ const initialValues = (data) => {
         unit_of_measurement: data?.unit_of_measurement || '',
         information: data?.information || '',
         brand: data?.brand || '',
+        certification: data?.certification || '',
 
     }
 }
@@ -156,6 +157,7 @@ const newSchema = () => {
         unit_of_measurement: Yup.number().integer().min(1).required(),
         information: Yup.string().min(10),
         brand: Yup.string().min(1),
+        certification: Yup.string().min(1),
     }
 }
 

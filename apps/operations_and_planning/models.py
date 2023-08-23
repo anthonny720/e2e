@@ -39,7 +39,7 @@ class Product(ItemsProxy):
         verbose_name_plural = 'Productos'
 
     raw_material = models.ForeignKey(RawMaterial, on_delete=models.PROTECT, verbose_name='Materia Prima')
-
+    certification = models.CharField(max_length=50, verbose_name='Certificación', blank=True, null=True)
     condition = models.ForeignKey(Condition, on_delete=models.PROTECT, verbose_name='Condición')
     family = models.ForeignKey(Family, on_delete=models.PROTECT, verbose_name='Familia')
     subfamily = models.ForeignKey(SubFamily, on_delete=models.PROTECT, verbose_name='Sub Familia')
@@ -61,7 +61,7 @@ class Product(ItemsProxy):
 
     def save(self, *args, **kwargs):
         self.name = str.upper(
-            self.raw_material.name + " " + self.condition.name + " " + self.family.name + " " + self.subfamily.name + " " + self.cut.name + " " + self.container.name + " " + self.packing.name + " " + str(
+            self.raw_material.name + " " + self.condition.name + " " + self.certification +" " + self.family.name + " " + self.subfamily.name + " " + self.cut.name + " " + self.container.name + " " + self.packing.name + " " + str(
                 self.net_weight) + " kg " + self.brand + "caja "+ str(self.weight_box) + " kg"
 
         )
