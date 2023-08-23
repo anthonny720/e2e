@@ -112,13 +112,13 @@ class BasePackingProcess(models.Model):
 
     date = models.DateField(verbose_name='Fecha', default=timezone.now, blank=True, null=True)
     lot_pt = models.CharField(max_length=15, verbose_name='Lote PT', blank=True, null=True)
-    finished_product = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Producto Terminado',
+    finished_product = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Producto Terminado',
                                            blank=True, default=0)
-    sale_local = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Venta Local', blank=True, default=0)
-    detriment = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Mermas', blank=True, default=0)
-    quality = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Calidad', blank=True, default=0)
-    aggregates = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Agregados', blank=True, default=0)
-    sub_product = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Sub Producto', blank=True,
+    sale_local = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Venta Local', blank=True, default=0)
+    detriment = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Mermas', blank=True, default=0)
+    quality = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Calidad', blank=True, default=0)
+    aggregates = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Agregados', blank=True, default=0)
+    sub_product = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Sub Producto', blank=True,
                                       default=0)
     lots_aggregates = models.CharField(max_length=100, verbose_name='Lotes Agregados', blank=True, null=True)
     cut = models.ForeignKey(Cut, on_delete=models.PROTECT, verbose_name='Corte', related_name='process', blank=True,

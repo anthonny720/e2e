@@ -41,15 +41,17 @@ const FormProduct = ({
         payload: subfamilies, name: 'subfamily', title: 'Subfamilia', subtitle: 'Seleccione una subfamilia',
     }, {
         payload: cuts, name: 'cut', title: 'Corte', subtitle: 'Seleccione un corte',
-    }, {payload: packings, name: 'packing', title: 'Empaque', subtitle: 'Seleccione un empaque',}, {
-        payload: containers, name: 'container', title: 'Envase', subtitle: 'Seleccione un envase',
-    }]
+    }, {payload: packings, name: 'packing', title: 'Empaque', subtitle: 'Seleccione un empaque',},
+        {payload: containers, name: 'container', title: 'Envase', subtitle: 'Seleccione un envase',}
 
-    console.log(containers)
+    ]
+
 
     const loading = useSelector(state => state.Operations.loading_products)
 
-    const columns = [{name: 'net_weight', title: 'Peso neto', type: 'text', maxLength: 5,}, {
+    const columns = [{name: 'net_weight', title: 'Peso neto', type: 'text', maxLength: 5,},
+        {name: 'weight_box', title: 'Peso neto (caja)', type: 'text', maxLength: 5,},
+        {
         name: 'brand', title: 'Marca', type: 'text', maxLength: 50,
     }, {
         name: 'performance', title: 'Rendimiento %', type: 'text', maxLength: 3,
@@ -127,6 +129,7 @@ const initialValues = (data) => {
         packing: data?.packing || '',
         container: data?.container || '',
         net_weight: data?.net_weight || 0,
+        weight_box: data?.weight_box || 0,
         performance: data?.performance || '',
         capacity: data?.capacity || '',
         group: data?.group || '',
@@ -145,7 +148,8 @@ const newSchema = () => {
         cut: Yup.number().integer().min(1).required(),
         packing: Yup.number().integer().min(1).required(),
         container: Yup.number().integer().min(1).required(),
-        net_weight: Yup.string().min(0).required(),
+        net_weight: Yup.number().min(0).required(),
+        weight_box: Yup.number().min(0).required(),
         performance: Yup.number().min(1).required(),
         capacity: Yup.number().min(1).required(),
         group: Yup.number().integer().min(1).required(),

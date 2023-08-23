@@ -9,8 +9,7 @@ from django.utils.text import slugify
 
 from apps.collection.models import Product as RawMaterial
 from apps.logistic.models import Lot
-from apps.management.models import Categories, Suppliers, TaxRates, Customer, Outsourcing, Condition, Family, SubFamily, \
-    Cut, Packing, UnitOfMeasurement, Currency, Container
+from apps.management.models import Categories, Suppliers, TaxRates, Customer, Outsourcing, Condition, Family, SubFamily, Cut, Packing, UnitOfMeasurement, Currency, Container
 
 
 # Create your models here.
@@ -50,6 +49,7 @@ class Product(ItemsProxy):
 
     net_weight = models.DecimalField(verbose_name='Peso neto envase', max_digits=5, decimal_places=3, default=0,
                                      blank=False)
+    weight_box = models.DecimalField(verbose_name='Peso caja', max_digits=5, decimal_places=3, default=0, blank=False)
     brand = models.CharField(max_length=50, verbose_name='Marca', blank=True, null=True)
 
     performance = models.DecimalField(verbose_name='% Rendimiento', max_digits=3, decimal_places=1, default=0,
@@ -60,9 +60,9 @@ class Product(ItemsProxy):
     slug = models.SlugField(max_length=250, unique=True, blank=True, null=True)
 
     def save(self, *args, **kwargs):
-        self.name = str.capitalize(
+        self.name = str.upper(
             self.raw_material.name + " " + self.condition.name + " " + self.family.name + " " + self.subfamily.name + " " + self.cut.name + " " + self.container.name + " " + self.packing.name + " " + str(
-                self.net_weight) + " kg " + self.brand
+                self.net_weight) + " kg " + self.brand + "caja "+ str(self.weight_box) + " kg"
 
         )
         self.slug = slugify(self.name)
