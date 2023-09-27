@@ -9,17 +9,13 @@ from rest_framework.decorators import permission_classes
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.operations_and_planning.serializers import MaterialSerializer, ProductSerializer, RecipeSerializer, \
-    StockSerializer, StockEntrySerializer, StockExitSerializer, PurchaseSerializer, StockExitDetailSerializer, \
-    PurchaseDetailSerializer, PurchaseItemSerializer, SalesOrderSerializer, SalesOrderDetailSerializer, \
-    ProductDetailSerializer, SalesOrderShortSerializer, ProductionPlanningSerializer, StockReEntrySerializer
+from apps.operations_and_planning.serializers import MaterialSerializer, ProductSerializer, RecipeSerializer, StockSerializer, StockEntrySerializer, StockExitSerializer, PurchaseSerializer, StockExitDetailSerializer, PurchaseDetailSerializer, PurchaseItemSerializer, SalesOrderSerializer, SalesOrderDetailSerializer, ProductDetailSerializer, SalesOrderShortSerializer, ProductionPlanningSerializer, StockReEntrySerializer
 from .models import (Material, Product, Recipe, Stock, StockEntry, StockExit, Purchase, PurchaseItems, SalesOrder,
                      ProductionPlanning, StockReEntry)
 
 from ..logistic.models import Records
 from ..logistic.serializers import RecordsMPSerializer
-from ..util.permissions import AnalystEditorPermission, PlanningLogisticEditorPermission, \
-    PlanningProductionEditorPermission, LogisticsEditorPermission
+from ..util.permissions import AnalystEditorPermission, PlanningLogisticEditorPermission, PlanningProductionEditorPermission, LogisticsEditorPermission
 
 months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
 
@@ -102,9 +98,9 @@ class BaseListView(APIView):
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response({'message': 'Se ha creado correctamente.'}, status=status.HTTP_201_CREATED)
-        except DatabaseError:
+        except DatabaseError as e:
             error_message = 'No se puede procesar su solicitud debido a un error de base de datos. Por favor, inténtelo de nuevo más tarde.'
-            return Response({'message': error_message}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'message': error_message,'detail':str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         except Exception as e:
             error_message = 'Se ha producido un error inesperado en el servidor. Por favor, inténtelo de nuevo más tarde.'
             return Response({'message': error_message, 'detail': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

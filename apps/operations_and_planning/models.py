@@ -459,7 +459,7 @@ class SalesOrder(models.Model):
     delivery = models.CharField(choices=DeliveryChoices.choices, max_length=9, default=DeliveryChoices.PENDING,
                                 verbose_name='Estado')
     drive = models.URLField(verbose_name='Drive URL', blank=True, max_length=200)
-    slug = models.SlugField(max_length=100, blank=True, null=True)
+    slug = models.SlugField(max_length=200, blank=True, null=True)
     color = models.CharField(max_length=7, blank=True, null=True)
 
     def __str__(self):

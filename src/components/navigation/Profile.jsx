@@ -21,6 +21,7 @@ export default function PopoverMe() {
             icon: faRightFromBracket,
         }
     ]
+
     const logoutHandler = () => {
         dispatch(logout())
         setRedirect(true);
@@ -30,6 +31,7 @@ export default function PopoverMe() {
         window.location.reload(false)
         return <Navigate to='/signin'/>;
     }
+    
     return (
         <div className="relative w-full max-w-sm px-4">
             <Popover className="relative">

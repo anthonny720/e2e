@@ -2,32 +2,32 @@ from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
 from simple_history.admin import SimpleHistoryAdmin
 
-from apps.production.models import ProcessPineapple, MOD, PackingProcessPineapple
+from apps.production.models import PineappleConditioning, PineapplePacking, MOD
 
 
 # Register your models here.
 
-@admin.register(ProcessPineapple)
-class ProcessPineappleAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
-    list_display = ('stock',)
+
+@admin.register(PineappleConditioning)
+class PineappleConditioningAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
+    list_display = ('date', 'lot', 'rejected')
+    search_fields = ('lot',)
     ordering = ['-date']
     date_hierarchy = 'date'
     list_per_page = 25
 
-@admin.register(PackingProcessPineapple)
-class PackingProcessPineappleAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
-    list_display = ('lot',)
+@admin.register(PineapplePacking)
+class PineapplePackingAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
+    list_display = ('date', 'lot', 'process','pt_total','cut')
+    search_fields = ('lot',)
     ordering = ['-date']
     date_hierarchy = 'date'
     list_per_page = 25
-
 
 @admin.register(MOD)
 class MODAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
-    list_display = ('get_total_cost_conditioning',
-                    'get_cmo_kg_conditioning',
-                    'get_productivity_conditioning',
-                    'get_total_cost_packing',
-                    'get_cmo_kg_packing',
-                    'get_productivity_packing',)
+    list_display = ('date', 'process', 'pt','product')
+    search_fields = ('product',)
+    ordering = ['-date']
+    date_hierarchy = 'date'
     list_per_page = 25

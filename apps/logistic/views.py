@@ -12,7 +12,6 @@ from rest_framework.views import APIView
 from apps.logistic.models import Lot, ILot, Motions, Pallets, Output, RegisterOutput
 from apps.logistic.serializers import LotSerializer, ILotSerializer, MotionsSerializer, PalletsSerializer, OutputSerializer, LotSummarySerializer, RegisterOutputSerializer, SummaryOutputSerializer, LotUpdateSerializer
 from apps.management.models import Location
-from apps.production.models import ProcessPineapple, MOD
 from apps.quality_assurance.models import Pineapple, Banano, Mango, Blueberry, Goldenberry
 from apps.util.permissions import RawMaterialEditorPermission, LogisticsEditorPermission, PlanningLogisticEditorPermission, CollectionEditorPermission
 
@@ -282,19 +281,6 @@ class ListCreateOutputView(APIView):
                 lot.save()
                 output = Output(lot=lot, kg=quantity, destine=destine)
                 output.save()
-                try:
-                    if lot.product.name == 'Piña':
-                        pineapple = ProcessPineapple(stock=output)
-                        pineapple.save()
-                        obj, create = MOD.objects.get_or_create(date=output.date)
-                        obj.process.add(output)
-                        obj.save()
-                    else:
-                        pass
-                except Exception as e:
-                    return Response({
-                        'error': 'Se ha producido un error inesperado en el servidor. Por favor, inténtelo de nuevo más tarde.',
-                        'detail': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
                 return Response({'message': 'Stock enviado a producción'}, status=status.HTTP_201_CREATED)
 
             elif destine == 'M':

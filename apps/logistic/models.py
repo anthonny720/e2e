@@ -443,7 +443,7 @@ class ILot(models.Model):
 
     def get_quantity_boxes(self):
         try:
-            return self.gb + self.pa + self.co + self.t0 + self.t1 + self.t2 + self.gn + self.ma
+            return self.gb + self.pa + self.co + self.t0 + self.t1 + self.t2 + self.gn + self.ma + self.industry
         except:
             return 0
 
