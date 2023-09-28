@@ -42,7 +42,7 @@ const TableMODPacking = ({reference}) => {
                             <td title={`Fecha: ${item?.date} \n Kg: ${Humanize.formatNumber(item?.process, 2)}`}
 
                                 className="md:sticky cursor-pointer md:left-0 text-sm px-6 text-black font-bold  bg-white  text-center whitespace-nowrap  ">
-                                {Humanize.formatNumber(item?.process, 2)}
+                                {Humanize.formatNumber(item?.pt, 2)}
                             </td>
 
                             <td className="text-sm bg-white  whitespace-no-wrap text-gray-800 font-normal leading-4 text-center ">{new Date(item?.date).toLocaleDateString('es-ES', {
@@ -59,7 +59,7 @@ const TableMODPacking = ({reference}) => {
                             </td>
                             <td className="text-sm bg-white px-6 whitespace-no-wrap text-red-600 font-bold leading-4 text-center ">
                                 <p className={"bg-red-400 bg-opacity-60 rounded-lg w-full p-2"}>
-                                {Humanize.formatNumber(item?.pt/(parseFloat(item?.people_packing)+parseFloat(item?.people_packing_25)+parseFloat(item?.people_packing_35))/(parseFloat(item?.people_packing_hours)+parseFloat(item?.people_packing_25_hours)+parseFloat(item?.people_packing_35_hours)), 2)}
+                                {Humanize.formatNumber(item?.pt/parseFloat(item?.people_packing)/(parseFloat(item?.people_packing_hours)+parseFloat(item?.people_packing_25_hours)+parseFloat(item?.people_packing_35_hours)), 2)}
                                 </p></td>
 
 

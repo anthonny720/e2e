@@ -62,7 +62,7 @@ const TableMODConditioning = ({reference}) => {
                             </td>
                             <td className="text-sm bg-white px-6 whitespace-no-wrap text-red-600 font-bold leading-4 text-center ">
                                 <p className={"bg-red-400 bg-opacity-60 rounded-lg w-full p-2"}>
-                                    {Humanize.formatNumber(item?.pt/(parseFloat(item?.people_conditioning)+parseFloat(item?.people_conditioning_25)+parseFloat(item?.people_conditioning_35))/(parseFloat(item?.people_conditioning_hours)+parseFloat(item?.people_conditioning_25_hours)+parseFloat(item?.people_conditioning_35_hours)), 2)}</p></td>
+                                    {Humanize.formatNumber(item?.pt/parseFloat(item?.people_conditioning)/(parseFloat(item?.people_conditioning_hours)+parseFloat(item?.people_conditioning_25_hours)+parseFloat(item?.people_conditioning_35_hours)), 2)}</p></td>
                             <td className="text-sm bg-white px-6 whitespace-no-wrap text-gray-800 font-normal leading-4 text-center ">{item?.people_conditioning}</td>
 
                             <td className="text-sm bg-white px-6 whitespace-no-wrap text-gray-800 font-normal leading-4 text-center ">{changeFormat(item?.people_conditioning_hours)}</td>
