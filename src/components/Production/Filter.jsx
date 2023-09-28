@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import {useFormik} from "formik";
-import {useDispatch} from "react-redux";
-import {map} from "lodash";
 import {DownloadTableExcel} from "react-export-table-to-excel";
 import RangeDate from "../util/RangeDate";
+import {useDispatch} from "react-redux";
 
-const Filter = ({providers, action, category, setParams, reference, action_two}) => {
+const Filter = ({category, setParams, reference, exclude, action_one, action_two}) => {
+
     const dispatch = useDispatch()
 
     const [date, setDate] = useState();
@@ -15,8 +15,8 @@ const Filter = ({providers, action, category, setParams, reference, action_two})
             form['start_date'] = date ? new Date(date?.[0]).toLocaleDateString('es-PE', {timeZone: 'America/Lima'}) : ''
             form['end_date'] = date ? new Date(date?.[1]).toLocaleDateString('es-PE', {timeZone: 'America/Lima'}) : ''
             setParams(form)
-            dispatch(action(category, form))
-            dispatch(action_two(category, form))
+            dispatch(action_one(form))
+            dispatch(action_two(form))
         }
     })
     return (<form className="w-full  rounded-lg bg-white text-black z-20 my-2">
@@ -50,19 +50,11 @@ const Filter = ({providers, action, category, setParams, reference, action_two})
 
         <div>
             <div className="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 xl:grid-cols-4 gap-4 mt-4">
+                {!exclude && <input type={'text'} value={formik.values.lot}
+                                    onChange={(value) => formik.setFieldValue('lot', value.target.value)}
+                                    placeholder={'Lote'}
+                                    className="px-4 py-3 w-full rounded-md bg-gray-100 focus:border-green-500 focus:bg-white focus:ring-2 text-sm"/>}
 
-                <select value={formik.values.provider}
-                        onChange={(value) => formik.setFieldValue('provider', value.target.value)}
-                        className="px-4 py-3 w-full rounded-md bg-gray-100  focus:border-green-500 focus:bg-white focus:ring-2 text-sm">
-                    <option value={''}>Todos los proveedores</option>
-                    {providers && map(providers, (provider, index) => {
-                        return <option key={index} value={provider.id}>{provider.business_name}</option>
-                    })}
-                </select>
-                <input type={'text'} value={formik.values.lot}
-                       onChange={(value) => formik.setFieldValue('lot', value.target.value)}
-                       placeholder={'Lote'}
-                       className="px-4 py-3 w-full rounded-md bg-gray-100 focus:border-green-500 focus:bg-white focus:ring-2 text-sm"/>
                 <RangeDate value={date} onChange={setDate}/>
             </div>
         </div>
@@ -70,7 +62,7 @@ const Filter = ({providers, action, category, setParams, reference, action_two})
 };
 const initialValues = () => {
     return {
-        start_date: "", end_date: "", provider: "", lot: ""
+        start_date: "", end_date: "", lot: ""
     }
 }
 

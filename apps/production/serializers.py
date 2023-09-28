@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from apps.production.models import PineappleConditioning, PineapplePacking
+from apps.production.models import PineappleConditioning, PineapplePacking, MOD
 
 
 class PineappleConditioningSerializer(serializers.ModelSerializer):
@@ -11,4 +11,9 @@ class PineappleConditioningSerializer(serializers.ModelSerializer):
 class PineapplePackingSerializer(serializers.ModelSerializer):
     class Meta:
         model = PineapplePacking
+        fields = '__all__'
+
+class MODSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MOD
         fields = '__all__'
