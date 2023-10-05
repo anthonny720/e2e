@@ -3,8 +3,7 @@ from import_export.admin import ImportExportModelAdmin
 from simple_history.admin import SimpleHistoryAdmin
 
 from apps.management.models import Customer, Suppliers, Outsourcing, Transport, StorageArea, Location, \
-    UnitOfMeasurement, Categories, Currency, TaxRates, CostProduction, Condition, Family, SubFamily, Cut, Packing, \
-    ContactPeople, Container
+    UnitOfMeasurement, Categories, CostProduction, ContactPeople
 
 
 # Register your models here.
@@ -80,70 +79,7 @@ class CategoriesAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
     list_per_page = 25
 
 
-@admin.register(Currency)
-class CurrencyAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
-    list_display = ('name',)
-    search_fields = ('name',)
-    ordering = ['name']
-    list_per_page = 25
-
-
-@admin.register(TaxRates)
-class TaxRatesAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
-    list_display = ('name', 'rate')
-    search_fields = ('name',)
-    ordering = ['name']
-    list_per_page = 25
-
-
 @admin.register(CostProduction)
 class CostProductionAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
     list_display = ('cost_hour_day', 'cost_hour_night', 'cost_hour_extra_25', 'cost_hour_extra_35')
-    list_per_page = 25
-
-
-@admin.register(Condition)
-class ConditionAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
-    list_display = ('name',)
-    search_fields = ('name',)
-    ordering = ['name']
-    list_per_page = 25
-
-
-@admin.register(Family)
-class FamilyAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
-    list_display = ('name',)
-    search_fields = ('name',)
-    ordering = ['name']
-    list_per_page = 25
-
-
-@admin.register(SubFamily)
-class SubFamilyAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
-    list_display = ('name',)
-    search_fields = ('name',)
-    ordering = ['name']
-    list_per_page = 25
-
-
-@admin.register(Cut)
-class CutAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
-    list_display = ('name',)
-    search_fields = ('name',)
-    ordering = ['name']
-    list_per_page = 25
-
-
-@admin.register(Packing)
-class PackingAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
-    list_display = ('name',)
-    search_fields = ('name',)
-    ordering = ['name']
-    list_per_page = 25
-
-@admin.register(Container)
-class ContainerAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
-    list_display = ('name',)
-    search_fields = ('name',)
-    ordering = ['name']
     list_per_page = 25

@@ -8,18 +8,9 @@ import {
     get_outsourcing,
     get_supplier,
     get_supplier_rm,
-    get_transport,
-    update_customer,
-    update_outsourcing,
-    update_supplier,
-    update_supplier_rm,
-    update_transport
+    get_transport
 } from "../../../../redux/actions/management";
-import {CloudArrowUpIcon, PlusCircleIcon} from "@heroicons/react/24/solid";
 import PeopleForm from "../../../../components/Planning/Contacts/People";
-import Modal from "../../../../components/util/Modal";
-import ModalHook from "../../../../components/util/hooks";
-import FormPeople from "../../../../components/Planning/Contacts/FormPeople";
 import {Helmet} from "react-helmet";
 
 const ContactDetail = () => {
@@ -27,19 +18,6 @@ const ContactDetail = () => {
     const dispatch = useDispatch();
     const payload = useSelector((state) => state.Management.contact);
     const loading = useSelector((state) => state.Management.loading);
-    const [editing, setEditing] = useState(false);
-    const {content, setContent, isOpen, setIsOpen, openModal} = ModalHook();
-
-    const handleRefresh = () => {
-        setEditing(!editing);
-    }
-    const handleAddForm = () => {
-        setIsOpen(true)
-        setContent(<div className={"h-full md:h-screen"}>
-            <FormPeople close={openModal} dispatch={dispatch} parent_id={payload?.id} model={path}
-                        handleRefresh={handleRefresh}/>
-        </div>)
-    }
 
 
     useEffect(() => {
@@ -52,47 +30,24 @@ const ContactDetail = () => {
     }, []);
 
 
-    useEffect(() => {
-        if (path === 'customers') dispatch(get_customer(id));
-        if (path === 'transports') dispatch(get_transport(id));
-        if (path === 'suppliers') dispatch(get_supplier(id));
-        if (path === 'suppliers_rm') dispatch(get_supplier_rm(id));
-        if (path === 'outsourcings') dispatch(get_outsourcing(id));
-    }, [editing]);
-
     const [formData, setFormData] = useState({}); // Inicializar con null
 
     useEffect(() => {
         setFormData(payload)
     }, [payload]);
 
-    const {display_name, ruc, address, email, business_name} = formData || {}; // Desestructurar formData solo si no es null
-    const onChange = (e) => {
-        setFormData({...formData, [e.target.name]: e.target.value});
-    };
-
-    const onSubmit = (e) => {
-        e.preventDefault();
-        if (path === 'customers') dispatch(update_customer(id, formData));
-        if (path === 'transports') dispatch(update_transport(id, formData));
-        if (path === 'suppliers') dispatch(update_supplier(id, formData));
-        if (path === 'suppliers_rm') dispatch(update_supplier_rm(id, formData));
-        if (path === 'outsourcings') dispatch(update_outsourcing(id, formData));
-    };
+    const {display_name, ruc, address, email, business_name, web} = formData || {}; // Desestructurar formData solo si no es null
 
 
     return (<Planning>
         <Helmet>
             <title>{business_name}</title>
         </Helmet>
-        <Modal isOpen={isOpen} close={openModal} children={content}/>
         <div className={'p-2 flex h-[550px] '}>
             <div className={"bg-white w-full shadow-2xl relative"}>
-                <PlusCircleIcon onClick={handleAddForm}
-                                className={"w-8 text-green-400 bg-white rounded-full cursor-pointer -bottom-4 left-[45%] md:left-[50%] absolute z-[100]"}/>
-                <div className={"flex justify-between"}>
+
+                <div className={"flex justify-start"}>
                     <p className={"text-black p-2"}>{business_name}</p>
-                    <CloudArrowUpIcon onClick={(e) => onSubmit(e)} className={"w-8 text-gray-400 cursor-pointer"}/>
                 </div>
 
                 <Skeleton height={5} highlightColor={!loading ? "#22C55E" : "#F1C40F"}/>
@@ -115,10 +70,10 @@ const ContactDetail = () => {
                                 name={'display_name'}
                                 id={'display_name'}
                                 type="text"
+                                disabled
                                 required={true}
                                 value={display_name}
                                 autoComplete={'off'}
-                                onChange={e => onChange(e)}
                                 className="w-full bg-transparent focus:bg-white focus:border-green-300 focus:outline-none border-b-2 p-1 text-xs text-gray-800 font-light"
                             />
                         </div>
@@ -128,9 +83,9 @@ const ContactDetail = () => {
                                 name={'ruc'}
                                 id={'ruc'}
                                 type="number"
+                                disabled
                                 value={ruc}
                                 autoComplete={'off'}
-                                onChange={e => onChange(e)}
                                 className="w-full bg-transparent focus:bg-white focus:border-green-300 focus:outline-none border-b-2 p-1 text-xs text-gray-800 font-light"
                             />
                         </div>
@@ -141,8 +96,8 @@ const ContactDetail = () => {
                                 id={'address'}
                                 type="text"
                                 value={address}
+                                disabled
                                 autoComplete={'off'}
-                                onChange={e => onChange(e)}
                                 className="w-full bg-transparent focus:bg-white focus:border-green-300 focus:outline-none border-b-2 p-1 text-xs text-gray-800 font-light"
                             />
                         </div>
@@ -153,8 +108,20 @@ const ContactDetail = () => {
                                 id={'email'}
                                 type="email"
                                 value={email}
+                                disabled
                                 autoComplete={'off'}
-                                onChange={e => onChange(e)}
+                                className="w-full bg-transparent focus:bg-white focus:border-green-300 focus:outline-none border-b-2 p-1 text-xs text-gray-800 font-light"
+                            />
+                        </div>
+                        <div>
+                            <label className={"text-gray-800 text-xs"}>Web</label>
+                            <input
+                                name={'web'}
+                                id={'web'}
+                                type="web"
+                                value={web}
+                                disabled
+                                autoComplete={'off'}
                                 className="w-full bg-transparent focus:bg-white focus:border-green-300 focus:outline-none border-b-2 p-1 text-xs text-gray-800 font-light"
                             />
                         </div>
@@ -163,7 +130,7 @@ const ContactDetail = () => {
                 </form>
 
                 <div className={" max-h-60 overflow-auto scrollbar-hide  relative"}>
-                    <PeopleForm data={payload?.contacts ? payload.contacts : []} handleRefresh={handleRefresh}
+                    <PeopleForm data={payload?.contacts ? payload.contacts : []}
                     />
                 </div>
             </div>

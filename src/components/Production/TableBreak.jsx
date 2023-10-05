@@ -16,7 +16,7 @@ function changeFormat(decimal) {
 const TableBreak = ({reference}) => {
     const data = useSelector(state => state.Production.mod)
 
-    const columns = ['Fecha', 'N° personas descanso/vacaciones', 'Horas descanso/vacaciones', 'CMO Descanso/Vacaciones']
+    const columns = ['Fecha', 'N° personas descanso acondicionado', 'N° personas descanso envasado', 'Horas descanso', 'CMO Descanso', 'Inasistencia acondicionado', 'Inasistencia envasado']
 
     return (<div className="w-full">
         <Helmet>
@@ -41,9 +41,12 @@ const TableBreak = ({reference}) => {
                             <td className="text-sm bg-white  whitespace-no-wrap text-gray-800 font-normal leading-4 text-center ">{new Date(item?.date).toLocaleDateString('es-ES', {
                                 year: 'numeric', month: 'numeric', day: 'numeric', timeZone: 'UTC'
                             })}</td>
-                            <td className="text-sm bg-white px-6 whitespace-nowrap text-gray-800 font-bold leading-4 text-center ">{Humanize.formatNumber(item?.people_rest, 0)}</td>
+                            <td className="text-sm bg-white px-6 whitespace-nowrap text-gray-800 font-bold leading-4 text-center ">{Humanize.formatNumber(item?.people_conditioning_rest, 0)}</td>
+                            <td className="text-sm bg-white px-6 whitespace-nowrap text-gray-800 font-bold leading-4 text-center ">{Humanize.formatNumber(item?.people_packing_rest, 0)}</td>
                             <td className="text-sm bg-white px-6 whitespace-nowrap text-gray-800 font-bold leading-4 text-center ">{changeFormat(item?.people_rest_hours)}</td>
                             <td className="text-sm bg-white px-6 whitespace-nowrap text-gray-800 font-bold leading-4 text-center ">{Humanize.formatNumber(item?.cmo_rest, 2)}</td>
+                            <td className="text-sm bg-white px-6 whitespace-nowrap text-gray-800 font-bold leading-4 text-center ">{Humanize.formatNumber(item?.people_conditioning_absence, 0)}</td>
+                            <td className="text-sm bg-white px-6 whitespace-nowrap text-gray-800 font-bold leading-4 text-center ">{Humanize.formatNumber(item?.people_packing_absence, 0)}</td>
                         </tr>)
                     })}
                     </tbody>

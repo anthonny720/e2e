@@ -8,9 +8,10 @@ import Sales from "./sales";
 import Operations from "./operations";
 import Production from "./production";
 import Auth from "./auth";
+import Commercial from "./commercial";
 
 
 export default combineReducers({
-    Collection, Management, Logistic, Alert, Quality, Sales, Operations, Production, Auth
+    Collection, Management, Logistic, Alert, Quality, Sales, Operations, Production, Auth, Commercial
 
 });

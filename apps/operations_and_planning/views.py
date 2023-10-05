@@ -2,20 +2,21 @@
 from datetime import datetime
 
 from django.db import DatabaseError
-from django.db.models import ProtectedError, OuterRef
-from django.shortcuts import get_object_or_404
+from django.db.models import OuterRef, ProtectedError
 from rest_framework import status
 from rest_framework.decorators import permission_classes
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.operations_and_planning.serializers import MaterialSerializer, ProductSerializer, RecipeSerializer, StockSerializer, StockEntrySerializer, StockExitSerializer, PurchaseSerializer, StockExitDetailSerializer, PurchaseDetailSerializer, PurchaseItemSerializer, SalesOrderSerializer, SalesOrderDetailSerializer, ProductDetailSerializer, SalesOrderShortSerializer, ProductionPlanningSerializer, StockReEntrySerializer
-from .models import (Material, Product, Recipe, Stock, StockEntry, StockExit, Purchase, PurchaseItems, SalesOrder,
-                     ProductionPlanning, StockReEntry)
-
+from apps.operations_and_planning.serializers import MaterialSerializer, ProductSerializer, StockSerializer, \
+    StockEntrySerializer, StockExitSerializer, ProductDetailSerializer, StockReEntrySerializer, \
+    ProductionPlanningSerializer
+from .models import (Material, Product, Stock, StockEntry, StockExit, StockReEntry, ProductionPlanning)
+from ..commercial.models import SalesProgress
+from ..commercial.serializers import SalesOrderShortSerializer
 from ..logistic.models import Records
 from ..logistic.serializers import RecordsMPSerializer
-from ..util.permissions import AnalystEditorPermission, PlanningLogisticEditorPermission, PlanningProductionEditorPermission, LogisticsEditorPermission
+from ..util.permissions import AnalystEditorPermission, LogisticsEditorPermission, PlanningProductionEditorPermission
 
 months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
 
@@ -100,7 +101,7 @@ class BaseListView(APIView):
             return Response({'message': 'Se ha creado correctamente.'}, status=status.HTTP_201_CREATED)
         except DatabaseError as e:
             error_message = 'No se puede procesar su solicitud debido a un error de base de datos. Por favor, inténtelo de nuevo más tarde.'
-            return Response({'message': error_message,'detail':str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'message': error_message, 'detail': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         except Exception as e:
             error_message = 'Se ha producido un error inesperado en el servidor. Por favor, inténtelo de nuevo más tarde.'
             return Response({'message': error_message, 'detail': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -202,19 +203,6 @@ class NoPostMixin:
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
-@permission_classes([AnalystEditorPermission])
-class ListRecipeView(BaseListView, NoGetMixin):
-    model = Recipe
-    serializer_class = RecipeSerializer
-    filter_params = ['product__name', 'material__name']
-
-
-@permission_classes([AnalystEditorPermission])
-class DetailRecipeView(BaseDetailView, NoGetMixin):
-    model = Recipe
-    serializer_class = RecipeSerializer
-
-
 class ListStockView(BaseListView, NoPostMixin):
     model = Stock
     serializer_class = StockSerializer
@@ -234,7 +222,7 @@ class ListStockView(BaseListView, NoPostMixin):
 class ListStockReEntryView(BaseListView, NoPostMixin):
     model = StockReEntry
     serializer_class = StockReEntrySerializer
-    filter_params = ['stock_entry__purchase_item__material__name']
+    filter_params = ['stock_entry__item__name']
     date_query = 'date'
 
 
@@ -242,34 +230,8 @@ class ListStockReEntryView(BaseListView, NoPostMixin):
 class ListStockEntryView(BaseListView, NoPostMixin):
     model = StockEntry
     serializer_class = StockEntrySerializer
-    filter_params = ['purchase_item__material__name']
-    date_query = 'date'
-
-    def patch(self, request):
-        try:
-            instance = get_object_or_404(self.model, id=request.data['id'])
-            quantity = request.data['stock']
-            last = Stock.objects.filter(product=instance.purchase_item.material).last()
-            stock, created = Stock.objects.get_or_create(product=instance.purchase_item.material, date=datetime.now())
-            if created:
-                stock.quantity = last.quantity
-                stock.save()
-            instance.stock += int(quantity)
-            instance.save()
-            stock.quantity += int(quantity)
-            stock.save()
-            stock = StockReEntry.objects.create(stock_entry=instance, quantity=quantity)
-            stock.save()
-            return Response({'message': 'Actualizado correctamente'}, status=status.HTTP_200_OK)
-        except self.model.DoesNotExist:
-            error_message = f'No se ha encontrado un objeto con el id {id}'
-            return Response({'message': error_message}, status=status.HTTP_404_NOT_FOUND)
-        except DatabaseError as e:
-            error_message = 'No se puede procesar su solicitud debido a un error de base de datos. Por favor, inténtelo de nuevo más tarde.'
-            return Response({'message': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        except Exception as e:
-            error_message = 'Se ha producido un error inesperado en el servidor. Por favor, inténtelo de nuevo más tarde.'
-            return Response({'message': error_message, 'detail': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    filter_params = ['item__name']
+    date_query = 'arrival_date'
 
 
 @permission_classes([LogisticsEditorPermission])
@@ -284,7 +246,7 @@ class ListStockExitView(APIView):
             start_date = request.query_params.get('start_date', None)
             end_date = request.query_params.get('end_date', None)
             if product_name:
-                stock_exits = stock_exits.filter(stock_entry__purchase_item__material__name__icontains=product_name)
+                stock_exits = stock_exits.filter(stock_entry__item__name__icontains=product_name)
 
             if start_date and end_date:
                 stock_exits = stock_exits.filter(
@@ -300,18 +262,6 @@ class ListStockExitView(APIView):
         except Exception as e:
             error_message = 'Se ha producido un error inesperado en el servidor. Por favor, inténtelo de nuevo más tarde.'
             return Response({'message': error_message, 'detail': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-    def post(self, request):
-        try:
-            serializer = StockExitDetailSerializer(data=request.data)
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-            return Response({'message': 'Creado correctamente'}, status=status.HTTP_201_CREATED)
-        except DatabaseError as e:
-            error_message = 'No se puede procesar su solicitud debido a un error de base de datos. Por favor, inténtelo de nuevo más tarde.'
-            return Response({'message': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        except Exception as e:
-            return Response({'message': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class ListStockAvailableView(BaseListView):
@@ -336,44 +286,17 @@ class ListStockAvailableView(BaseListView):
             return Response({'message': error_message, 'detail': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([LogisticsEditorPermission])
-class ListPurchasesView(BaseListView):
-    model = Purchase
-    serializer_class = PurchaseSerializer
-    filter_params = ['supplier__display_name', 'order_id', 'invoice_id', 'guide_number']
-    date_query = 'order_date'
+class ListPlanningProductionView(APIView):
+    model = SalesProgress
+    serializer_class = SalesOrderShortSerializer
 
-
-@permission_classes([LogisticsEditorPermission])
-class DetailPurchaseView(BaseDetailView):
-    model = Purchase
-    serializer_class = PurchaseDetailSerializer
-
-
-@permission_classes([LogisticsEditorPermission])
-class ListPurchaseItemView(BaseListView):
-    model = PurchaseItems
-    serializer_class = PurchaseItemSerializer
-
-
-@permission_classes([LogisticsEditorPermission])
-class DetailPurchaseItemView(BaseDetailView, NoGetMixin):
-    model = PurchaseItems
-    serializer_class = PurchaseItemSerializer
-
-
-@permission_classes([LogisticsEditorPermission])
-class UpdateTransferStockReceivedView(APIView):
-    model = Stock
-
-    def post(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         try:
-            self.model.receive_purchase(request.data['id'])
-            return Response({'message': 'Actualizado correctamente'}, status=status.HTTP_201_CREATED)
-        except self.model.DoesNotExist:
-            error_message = f'No se ha encontrado un objeto con el id {id}'
-            return Response({'message': error_message}, status=status.HTTP_404_NOT_FOUND)
-        except DatabaseError as e:
+            queryset = self.model.objects.filter(commercial_status='100', status__in=['TBT', 'TBD', 'TBP']).order_by(
+                '-date')
+            serializer = self.serializer_class(queryset, many=True)
+            return Response({'data': serializer.data}, status=status.HTTP_200_OK)
+        except DatabaseError:
             error_message = 'No se puede procesar su solicitud debido a un error de base de datos. Por favor, inténtelo de nuevo más tarde.'
             return Response({'message': error_message}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         except Exception as e:
@@ -381,47 +304,14 @@ class UpdateTransferStockReceivedView(APIView):
             return Response({'message': error_message, 'detail': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([PlanningLogisticEditorPermission])
-class ListSalesOrderView(BaseListView):
-    model = SalesOrder
-    serializer_class = SalesOrderSerializer
-    filter_params = ['sku__name', 'customer__display_name', 'process_plant__display_name', 'order_id', 'quote_id',
-                     'management']
-    date_query = 'order_date'
-
-    def get_queryset(self):
-        query = self.model.objects.all().order_by('-month', '-year')
-        return query
-
-
-@permission_classes([PlanningLogisticEditorPermission])
-class DetailSalesOrderView(BaseDetailView):
-    model = SalesOrder
-    serializer_class = SalesOrderDetailSerializer
-
-    def get_object(self, id):
-        query = self.model.objects.get(slug=id)
-        return query
-
-
-class SalesPlanningView(BaseListView):
-    model = SalesOrder
-    serializer_class = SalesOrderShortSerializer
-    filter_params = []
-
-    def get_queryset(self):
-        query = self.model.objects.filter(delivery='pending').order_by('month', '-year')
-        return query
-
-
-@permission_classes([PlanningProductionEditorPermission])
+# @permission_classes([PlanningProductionEditorPermission])
 class ListProductionPlanningView(BaseListView, NoGetMixin):
     model = ProductionPlanning
     serializer_class = ProductionPlanningSerializer
     filter_params = []
 
 
-@permission_classes([PlanningProductionEditorPermission])
+# @permission_classes([PlanningProductionEditorPermission])
 class DetailProductionPlanningView(BaseDetailView, NoGetMixin):
     model = ProductionPlanning
     serializer_class = ProductionPlanningSerializer
@@ -430,18 +320,17 @@ class DetailProductionPlanningView(BaseDetailView, NoGetMixin):
         query = self.model.objects.get(id=id)
         return query
 
-
 class CalendarScheduleManufacturingView(APIView):
     model = ProductionPlanning
 
     def get(self, request):
         data = []
         try:
-            query = self.model.objects.filter(sale__delivery='pending')
+            query = self.model.objects.filter(sale__commercial_status='100', sale__status__in=['TBT', 'TBD', 'TBP'])
             for item in query:
                 data.append({
-                    'title': item.sale.sku.raw_material.name + ' ' + item.sale.sku.cut.name + ' - ' + item.sale.customer.display_name + " " + str(
-                        item.raw_material) + " kg", 'date': item.date, 'color': item.sale.color})
+                    'title': item.sale.sku + ' - ' + item.sale.client_name + " " + str(
+                        item.raw_material) + " kg", 'date': item.date, })
             return Response(data, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'data': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

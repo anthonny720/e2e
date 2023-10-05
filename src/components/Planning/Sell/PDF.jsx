@@ -3,6 +3,7 @@ import {Document, Image, Page, PDFViewer, StyleSheet, Text, View} from "@react-p
 import Logo from "../../../assets/logo.jpg";
 import Humanize from "humanize-plus";
 import {map} from "lodash";
+
 const styles = StyleSheet.create({
     image: {
         width: 90, borderRadius: 10, padding: "2px",
@@ -13,11 +14,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between',
     }, gridItem: {
         width: '50%', marginBottom: 8,
-    },
-    gridItemFull:{
-      width: '100%', marginBottom: 8,
-    },
-    gridItemText: {
+    }, gridItemFull: {
+        width: '100%', marginBottom: 8,
+    }, gridItemText: {
         color: 'black',
         fontSize: 12,
         fontWeight: 'extrabold',
@@ -70,43 +69,149 @@ const PDFSell = ({data}) => {
                     }}>ORDEN DE PRODUCCIÓN</Text>
                 </View>
                 <View style={[styles.gridContainer]}>
-                    <Text style={[styles.gridItemFull,{color: "black", fontSize: "12px", fontWeight: "extrabold", fontFamily: "Times-Roman",marginTop:"4px", textAlign:"start"}]}>
-                        Fecha de la orden:  {data?.order_date?new Date(data?.order_date + "T00:00:00").toLocaleDateString('es-PE', {
+                    <Text style={[styles.gridItemFull, {
+                        color: "black",
+                        fontSize: "12px",
+                        fontWeight: "extrabold",
+                        fontFamily: "Times-Roman",
+                        marginTop: "4px",
+                        textAlign: "start"
+                    }]}>
+                        Fecha estimada: {data?.date ? new Date(data?.date).toLocaleDateString('es-PE', {
                         year: 'numeric', month: 'long', day: 'numeric'
-                    }):'Sin fecha'}
+                    }) : 'Sin fecha'}
                     </Text>
-                    <Text style={[styles.gridItem,{color: "black", fontSize: "12px", fontWeight: "extrabold", fontFamily: "Times-Roman",marginTop:"4px", textAlign:"start"}]}>Orden de compra: {data?.order_id}</Text>
-                    <Text style={[styles.gridItem,{color: "black", fontSize: "12px", fontWeight: "extrabold", fontFamily: "Times-Roman",marginTop:"4px", textAlign:"start"}]}>PFI: {data?.quote_id}</Text>
-                    <Text style={[styles.gridItem,{color: "black", fontSize: "12px", fontWeight: "extrabold", fontFamily: "Times-Roman",marginTop:"4px", textAlign:"start"}]}>Cliente: {data?.customer_name}</Text>
-                    <Text style={[styles.gridItem,{color: "black", fontSize: "12px", fontWeight: "extrabold", fontFamily: "Times-Roman",marginTop:"4px", textAlign:"start"}]}>FCL: {data?.full_container_load_name}</Text>
-                    <Text style={[styles.gridItem,{color: "black", fontSize: "12px", fontWeight: "extrabold", fontFamily: "Times-Roman",marginTop:"4px", textAlign:"start"}]}>Proceso: {data?.process_plant_name}</Text>
+                    <Text style={[styles.gridItem, {
+                        color: "black",
+                        fontSize: "12px",
+                        fontWeight: "extrabold",
+                        fontFamily: "Times-Roman",
+                        marginTop: "4px",
+                        textAlign: "start"
+                    }]}>Orden de compra: {data?.po_number}</Text>
+                    <Text style={[styles.gridItem, {
+                        color: "black",
+                        fontSize: "12px",
+                        fontWeight: "extrabold",
+                        fontFamily: "Times-Roman",
+                        marginTop: "4px",
+                        textAlign: "start"
+                    }]}>PFI: {data?.pfi_number}</Text>
+                    <Text style={[styles.gridItem, {
+                        color: "black",
+                        fontSize: "12px",
+                        fontWeight: "extrabold",
+                        fontFamily: "Times-Roman",
+                        marginTop: "4px",
+                        textAlign: "start"
+                    }]}>Cliente: {data?.client_name}</Text>
+                    <Text style={[styles.gridItem, {
+                        color: "black",
+                        fontSize: "12px",
+                        fontWeight: "extrabold",
+                        fontFamily: "Times-Roman",
+                        marginTop: "4px",
+                        textAlign: "start"
+                    }]}>FCL: {data?.fcl_name}</Text>
 
-                    <Text style={[styles.gridItem,{color: "black", fontSize: "12px", fontWeight: "extrabold", fontFamily: "Times-Roman",marginTop:"4px", textAlign:"start"}]}>Mercado: {data?.market === 'national'?'Nacional':'Internacional'}</Text>
-                    <Text style={[styles.gridItem,{color: "black", fontSize: "12px", fontWeight: "extrabold", fontFamily: "Times-Roman",marginTop:"4px", textAlign:"start"}]}>Materia Prima (kg): {Humanize.formatNumber(data?.raw_material,2)}</Text>
-                    <Text style={[styles.gridItem,{color: "black", fontSize: "12px", fontWeight: "extrabold", fontFamily: "Times-Roman",marginTop:"4px", textAlign:"start"}]}>Rendimiento: {data?.performance} %</Text>
-                    <Text style={[styles.gridItem,{color: "black", fontSize: "12px", fontWeight: "extrabold", fontFamily: "Times-Roman",marginTop:"4px", textAlign:"start"}]}>Capacidad: {Humanize.formatNumber(data?.capacity,2)}</Text>
-                    <Text style={[styles.gridItem,{color: "black", fontSize: "12px", fontWeight: "extrabold", fontFamily: "Times-Roman",marginTop:"4px", textAlign:"start"}]}>Fecha de inicio:  {data?.start_date?new Date(data?.start_date + "T00:00:00").toLocaleDateString('es-PE', {
+                    <Text style={[styles.gridItem, {
+                        color: "black",
+                        fontSize: "12px",
+                        fontWeight: "extrabold",
+                        fontFamily: "Times-Roman",
+                        marginTop: "4px",
+                        textAlign: "start"
+                    }]}>Mercado: {data?.market === 'N' ? 'Nacional' : 'Internacional'}</Text>
+                    <Text style={[styles.gridItem, {
+                        color: "black",
+                        fontSize: "12px",
+                        fontWeight: "extrabold",
+                        fontFamily: "Times-Roman",
+                        marginTop: "4px",
+                        textAlign: "start"
+                    }]}>Materia Prima (kg): {Humanize.formatNumber(data?.mp, 2)}</Text>
+                    <Text style={[styles.gridItem, {
+                        color: "black",
+                        fontSize: "12px",
+                        fontWeight: "extrabold",
+                        fontFamily: "Times-Roman",
+                        marginTop: "4px",
+                        textAlign: "start"
+                    }]}>Rendimiento: {Humanize.formatNumber(data?.kg / data?.mp * 100, 2)} %</Text>
+                    <Text style={[styles.gridItem, {
+                        color: "black",
+                        fontSize: "12px",
+                        fontWeight: "extrabold",
+                        fontFamily: "Times-Roman",
+                        marginTop: "4px",
+                        textAlign: "start"
+                    }]}>Fecha de
+                        inicio: {data?.start_process ? new Date(data?.start_process + "T00:00:00").toLocaleDateString('es-PE', {
+                            year: 'numeric', month: 'long', day: 'numeric'
+                        }) : 'Sin fecha'}</Text>
+                    <Text style={[styles.gridItem, {
+                        color: "black",
+                        fontSize: "12px",
+                        fontWeight: "extrabold",
+                        fontFamily: "Times-Roman",
+                        marginTop: "4px",
+                        textAlign: "start"
+                    }]}>Fecha de
+                        finalización: {data?.end_process ? new Date(data?.end_process + "T00:00:00").toLocaleDateString('es-PE', {
+                            year: 'numeric', month: 'long', day: 'numeric'
+                        }) : 'Sin fecha'}</Text>
+                    <Text style={[styles.gridItem, {
+                        color: "black",
+                        fontSize: "12px",
+                        fontWeight: "extrabold",
+                        fontFamily: "Times-Roman",
+                        marginTop: "4px",
+                        textAlign: "start"
+                    }]}>Fecha de
+                        envío: {data?.load_date ? new Date(data?.load_date + "T00:00:00").toLocaleDateString('es-PE', {
+                            year: 'numeric', month: 'long', day: 'numeric'
+                        }) : 'Sin fecha'}</Text>
+                    <Text style={[styles.gridItem, {
+                        color: "black",
+                        fontSize: "12px",
+                        fontWeight: "extrabold",
+                        fontFamily: "Times-Roman",
+                        marginTop: "4px",
+                        textAlign: "start"
+                    }]}>ETD: {data?.etd ? new Date(data?.etd + "T00:00:00").toLocaleDateString('es-PE', {
                         year: 'numeric', month: 'long', day: 'numeric'
-                    }):'Sin fecha'}</Text>
-                    <Text style={[styles.gridItem,{color: "black", fontSize: "12px", fontWeight: "extrabold", fontFamily: "Times-Roman",marginTop:"4px", textAlign:"start"}]}>Fecha de finalización:  {data?.finish_date?new Date(data?.finish_date + "T00:00:00").toLocaleDateString('es-PE', {
-                        year: 'numeric', month: 'long', day: 'numeric'
-                    }):'Sin fecha'}</Text>
-                    <Text style={[styles.gridItem,{color: "black", fontSize: "12px", fontWeight: "extrabold", fontFamily: "Times-Roman",marginTop:"4px", textAlign:"start"}]}>Fecha de envío:  {data?.shipping_date?new Date(data?.shipping_date + "T00:00:00").toLocaleDateString('es-PE', {
-                        year: 'numeric', month: 'long', day: 'numeric'
-                    }):'Sin fecha'}</Text>
-                    <Text style={[styles.gridItem,{color: "black", fontSize: "12px", fontWeight: "extrabold", fontFamily: "Times-Roman",marginTop:"4px", textAlign:"start"}]}>ETD: {data?.etd?new Date(data?.etd + "T00:00:00").toLocaleDateString('es-PE', {
-                        year: 'numeric', month: 'long', day: 'numeric'
-                    }):'Sin fecha'}
+                    }) : 'Sin fecha'}
                     </Text>
-                    <Text style={[styles.gridItem,{color: "black", fontSize: "12px", fontWeight: "extrabold", fontFamily: "Times-Roman",marginTop:"4px", textAlign:"start"}]}>ETA: {data?.eta?new Date(data?.eta + "T00:00:00").toLocaleDateString('es-PE', {
+                    <Text style={[styles.gridItem, {
+                        color: "black",
+                        fontSize: "12px",
+                        fontWeight: "extrabold",
+                        fontFamily: "Times-Roman",
+                        marginTop: "4px",
+                        textAlign: "start"
+                    }]}>ETA: {data?.eta ? new Date(data?.eta + "T00:00:00").toLocaleDateString('es-PE', {
                         year: 'numeric', month: 'long', day: 'numeric'
-                    }):'Sin fecha'}</Text>
+                    }) : 'Sin fecha'}</Text>
 
-                    <Text style={[styles.gridItemFull,{color: "black", fontSize: "12px", fontWeight: "extrabold", fontFamily: "Times-Roman",marginTop:"4px", textAlign:"start"}]}>SKU: {data?.sku_name}</Text>
-                    <Text style={[styles.gridItem,{color: "black", fontSize: "12px", fontWeight: "extrabold", fontFamily: "Times-Roman",marginTop:"4px", textAlign:"start"}]}>Producto terminado:  {data?.quantity}</Text>
+                    <Text style={[styles.gridItemFull, {
+                        color: "black",
+                        fontSize: "12px",
+                        fontWeight: "extrabold",
+                        fontFamily: "Times-Roman",
+                        marginTop: "4px",
+                        textAlign: "start"
+                    }]}>SKU: {data?.sku}</Text>
+                    <Text style={[styles.gridItem, {
+                        color: "black",
+                        fontSize: "12px",
+                        fontWeight: "extrabold",
+                        fontFamily: "Times-Roman",
+                        marginTop: "4px",
+                        textAlign: "start"
+                    }]}>Producto terminado: {Humanize.formatNumber(data?.kg, 2)}</Text>
 
                 </View>
-                <View style={[styles.section,{justifyContent:"flex-start"}]}>
+                <View style={[styles.section, {justifyContent: "flex-start"}]}>
                     <Text style={{
                         color: "black",
                         fontSize: "18px",
@@ -116,41 +221,36 @@ const PDFSell = ({data}) => {
                         textAlign: "flex-start"
                     }}>BOM</Text>
                 </View>
-                <View style={[styles.gridContainer]}>
-                    {map(data?.recipe, (item, index) => (
-                            <Text key={index} style={[styles.gridItemFull,{
-                                color: "black",
-                                fontSize: "12px",
-                                fontWeight: "extrabold",
-                                fontFamily: "Times-Roman",
-                                marginTop: "4px",
-                                textAlign: "flex-start"
-                            }]}>• {item?.material} : {Humanize.formatNumber(Math.ceil(item?.quantity,2))} {item?.unit}</Text>))}
-                </View>
-                <View style={[styles.section,{justifyContent:"flex-start"}]}>
-                    <Text style={{
-                        color: "black",
-                        fontSize: "18px",
-                        fontWeight: "extrabold",
-                        fontFamily: "Times-Roman",
-                        marginTop: "4px",
-                        textAlign: "flex-start"
-                    }}>PLANIFICACION:</Text>
-                </View>
-                <View style={[styles.gridContainer]}>
-                    {map(data?.planning, (item, index) => (
-                            <Text key={index} style={[styles.gridItemFull,{
-                                color: "black",
-                                fontSize: "12px",
-                                fontWeight: "extrabold",
-                                fontFamily: "Times-Roman",
-                                marginTop: "4px",
-                                textAlign: "flex-start"
-                            }]}>• {new Date(item?.date + "T00:00:00").toLocaleDateString('es-PE',{
-                                year: 'numeric', month: 'long', day: 'numeric'
-                            })} : {Humanize.formatNumber(item?.raw_material)} KG MP | {Humanize.formatNumber(item?.stock_end)} KG PT | {Humanize.formatNumber(item?.missing)} KG POR COMPLETAR</Text>))}
-                </View>
+                <View style={[styles.gridContainer, {
+                    justifyContent: "flex-start",
 
+                }]}>
+
+                    {map(data?.recipe, (item, index) => (<View style={[styles.gridItemFull, {
+                        justifyContent: "flex-start", width: "100%", display: "flex", flexDirection: "row",
+                    }]}>
+                        <Text key={index} style={[styles.gridItemFull, {
+                            color: "black",
+                            fontSize: "12px",
+                            fontWeight: "extrabold",
+                            fontFamily: "Times-Roman",
+                            marginTop: "4px",
+                            textAlign: "flex-start",
+                        }]}>• {item?.name}</Text>
+                        <Text key={index} style={[styles.gridItemFull, {
+                            color: "black",
+                            fontSize: "12px",
+                            fontWeight: "extrabold",
+                            fontFamily: "Times-Roman",
+                            marginTop: "4px",
+                            textAlign: "flex-start",
+                        }]}>• {Humanize.formatNumber(Math.ceil(item?.quantity_standar, 2) * data?.kg)} und (S) |
+                            • {Humanize.formatNumber(Math.ceil(item?.quantity_euro, 2) * data?.kg)} und (E) |
+                            • {Humanize.formatNumber(Math.ceil(item?.quantity_loose, 2) * data?.kg)} und (CS)
+                        </Text>
+
+                    </View>))}
+                </View>
 
 
             </Page>

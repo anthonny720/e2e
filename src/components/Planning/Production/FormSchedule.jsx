@@ -5,27 +5,22 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPaperPlane} from "@fortawesome/free-solid-svg-icons";
 import {map, size} from "lodash";
 import {useDispatch, useSelector} from "react-redux";
-import {TailSpin} from "react-loader-spinner";
-import {
-    add_sales_order,
-    add_schedule_manufacturing,
-    update_sales_order,
-    update_schedule_manufacturing
-} from "../../../redux/actions/operations";
+import {add_schedule_manufacturing, update_schedule_manufacturing} from "../../../redux/actions/operations";
 
 const FormSchedule = ({
-                          close, data, info,sale_id
+                          close, data, info, sale_id
                       }) => {
 
     const dispatch = useDispatch();
-    const loading = useSelector(state => state.Operations.loading_schedule)
     const outsourcings = useSelector(state => state.Management.outsourcings)
-    const columns = [
-        {name: 'date', title: 'Fecha', type: 'date', maxLength: 4,}, {
-            name: 'raw_material', title: 'Materia Prima ', type: 'text', maxLength: 6,
-        }, {name: 'performance', title: 'Rendimiento', type: 'text', maxLength: 4,}, {
-            name: 'capacity', title: 'Capacidad', type: 'text', maxLength: 6,
-        }, {name: 'stock_start', title: 'Stock inicial', type: 'text', maxLength: 8,},]
+    const columns = [{name: 'date', title: 'Fecha', type: 'date', maxLength: 4,}, {
+        name: 'raw_material', title: 'Materia Prima ', type: 'text', maxLength: 6,
+    }, {name: 'performance', title: 'Rendimiento', type: 'text', maxLength: 4,}, {
+        name: 'stock_start',
+        title: 'Stock inicial',
+        type: 'text',
+        maxLength: 8,
+    },]
 
     const formik = useFormik({
         initialValues: initialValues(data ? data : info),
@@ -67,14 +62,10 @@ const FormSchedule = ({
 
 
             <div className="w-full flex justify-center">
-                {loading ? <button onClick={formik.handleSubmit} type="button"
-                                   className="max-w-xl mx-2 my-2 bg-green-300 transition duration-150 ease-in-out focus:outline-none hover:bg-green-100 rounded-full text-white font-bold px-6 py-2 text-xs">
-                    <TailSpin
-                        className="mx-2" color="white" height={20} width={20} visible={loading}/>
-                </button> : <button onClick={formik.handleSubmit} type="button"
-                                    className="max-w-xl mx-2 my-2 bg-green-300 transition duration-150 ease-in-out focus:outline-none hover:bg-green-100 rounded-full text-white font-bold px-6 py-2 text-xs">
+                <button onClick={formik.handleSubmit} type="button"
+                        className="max-w-xl mx-2 my-2 bg-green-300 transition duration-150 ease-in-out focus:outline-none hover:bg-green-100 rounded-full text-white font-bold px-6 py-2 text-xs">
                     <FontAwesomeIcon icon={faPaperPlane}/>
-                </button>}
+                </button>
 
             </div>
 
@@ -84,12 +75,11 @@ const FormSchedule = ({
     </div>;
 };
 
-const initialValues = (data, info) => {
+const initialValues = (data) => {
     return {
         date: data?.date || '',
         raw_material: data?.raw_material || '',
         performance: data?.performance || '',
-        capacity: data?.capacity || '',
         stock_start: data?.stock_start || 0,
         process_plant: data?.process_plant || '',
 
@@ -101,7 +91,6 @@ const newSchema = () => {
         date: Yup.date().required(),
         raw_material: Yup.number().min(1).required(),
         performance: Yup.number().min(1).required(),
-        capacity: Yup.number().required(),
         stock_start: Yup.number().min(0).required(),
         process_plant: Yup.number().min(1).required(),
 
@@ -109,4 +98,3 @@ const newSchema = () => {
 }
 
 export default FormSchedule;
-

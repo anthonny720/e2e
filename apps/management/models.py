@@ -32,6 +32,7 @@ class CustomerSupplierProxy(models.Model):
     email = models.EmailField(max_length=255, blank=True, null=True, verbose_name="Correo Electrónico")
     phone = models.CharField(max_length=20, blank=True, null=True, verbose_name="Teléfono")
     slug = models.SlugField(max_length=255, blank=True, null=True, verbose_name="Slug")
+    web= models.URLField(max_length=200, verbose_name='Sitio Web', blank=True, null=True)
 
 
     def __str__(self):
@@ -147,94 +148,3 @@ class Categories(models.Model):
         return self.name
 
 
-class TaxRates(models.Model):
-    class Meta:
-        verbose_name = 'Impuesto'
-        verbose_name_plural = 'Impuestos'
-        ordering = ['name']
-
-    name = models.CharField(max_length=20, verbose_name='Nombre', blank=False)
-    rate = models.DecimalField(verbose_name='Valor', max_digits=4, decimal_places=2, blank=False)
-
-    def __str__(self):
-        return self.name
-
-class Currency(models.Model):
-    class Meta:
-        verbose_name = 'Moneda'
-        verbose_name_plural = 'Moneda'
-        ordering = ['name']
-
-    name = models.CharField(max_length=20, verbose_name='Nombre', blank=False)
-
-    def __str__(self):
-        return self.name
-
-
-class Condition(models.Model):
-    class Meta:
-        verbose_name = 'Condición'
-        verbose_name_plural = 'Condición'
-        ordering = ['name']
-
-    name = models.CharField(max_length=20, verbose_name='Nombre', blank=False)
-
-    def __str__(self):
-        return self.name
-
-
-class Family(models.Model):
-    class Meta:
-        verbose_name = 'Familia'
-        verbose_name_plural = 'Familia'
-        ordering = ['name']
-
-    name = models.CharField(max_length=20, verbose_name='Nombre', blank=False)
-
-    def __str__(self):
-        return self.name
-
-
-class SubFamily(models.Model):
-    class Meta:
-        verbose_name = 'Subfamilia'
-        verbose_name_plural = 'Subfamilia'
-        ordering = ['name']
-
-    name = models.CharField(max_length=20, verbose_name='Nombre', blank=False)
-
-    def __str__(self):
-        return self.name
-
-
-class Cut(models.Model):
-    class Meta:
-        verbose_name = 'Corte'
-        verbose_name_plural = 'Corte'
-        ordering = ['name']
-
-    name = models.CharField(max_length=20, verbose_name='Nombre', blank=False)
-    def __str__(self):
-        return self.name
-
-class Packing(models.Model):
-    class Meta:
-        verbose_name = 'Empaque'
-        verbose_name_plural = 'Empaque'
-        ordering = ['name']
-
-    name = models.CharField(max_length=20, verbose_name='Nombre', blank=False)
-
-    def __str__(self):
-        return self.name
-
-class Container(models.Model):
-    class Meta:
-        verbose_name = 'Envase'
-        verbose_name_plural = 'Envase'
-        ordering = ['name']
-
-    name = models.CharField(max_length=20, verbose_name='Nombre', blank=False)
-
-    def __str__(self):
-        return self.name

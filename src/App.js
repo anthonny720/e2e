@@ -8,28 +8,21 @@ import Error404 from "./containers/errors/Error404";
 import Sidebar from "./components/navigation/Sidebar";
 import Planning from "./containers/pages/Planning/Home";
 import Production from "./containers/pages/Planning/Production/Production";
-import BuyOpen from "./containers/pages/Planning/Buy/Open";
 import Material from "./containers/pages/Planning/Items/Material";
 import Inventory from "./containers/pages/Planning/Stock/Stock";
 import Settings from "./containers/pages/Planning/Settings";
 import Categories from "./components/Planning/Settings/Categories";
-import Condition from "./components/Planning/Settings/Condition";
 import CostProduction from "./components/Planning/Settings/CostProduction";
-import Currency from "./components/Planning/Settings/Currency";
-import Cut from "./components/Planning/Settings/Cut";
-import Family from "./components/Planning/Settings/Family";
+
 import Location from "./components/Planning/Settings/Location";
 import StorageArea from "./components/Planning/Settings/StorageArea";
-import SubFamily from "./components/Planning/Settings/SubFamily";
-import Tax from "./components/Planning/Settings/Tax";
+
 import UnitMeasurement from "./components/Planning/Settings/UnitMeasurement";
-import PackingItems from "./components/Planning/Settings/Packing";
 import Suppliers from "./containers/pages/Planning/Contact/Suppliers";
 import Customers from "./containers/pages/Planning/Contact/Customers";
 import Outsourcing from "./containers/pages/Planning/Contact/Outsourcing";
 import TransportBusiness from "./containers/pages/Planning/Contact/Transport";
 import Products from "./containers/pages/Planning/Items/Products";
-import BuyDone from "./containers/pages/Planning/Buy/Done";
 import SellOpen from "./containers/pages/Planning/Sell/Open";
 import SellDone from "./containers/pages/Planning/Sell/Done";
 import Login from "./containers/auth/Login";
@@ -52,11 +45,9 @@ import SuppliersRawMaterial from "./containers/pages/Planning/Contact/SuppliersR
 import ProductDetail from "./containers/pages/Planning/Items/ProductDetail";
 import Input from "./containers/pages/Planning/Stock/Input";
 import Output from "./containers/pages/Planning/Stock/Output";
-import DetailPurchase from "./containers/pages/Planning/Buy/Detail";
 import SellDetail from "./containers/pages/Planning/Sell/Detail";
 import CalendarPlanning from "./containers/pages/Planning/Production/Calendar";
 import ReEntry from "./containers/pages/Planning/Stock/ReEntry";
-import Container from "./components/Planning/Settings/Container";
 
 
 const App = () => {
@@ -102,9 +93,6 @@ const App = () => {
                         <Route exact path="/planning/sales/done" element={<SellDone/>}/>
                         <Route exact path="/planning/manufacturing" element={<Production/>}/>
                         <Route exact path="/planning/manufacturing/calendar" element={<CalendarPlanning/>}/>
-                        <Route exact path="/planning/purchases" element={<BuyOpen/>}/>
-                        <Route exact path="/planning/purchases/:id" element={<DetailPurchase/>}/>
-                        <Route exact path="/planning/purchases/done" element={<BuyDone/>}/>
                         <Route exact path="/planning/inventory" element={<Inventory/>}/>
                         <Route exact path="/planning/inventory/input" element={<Input/>}/>
                         <Route exact path="/planning/inventory/reentry" element={<ReEntry/>}/>
@@ -120,19 +108,10 @@ const App = () => {
                         <Route exact path="/planning/contacts/:path/:id" element={<ContactDetail/>}/>
                         <Route exact path="/planning/settings" element={<Settings/>}/>
                         <Route exact path="/planning/settings/categories" element={<Categories/>}/>
-                        <Route exact path="/planning/settings/condition" element={<Condition/>}/>
                         <Route exact path="/planning/settings/cost-production" element={<CostProduction/>}/>
-                        <Route exact path="/planning/settings/currency" element={<Currency/>}/>
-                        <Route exact path="/planning/settings/cut" element={<Cut/>}/>
-                        <Route exact path="/planning/settings/family" element={<Family/>}/>
                         <Route exact path="/planning/settings/location" element={<Location/>}/>
-                        <Route exact path="/planning/settings/container" element={<Container/>}/>
-                        <Route exact path="/planning/settings/packing" element={<PackingItems/>}/>
                         <Route exact path="/planning/settings/storage-area" element={<StorageArea/>}/>
-                        <Route exact path="/planning/settings/subfamily" element={<SubFamily/>}/>
-                        <Route exact path="/planning/settings/tax" element={<Tax/>}/>
                         <Route exact path="/planning/settings/unit-of-measurement" element={<UnitMeasurement/>}/>
-
                         {/*BI*/}
                         <Route exact path="/planning/kpi" element={<KPI/>}/>
 

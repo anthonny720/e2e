@@ -28,15 +28,16 @@ CORS_ALLOW_CREDENTIALS = True
 #     CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000']
 
 # Application definition
-DJANGO_APPS = ['django.contrib.admin', 'django.contrib.auth', 'django.contrib.contenttypes', 'django.contrib.sessions',
+DJANGO_APPS = ["admin_interface",
+    "colorfield",'django.contrib.admin', 'django.contrib.auth', 'django.contrib.contenttypes', 'django.contrib.sessions',
                'django.contrib.messages', 'django.contrib.staticfiles', ]
 
 PROJECT_APPS = ['apps.collection', 'apps.users', 'apps.logistic', 'apps.sales', 'apps.management',
-                'apps.operations_and_planning', 'apps.quality_assurance', 'apps.production',
+                'apps.operations_and_planning', 'apps.quality_assurance', 'apps.production', 'apps.commercial',
                 'apps.finances']
 
 THIRD_PARTY_APPS = ['corsheaders', 'simple_history', 'rest_framework', 'import_export', 'djoser',
-                    'rest_framework_simplejwt', 'rest_framework_simplejwt.token_blacklist', ]
+                    'rest_framework_simplejwt', 'rest_framework_simplejwt.token_blacklist','django_countries', ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
 
 MIDDLEWARE = ['django.middleware.security.SecurityMiddleware', 'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -46,7 +47,7 @@ MIDDLEWARE = ['django.middleware.security.SecurityMiddleware', 'whitenoise.middl
               'django.contrib.messages.middleware.MessageMiddleware',
               'django.middleware.clickjacking.XFrameOptionsMiddleware',
               'simple_history.middleware.HistoryRequestMiddleware', ]
-
+X_FRAME_OPTIONS = "SAMEORIGIN"
 ROOT_URLCONF = 'core.urls'
 
 TEMPLATES = [{'BACKEND': 'django.template.backends.django.DjangoTemplates', 'DIRS': [os.path.join(BASE_DIR, 'build')],

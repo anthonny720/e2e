@@ -1,13 +1,13 @@
 import React, {Fragment} from 'react';
 import {Menu, Popover, Transition} from "@headlessui/react";
 import {EllipsisVerticalIcon, InformationCircleIcon, PencilIcon} from "@heroicons/react/24/solid";
-import {TrashIcon} from "@heroicons/react/24/outline";
+import {EyeIcon, TrashIcon} from "@heroicons/react/24/outline";
 import {map, size} from "lodash";
 import Humanize from "humanize-plus";
 import Skeleton from "react-loading-skeleton";
 import {useNavigate} from "react-router-dom";
 
-const Table = ({formData, onChange, payload, onDelete, onUpdate,reference}) => {
+const Table = ({formData, onChange, payload,reference}) => {
     const {name, group__name} = formData
     const navigate = useNavigate()
 
@@ -98,15 +98,8 @@ const Table = ({formData, onChange, payload, onDelete, onUpdate,reference}) => {
                                 className="absolute bottom-2 mb-2 w-8  divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                 <div className="px-2 py-2 cursor-pointer">
                                     <Menu.Item>
-                                        <PencilIcon title={"Editar"} onClick={() => onUpdate(i)}
+                                        <EyeIcon title={"Editar"} onClick={() => navigate(`/planning/products/${i?.slug}`,{state:i?.id})}
                                                     className={'w-4 text-blue-400 '}/>
-                                    </Menu.Item>
-
-                                </div>
-                                <div className="px-2 py-2  cursor-pointer">
-                                    <Menu.Item>
-                                        <TrashIcon onClick={() => onDelete(i?.id)} title={"Eliminar"}
-                                                   className={'w-4 text-red-400 '}/>
                                     </Menu.Item>
 
                                 </div>
@@ -114,7 +107,7 @@ const Table = ({formData, onChange, payload, onDelete, onUpdate,reference}) => {
                         </Transition>
                     </Menu>
                     <p className={"hover:text-green-400 hover:font-bold cursor-pointer"}
-                       onClick={() => navigate(`/planning/products/${i?.slug}`,{state:i?.id})}>{i?.name}</p>
+                       >{i?.name}</p>
                 </div>
             </td>
 

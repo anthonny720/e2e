@@ -1,12 +1,4 @@
-import decimal
-
-from django.contrib.contenttypes.models import ContentType
 from django.db import models
-
-from apps.logistic.models import Lot
-from apps.management.models import Cut, Customer
-from apps.operations_and_planning.models import Product, SalesOrder
-from apps.production.models import MOD
 
 
 # Create your models here.
@@ -32,5 +24,3 @@ class CostFixed(models.Model):
     laboratory = models.DecimalField(max_digits=6, decimal_places=2, default=0, verbose_name='Laboratorio')
     supplementary = models.DecimalField(max_digits=6, decimal_places=2, default=0, verbose_name='Suplementarios')
     communications = models.DecimalField(max_digits=6, decimal_places=2, default=0, verbose_name='Comunicaciones')
-
-

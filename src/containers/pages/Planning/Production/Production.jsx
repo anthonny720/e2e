@@ -3,7 +3,7 @@ import Planning from "../Home";
 import NavManufacturing from "../../../../components/Planning/Production/Nav";
 import DisclosurePlanning from "../../../../components/Planning/Production/Disclosure";
 import {useDispatch, useSelector} from "react-redux";
-import {delete_schedule_manufacturing, get_sales_pending} from "../../../../redux/actions/operations";
+import {delete_schedule_manufacturing, get_planning_sales} from "../../../../redux/actions/operations";
 import {MySwal} from "../../../../components/util/colors";
 import ModalHook from "../../../../components/util/hooks";
 import Modal from "../../../../components/util/Modal";
@@ -13,10 +13,10 @@ import {Helmet} from "react-helmet";
 
 const Production = () => {
     const dispatch = useDispatch();
-    const payload = useSelector(state => state.Operations.sales_pending);
+    const payload = useSelector(state => state.Operations.planning);
     const {content, setContent, isOpen, setIsOpen, openModal} = ModalHook();
     useEffect(() => {
-        dispatch(get_sales_pending())
+        dispatch(get_planning_sales())
         dispatch(get_outsourcings())
     }, []);
 
@@ -25,7 +25,7 @@ const Production = () => {
         setContent(<FormSchedule close={openModal} info={info} sale_id={info?.id}/>)
     }
 
-    const handleUpdateForm = (item,id) => {
+    const handleUpdateForm = (item, id) => {
         setIsOpen(true)
         setContent(<FormSchedule close={openModal} data={item} sale_id={id}/>)
     }

@@ -35,13 +35,12 @@ const CalendarPlanning = () => {
                 dayCellClassNames={"text-xs px-2"}
                 contentHeight={"480px"}
                 allDayClassNames={"text-xs p-2"}
-
+                eventClick={(info) => {
+                  alert(info.event.title)
+                }}
                 events={payload && map(payload, (item) => {
                     return {
-                        title: item.title,
-                        date: item.date,
-                        backgroundColor: item?.color,
-                        borderColor: "transparent"
+                        title: item.title, date: item.date, backgroundColor: item?.color, borderColor: "transparent"
                     }
                 })}
             />

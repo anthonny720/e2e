@@ -1,30 +1,17 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import {Menu, Transition} from "@headlessui/react";
-import {EllipsisVerticalIcon, PencilIcon} from "@heroicons/react/24/solid";
-import {TrashIcon} from "@heroicons/react/24/outline";
+import {EllipsisVerticalIcon} from "@heroicons/react/24/solid";
+import {EyeIcon} from "@heroicons/react/24/outline";
 import {map, size} from "lodash";
 import {useDispatch} from "react-redux";
-import {MySwal} from "../../util/colors";
 
-const Table = ({data, onLoad, onRemove, path,reference}) => {
-
-    const onDelete = (slug) => {
-        MySwal.fire({
-            title: '¿Desea eliminar este contacto?', icon: 'warning', showCancelButton: true,
-        }).then((result) => {
-            if (result.isConfirmed) {
-                dispatch(onRemove(slug, formData))
-            }
-        })
-    }
-
+const Table = ({data, onLoad, path, reference}) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [formData, setFormData] = useState({
         display_name: '', email: '', phone: '',
     })
-
     const {display_name, email, phone} = formData
 
     const onChange = e => {
@@ -77,8 +64,7 @@ const Table = ({data, onLoad, onRemove, path,reference}) => {
 
         </thead>
         <tbody>
-        {data && data !== null && data !== undefined && size(data) > 0 ? map(data, (i, index) =>
-            <tr
+        {data && data !== null && data !== undefined && size(data) > 0 ? map(data, (i, index) => <tr
             className="bg-white border-b" key={index}>
             <td className="pr-2 py-4 font-medium text-gray-900 whitespace-nowrap ">
                 <div className={"flex gap-2"}>
@@ -106,17 +92,9 @@ const Table = ({data, onLoad, onRemove, path,reference}) => {
                                 className="absolute bottom-2 mb-2 w-8  divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                 <div className="px-2 py-2 cursor-pointer">
                                     <Menu.Item>
-                                        <PencilIcon onClick={() => navigate(`/planning/contacts/${path}/${i?.slug}`)}
-                                                    title={"Editar"} className={'w-4 text-blue-400 '}/>
+                                        <EyeIcon onClick={() => navigate(`/planning/contacts/${path}/${i?.slug}`)}
+                                                 title={"Editar"} className={'w-4 text-blue-400 '}/>
                                     </Menu.Item>
-
-                                </div>
-                                <div className="px-2 py-2  cursor-pointer">
-                                    <Menu.Item>
-                                        <TrashIcon onClick={() => onDelete(i?.slug)} title={"Eliminar"}
-                                                   className={'w-4 text-red-400 '}/>
-                                    </Menu.Item>
-
                                 </div>
                             </Menu.Items>
                         </Transition>

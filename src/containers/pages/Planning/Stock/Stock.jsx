@@ -26,8 +26,8 @@ const Inventory = () => {
 
     return (<Planning>
             <Helmet>
-            <title>Stock</title>
-        </Helmet>
+                <title>Stock</title>
+            </Helmet>
             <NavStock/>
             <div className={'p-2 flex justify-between relative'}>
 
@@ -89,26 +89,7 @@ const Inventory = () => {
                                 placeholder="Stock"
                             />
                         </th>
-                        <th scope="col" className="px-4 py-3">
-                            <input
-                                name="enable"
-                                id="enable"
-                                type="text"
-                                className="w-full bg-transparent focus:border-none focus:outline-none"
-                                disabled={true}
-                                placeholder="Disponible"
-                            />
-                        </th>
-                        <th scope="col" className="px-4 py-3">
-                            <input
-                                name="expected"
-                                id="expected"
-                                type="text"
-                                className="w-full bg-transparent focus:border-none focus:outline-none"
-                                disabled={true}
-                                placeholder="Esperado"
-                            />
-                        </th>
+
                         <th scope="col" className="px-4 py-3">
                             <input
                                 name="um"
@@ -195,12 +176,6 @@ const Inventory = () => {
                             </td>
                             <td className={`px-6 py-4 font-medium ${item?.quantity > item?.reorder_point ? 'text-green-400' : item?.quantity <= item?.reorder_point && item?.quantity >= item?.safety_stock ? 'text-yellow-500' : 'text-red-400'}  whitespace-nowrap hover:text-green-400 hover:cursor-pointer`}>
                                 {Humanize.formatNumber(item?.quantity, 2)}
-                            </td>
-                            <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer ">
-                                {Humanize.formatNumber(parseInt(item?.quantity) + parseInt(item?.expected), 2)}
-                            </td>
-                            <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer ">
-                                {Humanize.formatNumber(item?.expected, 2)}
                             </td>
                             <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer ">
                                 {item?.product?.unit_of_measurement_name}

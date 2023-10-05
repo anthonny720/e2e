@@ -9,15 +9,9 @@ from apps.management.views import (ListCustomerView,
                                    ListCostProductionView,
                                    ListUnitOfMeasurementView,
                                    ListCategoriesView,
-                                   ListTaxRatesView,
-                                   ListCurrencyView,
-                                   ListConditionView,
-                                   ListFamilyView,
-                                   ListSubFamilyView,
-                                   ListCutView,
-                                   ListPackingView, DetailCustomerView, DetailSuppliersView, DetailOutsourcingView,
+                                    DetailCustomerView, DetailSuppliersView, DetailOutsourcingView,
                                    DetailTransportView, DetailSupplierRMView, ListSuppliersRMView, DetailContactView,
-                                   AddContactView, ListContainerView)
+                                   AddContactView)
 
 app_name = "management"
 urlpatterns = [
@@ -31,14 +25,6 @@ urlpatterns = [
     path('costs', ListCostProductionView.as_view()),
     path('units', ListUnitOfMeasurementView.as_view()),
     path('categories', ListCategoriesView.as_view()),
-    path('taxes', ListTaxRatesView.as_view()),
-    path('currencies', ListCurrencyView.as_view()),
-    path('conditions', ListConditionView.as_view()),
-    path('families', ListFamilyView.as_view()),
-    path('subfamilies', ListSubFamilyView.as_view()),
-    path('cuts', ListCutView.as_view()),
-    path('packings', ListPackingView.as_view()),
-    path('containers', ListContainerView.as_view()),
     path('customers/<str:slug>', DetailCustomerView.as_view()),
     path('suppliers/<str:slug>', DetailSuppliersView.as_view()),
     path('outsourcings/<str:slug>', DetailOutsourcingView.as_view()),

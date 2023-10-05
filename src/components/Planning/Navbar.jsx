@@ -6,7 +6,6 @@ import {
     BuildingStorefrontIcon,
     HandRaisedIcon,
     RectangleGroupIcon,
-    ShoppingBagIcon,
     StarIcon,
     UsersIcon
 } from "@heroicons/react/24/solid";
@@ -20,13 +19,16 @@ const items = [
         description: "Your customers' data will be safe and secure.",
         href: '#',
         icon: BuildingStorefrontIcon
-    },
-    {name: 'Producción', description: "Your customers' data will be safe and secure.", href: '#', icon: HandRaisedIcon},
-    {name: 'Compras', description: "Your customers' data will be safe and secure.", href: '#', icon: ShoppingBagIcon},
-    {name: 'Stock', description: "Your customers' data will be safe and secure.", href: '#', icon: RectangleGroupIcon},
-    {name: 'Artículos', description: "Your customers' data will be safe and secure.", href: '#', icon: StarIcon},
-    {name: 'Contactos', description: "Your customers' data will be safe and secure.", href: '#', icon: UsersIcon},
-    {
+    }, {
+        name: 'Producción',
+        description: "Your customers' data will be safe and secure.",
+        href: '#',
+        icon: HandRaisedIcon
+    }, {
+        name: 'Stock', description: "Your customers' data will be safe and secure.", href: '#', icon: RectangleGroupIcon
+    }, {
+        name: 'Artículos', description: "Your customers' data will be safe and secure.", href: '#', icon: StarIcon
+    }, {name: 'Contactos', description: "Your customers' data will be safe and secure.", href: '#', icon: UsersIcon}, {
         name: 'Configuración',
         description: "Your customers' data will be safe and secure.",
         href: '#',
@@ -64,26 +66,18 @@ const Navbar = () => {
                             <Popover.Group as="nav" className="flex space-x-10 text-sm">
 
                                 <NavLink to="/planning/sales"
-                                         className={window.location.pathname === '/planning/sales'||window.location.pathname === '/planning/sales/done' ? ' text-xs  font-medium text-green-500 hover:text-green-400 flex flex-col justify-center items-center' : 'mt-2 text-xs  font-medium text-gray-500 hover:text-green-400 flex flex-col justify-center items-center'}>
+                                         className={window.location.pathname === '/planning/sales' || window.location.pathname === '/planning/sales/done' ? ' text-xs  font-medium text-green-500 hover:text-green-400 flex flex-col justify-center items-center' : 'mt-2 text-xs  font-medium text-gray-500 hover:text-green-400 flex flex-col justify-center items-center'}>
                                     <BuildingStorefrontIcon className={"w-8"}/>
                                     VENTAS
                                 </NavLink>
                                 <NavLink to="/planning/manufacturing"
-                                         className={window.location.pathname === '/planning/manufacturing' || window.location.pathname ==='/planning/manufacturing/calendar' ? ' text-xs  font-medium text-green-500 hover:text-green-400 flex flex-col justify-center items-center' : 'mt-2 text-xs  font-medium text-gray-500 hover:text-green-400 flex flex-col justify-center items-center'}>
+                                         className={window.location.pathname === '/planning/manufacturing' || window.location.pathname === '/planning/manufacturing/calendar' ? ' text-xs  font-medium text-green-500 hover:text-green-400 flex flex-col justify-center items-center' : 'mt-2 text-xs  font-medium text-gray-500 hover:text-green-400 flex flex-col justify-center items-center'}>
                                     <HandRaisedIcon className={"w-8"}/>
-                                    PRODUCCION
+                                    PRODUCCIÓN
                                 </NavLink>
-                                <NavLink to="/planning/purchases"
-                                         className={window.location.pathname === '/planning/purchases' || window.location.pathname === '/planning/purchases/done' ? ' text-xs  font-medium text-green-500 hover:text-green-400 flex flex-col justify-center items-center' : 'mt-2 text-xs  font-medium text-gray-500 hover:text-green-400 flex flex-col justify-center items-center'}>
-                                    <ShoppingBagIcon className={"w-8"}/>
-                                    COMPRAS
-                                </NavLink>
+
                                 <NavLink to="/planning/inventory"
-                                         className={window.location.pathname === '/planning/inventory' ||
-                                              window.location.pathname === '/planning/inventory/input' ||
-                                              window.location.pathname === '/planning/inventory/output' ||
-                                             window.location.pathname === '/planning/inventory/reentry'
-                                             ? ' text-xs  font-medium text-green-500 hover:text-green-400 flex flex-col justify-center items-center' : 'mt-2 text-xs  font-medium text-gray-500 hover:text-green-400 flex flex-col justify-center items-center'}>
+                                         className={window.location.pathname === '/planning/inventory' || window.location.pathname === '/planning/inventory/input' || window.location.pathname === '/planning/inventory/output' || window.location.pathname === '/planning/inventory/reentry' ? ' text-xs  font-medium text-green-500 hover:text-green-400 flex flex-col justify-center items-center' : 'mt-2 text-xs  font-medium text-gray-500 hover:text-green-400 flex flex-col justify-center items-center'}>
                                     <RectangleGroupIcon className={"w-8"}/>
                                     STOCK
                                 </NavLink>
@@ -94,15 +88,7 @@ const Navbar = () => {
                                 </NavLink>
                                 <NavLink
                                     to="/planning/contacts/customers"
-                                    className={
-                                        window.location.pathname === '/planning/contacts/customers' ||
-                                        window.location.pathname === '/planning/contacts/outsourcing' ||
-                                        window.location.pathname === '/planning/contacts/transport' ||
-                                        window.location.pathname === '/planning/contacts/suppliers_rw' ||
-                                        window.location.pathname === '/planning/contacts/suppliers'
-                                            ? 'text-xs font-medium text-green-500 hover:text-green-400 flex flex-col justify-center items-center'
-                                            : 'mt-2 text-xs font-medium text-gray-500 hover:text-green-400 flex flex-col justify-center items-center'
-                                    }
+                                    className={window.location.pathname === '/planning/contacts/customers' || window.location.pathname === '/planning/contacts/outsourcing' || window.location.pathname === '/planning/contacts/transport' || window.location.pathname === '/planning/contacts/suppliers_rw' || window.location.pathname === '/planning/contacts/suppliers' ? 'text-xs font-medium text-green-500 hover:text-green-400 flex flex-col justify-center items-center' : 'mt-2 text-xs font-medium text-gray-500 hover:text-green-400 flex flex-col justify-center items-center'}
                                 >
                                     <UsersIcon className={"w-8"}/>
                                     CONTACTOS

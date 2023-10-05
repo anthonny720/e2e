@@ -49,37 +49,5 @@ class CategoriesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Categories
         fields = '__all__'
-class TaxRatesSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = TaxRates
-        fields = '__all__'
-class CurrencySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Currency
-        fields = '__all__'
-class ConditionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Condition
-        fields = '__all__'
-class FamilySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Family
-        fields = '__all__'
-class SubFamilySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = SubFamily
-        fields = '__all__'
-class CutSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Cut
-        fields = '__all__'
-class PackingSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Packing
-        fields = '__all__'
 
-class ContainerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Container
-        fields = '__all__'
 

@@ -8,14 +8,11 @@ from rest_framework.views import APIView
 from apps.collection.models import Provider
 from apps.collection.serializers import SupplierRMSerializer
 from apps.management.models import Customer, Suppliers, Outsourcing, Transport, StorageArea, Location, CostProduction, \
-    UnitOfMeasurement, Categories, TaxRates, Currency, Condition, Family, SubFamily, Cut, Packing, ContactPeople, \
-    Container
+    UnitOfMeasurement, Categories, ContactPeople
 from apps.management.serializers import (CustomerSerializer, SuppliersSerializer, OutsourcingSerializer,
                                          TransportSerializer, StorageAreaSerializer, LocationSerializer,
                                          CostProductionSerializer, UnitOfMeasurementSerializer,
-                                         CategoriesSerializer, TaxRatesSerializer, CurrencySerializer,
-                                         ConditionSerializer, FamilySerializer, SubFamilySerializer,
-                                         CutSerializer, PackingSerializer, ContactSerializer, ContainerSerializer)
+                                         CategoriesSerializer,ContactSerializer)
 from apps.util.permissions import AnalystEditorPermission, PlanningLogisticEditorPermission
 
 
@@ -124,53 +121,6 @@ class ListCategoriesView(BaseListView, NoPostMixin):
     serializer_class = CategoriesSerializer
     filter_param = 'name'
 
-
-class ListTaxRatesView(BaseListView, NoPostMixin):
-    model = TaxRates
-    serializer_class = TaxRatesSerializer
-    filter_param = 'name'
-
-
-class ListCurrencyView(BaseListView, NoPostMixin):
-    model = Currency
-    serializer_class = CurrencySerializer
-    filter_param = 'name'
-
-
-class ListConditionView(BaseListView, NoPostMixin):
-    model = Condition
-    serializer_class = ConditionSerializer
-    filter_param = 'name'
-
-
-class ListFamilyView(BaseListView, NoPostMixin):
-    model = Family
-    serializer_class = FamilySerializer
-    filter_param = 'name'
-
-
-class ListSubFamilyView(BaseListView, NoPostMixin):
-    model = SubFamily
-    serializer_class = SubFamilySerializer
-    filter_param = 'name'
-
-
-class ListCutView(BaseListView, NoPostMixin):
-    model = Cut
-    serializer_class = CutSerializer
-    filter_param = 'name'
-
-
-class ListPackingView(BaseListView, NoPostMixin):
-    model = Packing
-    serializer_class = PackingSerializer
-    filter_param = 'name'
-
-
-class ListContainerView(BaseListView, NoPostMixin):
-    model = Container
-    serializer_class = ContainerSerializer
-    filter_param = 'name'
 
 
 class BaseDetailView(APIView):

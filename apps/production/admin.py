@@ -10,7 +10,7 @@ from apps.production.models import PineappleConditioning, PineapplePacking, MOD
 
 @admin.register(PineappleConditioning)
 class PineappleConditioningAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
-    list_display = ('date', 'lot', 'rejected')
+    list_display = ('date', 'lot', 'reject')
     search_fields = ('lot',)
     ordering = ['-date']
     date_hierarchy = 'date'

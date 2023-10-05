@@ -3,12 +3,10 @@ import Planning from "../Home";
 import {useLocation, useParams} from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import {useDispatch, useSelector} from "react-redux";
-import {PlusCircleIcon} from "@heroicons/react/24/solid";
 import Modal from "../../../../components/util/Modal";
 import ModalHook from "../../../../components/util/hooks";
 import {get_sku} from "../../../../redux/actions/operations";
 import {map} from "lodash";
-import FormRecipe from "../../../../components/Planning/Items/Products/FormRecipe";
 import Recipe from "../../../../components/Planning/Items/Products/Recipe";
 import {Tab} from '@headlessui/react'
 import {Helmet} from "react-helmet";
@@ -32,14 +30,6 @@ const ProductDetail = () => {
         dispatch(get_sku(state));
         setFormData(payload)
     }, []);
-
-
-    const handleAddForm = () => {
-        setIsOpen(true)
-        setContent(<div className={"h-full md:h-screen"}>
-            <FormRecipe close={openModal} dispatch={dispatch} parent_id={state}/>
-        </div>)
-    }
 
 
     const [formData, setFormData] = useState({undefined}); // Inicializar con null
@@ -67,12 +57,13 @@ const ProductDetail = () => {
         </Helmet>
         <Modal isOpen={isOpen} close={openModal} children={content}/>
         <div className={'p-2 flex relative'}>
-            <PlusCircleIcon onClick={handleAddForm}
-                            className={"w-8 text-green-400 bg-white rounded-full cursor-pointer top-0 left-[45%] md:left-[50%] absolute z-[100]"}/>
+
             <div className={"bg-white w-full shadow-2xl "}>
 
                 <div className={"flex justify-between"}>
-                    <p className={"text-black p-2 text-xs md:text-sm"}>{name}</p>
+                    <p
+                        className={"text-black p-2 text-xs md:text-sm"}>{name}
+                    </p>
                 </div>
 
 

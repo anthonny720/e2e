@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.05333c4b.css",
-    "main.js": "/static/js/main.dbf4d0da.js",
+    "main.css": "/static/css/main.ff208927.css",
+    "main.js": "/static/js/main.663ece45.js",
     "static/media/cerros-grabado-verde.png": "/static/media/cerros-grabado-verde.171db28be3cbea5f894c.png",
     "static/media/sign-up-form.svg": "/static/media/sign-up-form.cd941b2a12cb5b599fdf37c715e6c5e9.svg",
     "static/media/firma2.png": "/static/media/firma2.fb25fb35c6d86112c3aa.png",
@@ -9,11 +9,11 @@
     "static/media/logo.jpg": "/static/media/logo.837271bcd7338d488e72.jpg",
     "static/media/firma1.png": "/static/media/firma1.090a91cc9400a54d40d4.png",
     "index.html": "/index.html",
-    "main.05333c4b.css.map": "/static/css/main.05333c4b.css.map",
-    "main.dbf4d0da.js.map": "/static/js/main.dbf4d0da.js.map"
+    "main.ff208927.css.map": "/static/css/main.ff208927.css.map",
+    "main.663ece45.js.map": "/static/js/main.663ece45.js.map"
   },
   "entrypoints": [
-    "static/css/main.05333c4b.css",
-    "static/js/main.dbf4d0da.js"
+    "static/css/main.ff208927.css",
+    "static/js/main.663ece45.js"
   ]
 }

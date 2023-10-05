@@ -22,7 +22,7 @@ const TableMODConditioning = ({reference}) => {
 
     const data = useSelector(state => state.Production.mod)
 
-    const columns = ['Kg proceso', 'Fecha', 'CMO total consolidado acondicionado', 'CMO/Kg acondicionado', 'Productividad', 'N° personas acondicionado (día)', 'Horas laboradas acondicionado (dia)', 'CMO total acondicionado (dia)', 'N° personas (extras 25%) acondicionado', 'N° horas (extras 25%) acondicionado', 'CMO (25%) acondicionado', 'N° personas (extras 35%) acondicionado', 'N° horas (extras 35%) acondicionado', 'CMO (35%) acondicionado', 'Total de horas acondicionado',]
+    const columns = ['Kg proceso', 'Fecha', 'CMO total consolidado acondicionado', 'CMO/Kg acondicionado', 'Productividad','N° personas acondicionado (noche)', 'Horas laboradas acondicionado (noche)', 'CMO total acondicionado (noche)','N° personas acondicionado (tarde)', 'Horas laboradas acondicionado (tarde)', 'CMO total acondicionado (tarde)', 'N° personas acondicionado (día)', 'Horas laboradas acondicionado (dia)', 'CMO total acondicionado (dia)', 'N° personas (extras 25%) acondicionado', 'N° horas (extras 25%) acondicionado', 'CMO (25%) acondicionado', 'N° personas (extras 35%) acondicionado', 'N° horas (extras 35%) acondicionado', 'CMO (35%) acondicionado', 'Total de horas acondicionado',]
 
     return (<div className="w-full">
         <div className="mx-auto container bg-white ">
@@ -63,6 +63,14 @@ const TableMODConditioning = ({reference}) => {
                             <td className="text-sm bg-white px-6 whitespace-no-wrap text-red-600 font-bold leading-4 text-center ">
                                 <p className={"bg-red-400 bg-opacity-60 rounded-lg w-full p-2"}>
                                     {Humanize.formatNumber(item?.pt/parseFloat(item?.people_conditioning)/(parseFloat(item?.people_conditioning_hours)+parseFloat(item?.people_conditioning_25_hours)+parseFloat(item?.people_conditioning_35_hours)), 2)}</p></td>
+                               <td className="text-sm bg-white px-6 whitespace-no-wrap text-gray-800 font-normal leading-4 text-center ">{item?.people_conditioning_night}</td>
+
+                            <td className="text-sm bg-white px-6 whitespace-no-wrap text-gray-800 font-normal leading-4 text-center ">{changeFormat(item?.people_conditioning_night_hours)}</td>
+                            <td className="text-sm bg-white px-6 whitespace-no-wrap text-gray-800 font-bold leading-4 text-center ">{Humanize.formatNumber(item?.cmo_conditioning_night, 2)}</td>
+                                                        <td className="text-sm bg-white px-6 whitespace-no-wrap text-gray-800 font-normal leading-4 text-center ">{item?.people_conditioning_afternoon}</td>
+
+                            <td className="text-sm bg-white px-6 whitespace-no-wrap text-gray-800 font-normal leading-4 text-center ">{changeFormat(item?.people_conditioning_afternoon_hours)}</td>
+                            <td className="text-sm bg-white px-6 whitespace-no-wrap text-gray-800 font-bold leading-4 text-center ">{Humanize.formatNumber(item?.cmo_conditioning_afternoon, 2)}</td>
                             <td className="text-sm bg-white px-6 whitespace-no-wrap text-gray-800 font-normal leading-4 text-center ">{item?.people_conditioning}</td>
 
                             <td className="text-sm bg-white px-6 whitespace-no-wrap text-gray-800 font-normal leading-4 text-center ">{changeFormat(item?.people_conditioning_hours)}</td>

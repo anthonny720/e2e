@@ -13,14 +13,12 @@ const Planning = ({children}) => {
         <Navbar/>
         <div className={"w-full"}>
             <h1 className={"text-gray-400 text-center"}>
-                {window.location.pathname === '/planning' &&
-                    <>
-                        <p>
-                            ¡Bienvenido!
-                        </p>
-                        <p>Dirigir tu negocio es ahora mucho más fácil</p>
-                    </>
-                }
+                {window.location.pathname === '/planning' && <>
+                    <p>
+                        ¡Bienvenido!
+                    </p>
+                    <p>Dirigir tu negocio es ahora mucho más fácil</p>
+                </>}
             </h1>
             {children}
         </div>

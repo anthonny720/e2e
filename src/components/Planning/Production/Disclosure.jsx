@@ -18,7 +18,7 @@ const DisclosurePlanning = ({
             {({open}) => (<>
                 <Disclosure.Button
                     className={`flex w-full justify-between rounded-lg ${!open ? 'bg-gray-200' : 'bg-green-200 '} px-4 py-2 text-left text-sm font-medium text-green-900 hover:bg-green-200 focus:outline-none focus-visible:ring focus-visible:ring-green-500 focus-visible:ring-opacity-75`}>
-                    <span>{item?.customer} - {item?.full_container_load_name} - {item?.sku}</span>
+                    <span>{item?.client_name} - {item?.fcl_name} - {item?.sku} - {item?.kg} kg</span>
                     <ChevronUpIcon
                         className={`${open ? 'rotate-180 transform' : ''} h-5 w-5 text-white`}
                     />

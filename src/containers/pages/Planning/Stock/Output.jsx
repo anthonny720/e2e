@@ -8,7 +8,6 @@ import Skeleton from "react-loading-skeleton";
 import {CloudArrowDownIcon} from "@heroicons/react/24/solid";
 import Modal from "../../../../components/util/Modal";
 import ModalHook from "../../../../components/util/hooks";
-import FormOutput from "../../../../components/Planning/Stock/FormOutput";
 import {DownloadTableExcel} from "react-export-table-to-excel";
 import Humanize from "humanize-plus";
 import DateRangePicker from "@wojtekmaj/react-daterange-picker";
@@ -23,12 +22,7 @@ const Output = () => {
     const {product__name} = formData
     const {content, setContent, isOpen, setIsOpen, openModal} = ModalHook();
     const [date, setDate] = useState();
-    const handleAddForm = () => {
-        setIsOpen(true)
-        setContent(<div className={"h-full md:h-screen"}>
-            <FormOutput close={openModal} data={data}/>
-        </div>)
-    }
+
 
     const onChange = e => {
         setFormData({...formData, [e.target.name]: e.target.value})
@@ -53,8 +47,8 @@ const Output = () => {
 
     return (<Planning>
             <Helmet>
-            <title>Salidas de stock</title>
-        </Helmet>
+                <title>Salidas de stock</title>
+            </Helmet>
             <NavStock/>
             <Modal isOpen={isOpen} close={openModal} children={content}/>
             <div className={'p-2 flex justify-between '}>
@@ -65,7 +59,6 @@ const Output = () => {
                     calendarClassName={"border-1"} onChange={onDateChange}
                     value={date}/></p>
                 <p className={" right-0 flex gap-2"}>
-                    <span className={"font-bold text-sm text-green-500 cursor-pointer"} onClick={() => handleAddForm()}>+ Salida</span>
                     <DownloadTableExcel
                         filename={`Salidas ${new Date().toLocaleDateString()}`}
                         sheet="Data"
@@ -181,7 +174,17 @@ const Output = () => {
                                 type="text"
                                 className="w-full bg-transparent focus:border-none focus:outline-none"
                                 disabled
-                                placeholder="Precio"
+                                placeholder="Precio unitario"
+                            />
+                        </th>
+                        <th scope="col" className="px-4 py-3">
+                            <input
+                                name="total"
+                                id="total"
+                                type="text"
+                                className="w-full bg-transparent focus:border-none focus:outline-none"
+                                disabled
+                                placeholder="Precio total"
                             />
                         </th>
 
@@ -197,7 +200,7 @@ const Output = () => {
                                 {item?.stock_entry?.material}
                             </td>
                             <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer ">
-                                {item?.stock_entry?.order_id}
+                                {item?.stock_entry?.po_number}
                             </td>
                             <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer ">
                                 {item?.guide_number}
@@ -219,13 +222,17 @@ const Output = () => {
                                 {item?.quantity}
                             </td>
                             <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer ">
-                                {item?.currency}
+                                $
                             </td>
                             <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer ">
                                 {Humanize.formatNumber(item?.price, 2)}
                             </td>
+                            <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer ">
+                                {Humanize.formatNumber(item?.price * item?.quantity, 2)}
+                            </td>
 
                         </tr>) : <tr>
+                        <td className={"px-4"}><Skeleton count={20}/></td>
                         <td className={"px-4"}><Skeleton count={20}/></td>
                         <td className={"px-4"}><Skeleton count={20}/></td>
                         <td className={"px-4"}><Skeleton count={20}/></td>

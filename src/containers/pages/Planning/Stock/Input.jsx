@@ -6,10 +6,7 @@ import {get_stock_entries} from "../../../../redux/actions/operations";
 import Humanize from "humanize-plus";
 import NavStock from "../../../../components/Planning/Stock/Nav";
 import Skeleton from "react-loading-skeleton";
-import {CloudArrowDownIcon, PlusCircleIcon} from "@heroicons/react/24/solid";
-import ModalHook from "../../../../components/util/hooks";
-import Modal from "../../../../components/util/Modal";
-import FormAdjustStock from "../../../../components/Planning/Stock/FormAdjustStock";
+import {CloudArrowDownIcon} from "@heroicons/react/24/solid";
 import {DownloadTableExcel} from "react-export-table-to-excel";
 import DateRangePicker from '@wojtekmaj/react-daterange-picker';
 import {Helmet} from "react-helmet";
@@ -18,9 +15,8 @@ const Input = () => {
     const tableRef = useRef(null);
     const dispatch = useDispatch()
     const payload = useSelector(state => state.Operations.stock_entries)
-    const [formData, setFormData] = useState({purchase_item__material__name: '', start_date: '', end_date: ''})
-    const {purchase_item__material__name} = formData
-    const {content, setContent, isOpen, setIsOpen, openModal} = ModalHook();
+    const [formData, setFormData] = useState({item__name: '', start_date: '', end_date: ''})
+    const {item__name} = formData
     const [date, setDate] = useState();
 
     const onChange = e => {
@@ -29,15 +25,8 @@ const Input = () => {
 
     useEffect(() => {
         dispatch(get_stock_entries(formData))
-    }, [date,formData]);
+    }, [date, formData]);
 
-
-    const handleAdjustForm = (id) => {
-        setIsOpen(true)
-        setContent(<div className={"h-full md:h-screen"}>
-            <FormAdjustStock close={openModal} id={id}/>
-        </div>)
-    }
 
     const onDateChange = (e) => {
         setDate(e)
@@ -50,10 +39,9 @@ const Input = () => {
 
     return (<Planning>
             <Helmet>
-            <title>Ingresos de stock</title>
-        </Helmet>
+                <title>Ingresos de stock</title>
+            </Helmet>
             <NavStock/>
-            <Modal isOpen={isOpen} close={openModal} children={content}/>
             <div className={'p-2 flex justify-between '}>
                 <p><span className={"font-bold text-sm text-gray-800"}>{size(payload)} </span><span
                     className={"font-medium text-sm text-gray-800"}> Ingresos</span></p>
@@ -90,11 +78,11 @@ const Input = () => {
                         </th>
                         <th scope="col" className="px-4 py-3">
                             <input
-                                name="purchase_item__material__name"
-                                id="purchase_item__material__name"
+                                name="item__name"
+                                id="item__name"
                                 type="text"
                                 className="w-full bg-transparent focus:border-none focus:outline-none"
-                                value={purchase_item__material__name}
+                                value={item__name}
                                 onChange={e => onChange(e)}
                                 placeholder="Nombre"
                             />
@@ -121,8 +109,18 @@ const Input = () => {
                         </th>
                         <th scope="col" className="px-4 py-3">
                             <input
-                                name="date"
-                                id="date"
+                                name="po_date"
+                                id="po_date"
+                                type="text"
+                                disabled
+                                className="w-full bg-transparent focus:border-none focus:outline-none"
+                                placeholder="Fecha de OC"
+                            />
+                        </th>
+                         <th scope="col" className="px-4 py-3">
+                            <input
+                                name="arrival_date"
+                                id="arrival_date"
                                 type="text"
                                 disabled
                                 className="w-full bg-transparent focus:border-none focus:outline-none"
@@ -161,6 +159,16 @@ const Input = () => {
                         </th>
                         <th scope="col" className="px-4 py-3">
                             <input
+                                name="total"
+                                id="total"
+                                type="text"
+                                className="w-full bg-transparent focus:border-none focus:outline-none"
+                                disabled
+                                placeholder="Precio total"
+                            />
+                        </th>
+                        <th scope="col" className="px-4 py-3">
+                            <input
                                 name="stock"
                                 id="stock"
                                 type="text"
@@ -181,18 +189,23 @@ const Input = () => {
                                 {item?.material}
                             </td>
                             <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer ">
-                                {item?.order_id}
+                                {item?.po_number}
                             </td>
                             <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer ">
                                 {item?.supplier}
                             </td>
                             <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer ">
-                                {new Date(item?.date + "T00:00:00").toLocaleDateString('es-PE', {
+                                {new Date(item?.po_date + "T00:00:00").toLocaleDateString('es-PE', {
                                     year: 'numeric', month: 'numeric', day: 'numeric'
                                 })}
                             </td>
                             <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer ">
-                                {item?.currency}
+                                {new Date(item?.arrival_date + "T00:00:00").toLocaleDateString('es-PE', {
+                                    year: 'numeric', month: 'numeric', day: 'numeric'
+                                })}
+                            </td>
+                            <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer ">
+                                $
                             </td>
                             <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer ">
                                 {Humanize.formatNumber(item?.price_per_unit, 2)}
@@ -200,11 +213,12 @@ const Input = () => {
                             <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer ">
                                 {item?.quantity}
                             </td>
+                            <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer ">
+                                {Humanize.formatNumber(item?.price_per_unit * item?.quantity, 2)}
+                            </td>
                             <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap hover:text-green-400 ">
                                 <div className={"flex justify-between"}>
                                     <p>{item?.stock} </p>
-                                    <PlusCircleIcon onClick={() => handleAdjustForm(item?.id)}
-                                                    className={"hover:cursor-pointer  w-5 inline-block text-green-400"}/>
                                 </div>
 
                             </td>

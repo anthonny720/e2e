@@ -15,11 +15,11 @@ const ReEntry = () => {
     const dispatch = useDispatch()
     const payload = useSelector(state => state.Operations.stock_reentries)
     const [formData, setFormData] = useState({
-        stock_entry__purchase_item__material__name: '',
+        stock_entry__item__name: '',
         start_date: '',
         end_date: ''
     })
-    const {stock_entry__purchase_item__material__name} = formData
+    const {stock_entry__item__name} = formData
     const [date, setDate] = useState();
 
 
@@ -80,11 +80,11 @@ const ReEntry = () => {
                         </th>
                         <th scope="col" className="px-4 py-3">
                             <input
-                                name="stock_entry__purchase_item__material__name"
-                                id="stock_entry__purchase_item__material__name"
+                                name="stock_entry__item__name"
+                                id="stock_entry__item__name"
                                 type="text"
                                 className="w-full bg-transparent focus:border-none focus:outline-none"
-                                value={stock_entry__purchase_item__material__name}
+                                value={stock_entry__item__name}
                                 onChange={e => onChange(e)}
                                 placeholder="Nombre"
                             />
@@ -134,7 +134,7 @@ const ReEntry = () => {
                                 {item?.stock_entry?.material}
                             </td>
                             <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer ">
-                                {item?.stock_entry?.order_id}
+                                {item?.stock_entry?.po_number}
                             </td>
 
                             <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer ">
