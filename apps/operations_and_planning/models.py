@@ -312,7 +312,7 @@ class ProductionPlanning(models.Model):
         verbose_name_plural = 'Planificación de producción'
         ordering = ['-sale__date']
 
-    sale = models.ForeignKey('commercial.SalesProgress', on_delete=models.PROTECT, related_name='production_planning_sale',
+    sale = models.ForeignKey('commercial.SalesProgress', on_delete=models.PROTECT, related_name='production_planning',
                              verbose_name='Orden de venta')
     date = models.DateField(verbose_name='Fecha', default=timezone.now)
     raw_material = models.DecimalField(verbose_name='Materia Prima', max_digits=9, decimal_places=2, default=0,
