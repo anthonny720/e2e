@@ -342,10 +342,10 @@ class SalesProgress(models.Model):
         return result
 
     def get_first_date(self):
-        return self.production_planning_sale.aggregate(first_date=Min('date'))['first_date']
+        return self.production_planning.aggregate(first_date=Min('date'))['first_date']
 
     def get_last_date(self):
-        return self.production_planning_sale.aggregate(last_date=Max('date'))['last_date']
+        return self.production_planning.aggregate(last_date=Max('date'))['last_date']
 
     def update_date_manufacturing(self):
         try:
@@ -363,7 +363,7 @@ class SalesProgress(models.Model):
 
     def get_planning(self):
         try:
-            query = self.production_planning_sale.all().order_by('date')
+            query = self.production_planning.all().order_by('date')
             payload = []
             for item in query:
                 payload.append({'id': item.id, 'date': item.date, 'raw_material': item.raw_material,

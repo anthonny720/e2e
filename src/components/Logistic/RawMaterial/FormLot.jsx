@@ -11,14 +11,22 @@ import {add_lot} from "../../../redux/actions/logistic";
 const FormLot = ({close, providers, categories}) => {
     const dispatch = useDispatch()
 
-    const columns = [
-        {name: 'carrier_guide', title: 'Guia de transportista', type: 'text', maxLength: 12},
-        {name: 'provider_guide', title: 'Guia de proveedor', type: 'text', maxLength: 12},
-        {name: 'entry_date', title: 'Fecha de ingreso', type: 'date', maxLength: 10},
-        {name: 'download_date', title: 'Fecha de descarga', type: 'date', maxLength: 10},
-        {name: 'lot', title: 'Lote', type: 'text', maxLength: 13},
-        {name: 'variety', title: 'Variedad', type: 'text', maxLength: 10},
-    ]
+    const columns = [{
+        name: 'carrier_guide',
+        title: 'Guia de transportista',
+        type: 'text',
+        maxLength: 12
+    }, {name: 'provider_guide', title: 'Guia de proveedor', type: 'text', maxLength: 12}, {
+        name: 'entry_date',
+        title: 'Fecha de ingreso',
+        type: 'date',
+        maxLength: 10
+    }, {name: 'download_date', title: 'Fecha de descarga', type: 'date', maxLength: 10}, {
+        name: 'lot',
+        title: 'Lote',
+        type: 'text',
+        maxLength: 13
+    }, {name: 'variety', title: 'Variedad', type: 'text', maxLength: 10},]
     /*Formik*/
     const formik = useFormik({
         initialValues: initialValues(),
@@ -29,12 +37,11 @@ const FormLot = ({close, providers, categories}) => {
             close()
         }
     })
-    return (
-        <div className="w-full z-20">
+    return (<div className="w-full z-20">
             <form className="bg-white px-8 pt-6 pb-8 mb-4">
                 {/*CATEGORY*/}
                 <div>
-                    <p className={`${formik.errors.product && "text-red-500"} text-[10px]  font-extralight leading-none text-blue-400 my-1`} >Producto:</p>
+                    <p className={`${formik.errors.product && "text-red-500"} text-[10px]  font-extralight leading-none text-blue-400 my-1`}>Producto:</p>
                     <select value={formik.values.product}
                             onChange={(value) => formik.setFieldValue('product', value.target.value)}
                             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50  focus:outline-none focus-visible:border-blue-500  sm:text-sm">
@@ -60,7 +67,7 @@ const FormLot = ({close, providers, categories}) => {
                 {map(columns, (column, index) => (<div key={index}>
                     <p className={`${formik.errors[column.name] && "text-red-500"} text-[10px]  font-extralight leading-none text-blue-400 my-1`}>{column.title}</p>
                     <input type={column.type} maxLength={column.maxLength}
-                            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50  focus:outline-none focus-visible:border-blue-500  sm:text-sm"
+                           className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50  focus:outline-none focus-visible:border-blue-500  sm:text-sm"
                            value={`${formik.values[column.name]}`}
                            onChange={text => formik.setFieldValue(column.name, text.target.value)}/>
                     <p className="text-red-500 text-xs italic">{formik.errors[column.name]}</p>
@@ -87,8 +94,7 @@ const FormLot = ({close, providers, categories}) => {
                 </div>
             </form>
 
-        </div>
-    );
+        </div>);
 };
 const initialValues = () => {
     return {

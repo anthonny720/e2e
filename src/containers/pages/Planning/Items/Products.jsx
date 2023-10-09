@@ -1,12 +1,13 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Planning from "../Home";
 import NavItems from "../../../../components/Planning/Items/Nav";
 import {CloudArrowDownIcon} from "@heroicons/react/24/solid";
 import Table from "../../../../components/Planning/Items/Products/Table";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {size} from "lodash";
 import {DownloadTableExcel} from "react-export-table-to-excel";
 import {Helmet} from "react-helmet";
+import {get_skus} from "../../../../redux/actions/operations";
 
 const Products = () => {
     const tableRef = useRef(null);
@@ -19,7 +20,13 @@ const Products = () => {
         setFormData({...formData, [e.target.name]: e.target.value})
     }
 
+    const dispatch = useDispatch();
     const payload = useSelector(state => state.Operations.products)
+
+    useEffect(() => {
+        dispatch(get_skus(formData))
+    }, [dispatch,payload]);
+
 
 
     return (<Planning>

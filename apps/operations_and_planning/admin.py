@@ -76,7 +76,8 @@ class StockExitAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
 
 @admin.register(ProductionPlanning)
 class ProductionPlanningAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
-    list_display = ('sale', 'date', 'raw_material', 'performance', 'expected', 'stock_start', 'stock_end', 'process_plant')
+    list_display = (
+    'sale', 'date', 'raw_material', 'performance', 'expected', 'stock_start', 'stock_end', 'process_plant')
     search_fields = ('sale__sku',)
     date_hierarchy = 'date'
     ordering = ['sale__date']

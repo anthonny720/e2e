@@ -20,6 +20,7 @@ class ItemsProxy(models.Model):
         abstract = True
 
     name = models.CharField(max_length=200, verbose_name="Nombre", blank=True)
+    sap = models.CharField(max_length=10, verbose_name='Código SAP', blank=True, null=True)
     group = models.ForeignKey(Categories, verbose_name='Grupo de producto', blank=True, null=True,
                               on_delete=models.PROTECT, related_name='%(class)s_group')
     unit_of_measurement = models.ForeignKey(UnitOfMeasurement, verbose_name='Unidad de medida', blank=True, null=True,
@@ -36,8 +37,6 @@ class Product(ItemsProxy):
     class Meta:
         verbose_name = 'Producto'
         verbose_name_plural = 'Productos'
-
-    sap = models.CharField(max_length=10, verbose_name='Código SAP', blank=True, null=True)
 
     performance = models.DecimalField(verbose_name='% Rendimiento', max_digits=3, decimal_places=1, default=0,
                                       blank=False)
@@ -56,7 +55,6 @@ class Material(ItemsProxy):
         verbose_name = 'Material'
         verbose_name_plural = 'Materiales'
 
-    sap = models.CharField(max_length=10, verbose_name='Código SAP')
     price = models.DecimalField(verbose_name='Precio', max_digits=6, decimal_places=3, default=0, blank=False)
 
     def save(self, *args, **kwargs):
@@ -310,10 +308,10 @@ class ProductionPlanning(models.Model):
     class Meta:
         verbose_name = 'Planificación de producción'
         verbose_name_plural = 'Planificación de producción'
-        ordering = ['-sale__date']
+        # ordering = ['-sale__date']
 
-    sale = models.ForeignKey('commercial.SalesProgress', on_delete=models.PROTECT, related_name='production_planning',
-                             verbose_name='Orden de venta')
+    sale = models.ForeignKey('commercial.SalesProgress', on_delete=models.CASCADE, related_name='production_planning',
+                             verbose_name='Orden de venta', blank=True, null=True)
     date = models.DateField(verbose_name='Fecha', default=timezone.now)
     raw_material = models.DecimalField(verbose_name='Materia Prima', max_digits=9, decimal_places=2, default=0,
                                        blank=True)
