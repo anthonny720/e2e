@@ -8,7 +8,7 @@ const TablePacking = ({reference}) => {
     const data = useSelector(state => state.Production.packing_process)
 
 
-    const columns = ['Lote', 'Fecha proceso', 'Fecha envasado', 'Kg procesados', 'Corte', 'Cliente', 'Lote PT', 'Kg total', 'Kg neto', 'Venta local', 'Subproducto', 'Merma', 'Calidad', 'Agregado', 'Lotes agregados', 'Rendimiento', 'Humedad','Cajas', 'Bolsa','Bolsas adicionales' ]
+    const columns = ['Lote', 'Fecha proceso', 'Fecha envasado', 'Kg procesados', 'Corte', 'Cliente', 'Lote PT', 'Kg total', 'Kg neto', 'Venta local', 'Subproducto', 'Merma', 'Calidad', 'Agregado', 'Lotes agregados', 'Rendimiento', 'Humedad', 'Cajas', 'Bolsa', 'Bolsas adicionales']
 
     return (<div className="w-full">
         <Helmet>
@@ -76,7 +76,7 @@ const TablePacking = ({reference}) => {
                             <td className="text-sm bg-white px-6 whitespace-nowrap text-gray-800 font-normal leading-4 text-center "> {item?.lots_aggregated}</td>
                             <td className="text-sm bg-white px-6 whitespace-nowrap text-orange-800 font-bold leading-4 text-center ">
                                 <p className={"bg-orange-400 bg-opacity-60 rounded-lg w-full p-2"}>
-                                    {Humanize.formatNumber((parseFloat(item?.pt_total) + parseFloat(item?.pt_subproduct) + parseFloat(item?.pt_quality) - parseFloat(item?.pt_aggregated)) / parseFloat(item?.process) * 100, 2)}</p>
+                                    {Humanize.formatNumber((parseFloat(item?.pt_total) + parseFloat(item?.pt_subproduct) + parseFloat(item?.pt_quality) + parseFloat(item?.pt_local) - parseFloat(item?.pt_aggregated)) / parseFloat(item?.process) * 100, 2)}</p>
                             </td>
                             <td className="text-sm bg-white px-6 whitespace-nowrap text-gray-800 font-normal leading-4 text-center "> {Humanize.formatNumber(item?.humidity, 2)}</td>
                             <td className="text-sm bg-white px-6 whitespace-nowrap text-gray-800 font-normal leading-4 text-center "> {item?.boxes} und</td>
