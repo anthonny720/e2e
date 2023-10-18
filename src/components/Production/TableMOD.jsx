@@ -45,7 +45,7 @@ const TableMOD = ({reference}) => {
                             </td>
                             <td className="text-sm bg-white px-6 whitespace-no-wrap text-cyan-800 font-bold  text-center ">
                                  <p className={"bg-cyan-400 bg-opacity-60 rounded-lg w-full p-2"}>
-                                    {Humanize.formatNumber(item?.conditioning, 2)}</p>
+                                    {Humanize.formatNumber(item?.cmo_conditioning, 2)}</p>
                             </td>
                             <td className="text-sm bg-white px-6 whitespace-no-wrap text-orange-800 font-bold  text-center ">
                                 <p className={"bg-orange-400 bg-opacity-60 rounded-lg w-full p-2"}>

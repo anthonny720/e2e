@@ -77,8 +77,8 @@ class MOD(models.Model):
     controller_rest_day_cost = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Costo Día Descanso Controller', default=0)
     controller_night_shift_cost = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Costo Noche Controller', default=0)
     controller_day_shift_cost = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Costo Día Controller', default=0)
-    conditioning_cost = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Costo Acondicionado', default=0)
-    packing_cost = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Costo Envasado', default=0)
+    cmo_conditioning = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Costo Acondicionado', default=0)
+    cmo_packing = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Costo Envasado', default=0)
     history = HistoricalRecords()
 
     class Meta:
