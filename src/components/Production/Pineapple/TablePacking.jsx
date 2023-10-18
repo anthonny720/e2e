@@ -8,7 +8,7 @@ const TablePacking = ({reference}) => {
     const data = useSelector(state => state.Production.packing_process)
 
 
-    const columns = ['Lote', 'Fecha proceso', 'Fecha envasado', 'Kg procesados', 'Corte', 'Cliente', 'Lote PT', 'Kg total', 'Kg neto', 'Venta local', 'Subproducto', 'Merma', 'Calidad', 'Agregado', 'Lotes agregados', 'Rendimiento', 'Humedad', 'Cajas', 'Bolsa', 'Bolsas adicionales']
+    const columns = ['Lote', 'Fecha proceso', 'Fecha envasado', 'Kg procesados', 'Corte', 'Cliente', 'Lote PT', 'Kg total', 'Kg neto', 'Venta local', 'Subproducto', 'Merma', 'Calidad', 'Agregado', 'Lotes agregados', 'Rendimiento', 'Humedad', 'Cajas', 'Bolsa', 'Bolsas adicionales', 'Personas', 'Horas', 'CMO']
 
     return (<div className="w-full">
         <Helmet>
@@ -83,6 +83,13 @@ const TablePacking = ({reference}) => {
 
                             <td className="text-sm bg-white px-6 whitespace-nowrap text-gray-800 font-normal leading-4 text-center "> {item?.bags} und</td>
                             <td className="text-sm bg-white px-6 whitespace-nowrap text-gray-800 font-normal leading-4 text-center "> {item?.bags_extra} und</td>
+                            <td className="text-sm bg-white px-6 whitespace-nowrap text-gray-800 font-normal leading-4 text-center ">{item?.people}</td>
+                            <td className="text-sm bg-white px-6 whitespace-nowrap text-gray-800 font-normal leading-4 text-center ">{Humanize.formatNumber(item?.hours, 2)}</td>
+                            <td className="text-sm bg-white px-6 whitespace-nowrap text-white font-normal leading-4 text-center ">
+                                <p className={"bg-green-400 bg-opacity-60 rounded-lg w-full p-2"}>
+                                    {Humanize.formatNumber((item?.people * item?.hours * item?.cost), 2)}</p>
+
+                            </td>
 
 
                         </tr>)

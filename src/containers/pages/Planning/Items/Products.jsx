@@ -25,8 +25,7 @@ const Products = () => {
 
     useEffect(() => {
         dispatch(get_skus(formData))
-    }, [dispatch,payload]);
-
+    }, [dispatch, payload]);
 
 
     return (<Planning>

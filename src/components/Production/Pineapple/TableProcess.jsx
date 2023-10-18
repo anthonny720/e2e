@@ -7,7 +7,7 @@ import {Helmet} from "react-helmet";
 const TableProduction = ({reference}) => {
     const data = useSelector(state => state.Production.process)
 
-    const columns = ['Lote', 'Fecha', 'Kg logistica', 'Rechazo', '%Rechazo', 'Kg proceso', 'Brix', 'pH', 'Corona', '%', 'Cáscara y tronco', '%', 'Pulpa', '%', 'Kg habilitado', '%']
+    const columns = ['Lote', 'Fecha', 'Kg logistica', 'Rechazo', '%Rechazo', 'Kg proceso', 'Brix', 'pH', 'Corona', '%', 'Cáscara y tronco', '%', 'Pulpa', '%', 'Kg habilitado', '%', 'Personas', 'Horas', 'CMO']
 
     return (<div className="w-full">
         <Helmet>
@@ -78,6 +78,14 @@ const TableProduction = ({reference}) => {
                                     {Humanize.formatNumber((item?.logistic - item?.reject - item?.crown - item?.shell_trunk - item?.pulp) / (item?.logistic - item?.reject) * 100, 2)}</p>
 
                             </td>
+                            <td className="text-sm bg-white px-6 whitespace-nowrap text-gray-800 font-normal leading-4 text-center ">{item?.people}</td>
+                            <td className="text-sm bg-white px-6 whitespace-nowrap text-gray-800 font-normal leading-4 text-center ">{Humanize.formatNumber(item?.hours, 2)}</td>
+                            <td className="text-sm bg-white px-6 whitespace-nowrap text-white font-normal leading-4 text-center ">
+                                <p className={"bg-green-400 bg-opacity-60 rounded-lg w-full p-2"}>
+                                    {Humanize.formatNumber((item?.people * item?.hours * item?.cost), 2)}</p>
+
+                            </td>
+
                         </tr>)
 
                     })}
