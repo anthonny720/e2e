@@ -9,7 +9,7 @@ const TableMOD = ({reference}) => {
 
     const data = useSelector(state => state.Production.mod)
 
-    const columns = ['Fecha', 'Producto', 'Kg proceso', 'Kg Pt','CMO Acondicionado','CMO Envasado', 'CMO Total', 'CMO Descanso Operario', 'CMO Noche Operario', 'CMO Dia Operario', 'CMO Operario', 'CMO Descanso Supervisor', 'CMO Día Supervisor', 'CMO Supervisor', 'CMO Descanso Controller', 'CMO Noche Controller', 'CMO Dia Controller', 'CMO Controller']
+    const columns = ['Fecha', 'Producto', 'Kg proceso', 'Kg Pt','CMO Acondicionado','CMO Envasado','CMO Descanso', 'CMO Total', 'CMO Descanso Operario', 'CMO Noche Operario', 'CMO Dia Operario', 'CMO Operario', 'CMO Descanso Supervisor', 'CMO Día Supervisor', 'CMO Supervisor', 'CMO Descanso Controller', 'CMO Noche Controller', 'CMO Dia Controller', 'CMO Controller']
 
     return (<div className="w-full">
         <div className="mx-auto container bg-white ">
@@ -43,13 +43,17 @@ const TableMOD = ({reference}) => {
                                 className=" text-sm bg-white px-6 whitespace-no-wrap text-green-800 font-bold  text-center">
                                 {Humanize.formatNumber(item?.pt, 2)}
                             </td>
-                            <td className="text-sm bg-white px-6 whitespace-no-wrap text-cyan-800 font-bold  text-center ">
-                                 <p className={"bg-cyan-400 bg-opacity-60 rounded-lg w-full p-2"}>
-                                    {Humanize.formatNumber(item?.cmo_conditioning, 2)}</p>
+                            <td className="text-sm bg-white px-6 whitespace-no-wrap text-sky-800 font-bold  text-center ">
+                                 <p className={"bg-sky-200 bg-opacity-60 rounded-lg w-full p-2"}>
+                                    {Humanize.formatNumber(item?.conditioning, 2)}</p>
                             </td>
-                            <td className="text-sm bg-white px-6 whitespace-no-wrap text-orange-800 font-bold  text-center ">
-                                <p className={"bg-orange-400 bg-opacity-60 rounded-lg w-full p-2"}>
+                            <td className="text-sm bg-white px-6 whitespace-no-wrap text-yellow-800 font-bold  text-center ">
+                                <p className={"bg-yellow-300 bg-opacity-60 rounded-lg w-full p-2"}>
                                     {Humanize.formatNumber(item?.cmo_packing, 2)}</p>
+                            </td>
+                             <td className="text-sm bg-white px-6 whitespace-no-wrap text-violet-800 font-bold  text-center ">
+                                <p className={"bg-violet-300 bg-opacity-60 rounded-lg w-full p-2"}>
+                                    {Humanize.formatNumber(item?.cmo_rest, 2)}</p>
                             </td>
 
                             <td className="text-sm bg-white px-6 whitespace-no-wrap text-green-800 font-bold  text-center ">
@@ -69,7 +73,7 @@ const TableMOD = ({reference}) => {
                                 {Humanize.formatNumber(item?.worker_day_shift_cost, 2)}
                             </td>
                             <td className="text-sm bg-white px-6 whitespace-no-wrap text-red-800 font-bold  text-center ">
-                                <p className={"bg-red-400 bg-opacity-60 rounded-lg w-full p-2"}>
+                                <p className={"bg-red-300 bg-opacity-60 rounded-lg w-full p-2"}>
                                     {Humanize.formatNumber(parseFloat(item?.worker_rest_day_cost) + parseFloat(item?.worker_night_shift_cost) + parseFloat(item?.worker_day_shift_cost), 2)}</p>
                             </td>
                             <td
@@ -80,8 +84,8 @@ const TableMOD = ({reference}) => {
                                 className=" text-sm bg-white px-6 whitespace-no-wrap text-green-800 font-bold  text-center">
                                 {Humanize.formatNumber(item?.supervisor_day_shift_cost, 2)}
                             </td>
-                            <td className="text-sm bg-white px-6 whitespace-no-wrap text-yellow-800 font-bold  text-center ">
-                                <p className={"bg-yellow-400 bg-opacity-60 rounded-lg w-full p-2"}>
+                            <td className="text-sm bg-white px-6 whitespace-no-wrap text-orange-800 font-bold  text-center ">
+                                <p className={"bg-orange-300 bg-opacity-60 rounded-lg w-full p-2"}>
                                     {Humanize.formatNumber(parseFloat(item?.supervisor_rest_day_cost) + parseFloat(item?.supervisor_day_shift_cost), 2)}</p>
                             </td>
                             <td
@@ -96,8 +100,8 @@ const TableMOD = ({reference}) => {
                                 className=" text-sm bg-white px-6 whitespace-no-wrap text-green-800 font-bold  text-center">
                                 {Humanize.formatNumber(item?.controller_day_shift_cost, 2)}
                             </td>
-                            <td className="text-sm bg-white px-6 whitespace-no-wrap text-blue-800 font-bold  text-center ">
-                                <p className={"bg-blue-400 bg-opacity-60 rounded-lg w-full p-2"}>
+                            <td className="text-sm bg-white px-6 whitespace-no-wrap text-indigo-800 font-bold  text-center ">
+                                <p className={"bg-indigo-300 bg-opacity-60 rounded-lg w-full p-2"}>
                                     {Humanize.formatNumber(parseFloat(item?.controller_rest_day_cost) + parseFloat(item?.controller_night_shift_cost) + parseFloat(item?.controller_day_shift_cost), 2)}</p>
                             </td>
 
