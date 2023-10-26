@@ -55,6 +55,7 @@ const FormStock = ({data, lot, close}) => {
                         aria-label="Default select example">
                     <option value={'P'}>Producción</option>
                     <option value={'M'}>Merma</option>
+                    <option value={'I'}>I+D</option>
                 </select>
             </div>
 

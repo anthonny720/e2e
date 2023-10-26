@@ -42,7 +42,7 @@ const TableStock = ({data, remove}) => {
                                 {Humanize.formatNumber(item?.kg, 2)}
                             </td>
                             <td className="text-sm pr-6 whitespace-no-wrap text-gray-800 font-light   leading-4 text-center ">
-                                {item?.destine === 'M' ? 'Merma' : 'Producción'}
+                                {item?.destine === 'M' ? 'Merma' : item?.destine === 'I' ? 'I+D' : 'Producción'}
                             </td>
                         </tr>)
                     })}

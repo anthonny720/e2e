@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.510c4533.css",
-    "main.js": "/static/js/main.f177dc2b.js",
+    "main.js": "/static/js/main.da0a4e0f.js",
     "static/media/cerros-grabado-verde.png": "/static/media/cerros-grabado-verde.171db28be3cbea5f894c.png",
     "static/media/sign-up-form.svg": "/static/media/sign-up-form.cd941b2a12cb5b599fdf37c715e6c5e9.svg",
     "static/media/firma2.png": "/static/media/firma2.fb25fb35c6d86112c3aa.png",
@@ -10,10 +10,10 @@
     "static/media/firma1.png": "/static/media/firma1.090a91cc9400a54d40d4.png",
     "index.html": "/index.html",
     "main.510c4533.css.map": "/static/css/main.510c4533.css.map",
-    "main.f177dc2b.js.map": "/static/js/main.f177dc2b.js.map"
+    "main.da0a4e0f.js.map": "/static/js/main.da0a4e0f.js.map"
   },
   "entrypoints": [
     "static/css/main.510c4533.css",
-    "static/js/main.f177dc2b.js"
+    "static/js/main.da0a4e0f.js"
   ]
 }

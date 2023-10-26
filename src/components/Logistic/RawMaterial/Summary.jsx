@@ -35,6 +35,7 @@ const Summary = ({data}) => {
                 <h2 className={"font-light"}>JABAS GANDULES: {data?.boxes?.box_gn}</h2>
                 <h2 className={"font-light"}>JABAS MADERA: {data?.boxes?.box_ma}</h2>
                 <h2 className={"font-light"}>JABAS INDUSTRIALES: {data?.boxes?.box_industry}</h2>
+                <h2 className={"font-light"}>JABAS COS. ARANDANO: {data?.boxes?.box_csa}</h2>
                 <hr/>
             </div>
             <div className="text-gray-800  text-sm font-extrabold text-center">

@@ -135,6 +135,7 @@ const RegisterViewer = ({info, data}) => {
                             {item?.gn > 0 && "GA :" + item?.gn + " "}
                             {item?.ma > 0 && "MA :" + item?.ma + " "}
                             {item?.industry > 0 && "MA :" + item?.industry + " "}
+                            {item?.csa > 0 && "CA :" + item?.csa + " "}
                         </Text>
                         <Text style={{
                             fontSize: "8px", color: "#4c4848", fontWeight: "light", width: "20%", textAlign: "center"

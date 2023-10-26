@@ -368,11 +368,12 @@ class Lot(models.Model):
                     "box_co": sum(d.co for d in self.i_lot.all()), "box_t0": sum(d.t0 for d in self.i_lot.all()),
                     "box_t1": sum(d.t1 for d in self.i_lot.all()), "box_t2": sum(d.t2 for d in self.i_lot.all()),
                     "box_gn": sum(d.gn for d in self.i_lot.all()), "box_ma": sum(d.ma for d in self.i_lot.all()),
-                    "box_industry": sum(d.industry  for d in self.i_lot.all())
+                    "box_industry": sum(d.industry for d in self.i_lot.all()),
+                    "box_csa": sum(d.csa for d in self.i_lot.all()),
                     }
         except:
             return {'box_gb': 0, 'box_pa': 0, 'box_co': 0, 'box_t0': 0, 'box_t1': 0, 'box_t2': 0, 'box_gn': 0,
-                    'box_ma': 0,"box_industry": 0}
+                    'box_ma': 0,"box_industry": 0,"box_csa": 0}
 
     def get_provider(self):
         try:
@@ -410,6 +411,7 @@ class ILot(models.Model):
     gn = models.IntegerField(default=0, verbose_name="Gandules")
     ma = models.IntegerField(default=0, verbose_name="Madera")
     industry = models.IntegerField(default=0, verbose_name="Industriales")
+    csa= models.IntegerField(default=0, verbose_name="Cosecha Arandanos")
     pallet = models.ForeignKey(Pallets, on_delete=models.PROTECT, verbose_name="Pallet", related_name="pallets")
     tare = models.FloatField(default=0, verbose_name="Tara")
     c6 = models.IntegerField(default=0, verbose_name="Calibre 6")
@@ -443,7 +445,7 @@ class ILot(models.Model):
 
     def get_quantity_boxes(self):
         try:
-            return self.gb + self.pa + self.co + self.t0 + self.t1 + self.t2 + self.gn + self.ma + self.industry
+            return self.gb + self.pa + self.co + self.t0 + self.t1 + self.t2 + self.gn + self.ma + self.industry + self.csa
         except:
             return 0
 
@@ -457,7 +459,8 @@ class ILot(models.Model):
                     self.co * Boxes.objects.filter(name="Colores").first().weight) + (
                     self.gn * Boxes.objects.filter(name="Gandules").first().weight) + (
                     self.ma * Boxes.objects.filter(name="Madera").first().weight) + (
-                    self.industry * Boxes.objects.filter(name="Industriales").first().weight)
+                    self.industry * Boxes.objects.filter(name="Industriales").first().weight) + (
+                    self.csa * Boxes.objects.filter(name="Cosecha Arandanos").first().weight)
         except Exception as e:
             return 0
 
@@ -491,6 +494,7 @@ class Output(models.Model):
     class Destine(models.TextChoices):
         PRODUCCION = 'P', 'Producción'
         MERMA = 'M', 'Merma'
+        ID = 'I', 'I+D'
 
     class Meta:
         verbose_name = 'Salida de Lotes'
