@@ -16,7 +16,7 @@ const FormData = ({data, lot, pallets, zones,close}) => {
         {name: 'pa', title: 'PAE', type: 'text', maxLength: 2},
         {name: 't0', title: 'Tibana 0', type: 'text', maxLength: 2},
         {name: 'industry', title: 'Industriales', type: 'text', maxLength: 2},
-        {name: 'csa', title: 'Cosecha Arandanos', type: 'text', maxLength: 2},
+        {name: 'csa', title: 'Cosecha Arandanos', type: 'text', maxLength: 3},
 
         {name: 'c6', title: 'C6', type: 'text', maxLength: 2},
         {name: 'c8', title: 'C8', type: 'text', maxLength: 2},
@@ -119,7 +119,7 @@ const newSchema = () => {
         pa: Yup.number().min(0).max(99).integer("Ingrese un número entre 0 - 99").required(true),
         t0: Yup.number().min(0).max(99).integer("Ingrese un número entre 0 - 99").required(true),
         industry: Yup.number().min(0).max(99).integer("Ingrese un número entre 0 - 99").required(true),
-        csa: Yup.number().min(0).max(99).integer("Ingrese un número entre 0 - 99").required(true),
+        csa: Yup.number().min(0).max(999).integer("Ingrese un número entre 0 - 99").required(true),
         c6: Yup.number().min(0).max(99).integer("Ingrese un número entre 0 - 99").required(true),
         c8: Yup.number().min(0).max(99).integer("Ingrese un número entre 0 - 99").required(true),
         c10: Yup.number().min(0).max(99).integer("Ingrese un número entre 0 - 99").required(true),
