@@ -48,6 +48,7 @@ import Output from "./containers/pages/Planning/Stock/Output";
 import SellDetail from "./containers/pages/Planning/Sell/Detail";
 import CalendarPlanning from "./containers/pages/Planning/Production/Calendar";
 import ReEntry from "./containers/pages/Planning/Stock/ReEntry";
+import Oven from "./containers/pages/Production/Oven";
 
 
 const App = () => {
@@ -122,6 +123,7 @@ const App = () => {
                         {/*Production*/}
                         <Route path="production/process" element={<Process/>}/>
                         <Route path="production/mod" element={<MOD/>}/>
+                        <Route path="production/ovens" element={<Oven/>}/>
 
                     </Routes>
                 </section>
