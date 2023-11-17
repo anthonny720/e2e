@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
 import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
-import {enGB} from "date-fns/locale";
-import {DateRangePicker} from "react-nice-dates";
 import {map} from "lodash";
 import {DownloadTableExcel} from "react-export-table-to-excel";
 import RangeDate from "../util/RangeDate";
@@ -44,7 +42,7 @@ const Filter = ({providers, action, category, reference}) => {
                 <button onClick={formik.handleSubmit} type={'button'}
                         className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-medium rounded-md flex justify-center items-center">
                     {loader ? <svg className="animate-spin  h-5 w-5 text-black"
-                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                   xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
                                 strokeWidth="4"/>
                         <path className="opacity-75" fill="currentColor"
@@ -67,14 +65,19 @@ const Filter = ({providers, action, category, reference}) => {
                         return <option key={index} value={provider.business_name}>{provider.business_name}</option>
                     })}
                 </select>
-                 <RangeDate value={date} onChange={setDate}/>
+                <input type={'text'} value={formik.values.lot}
+                       onChange={(value) => formik.setFieldValue('lot', value.target.value)}
+                       className="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm"
+                       placeholder={'Lote'}/>
+
+                <RangeDate value={date} onChange={setDate}/>
             </div>
         </div>
     </form>);
 };
 const initialValues = () => {
     return {
-        start_date: "", end_date: "", provider: ""
+        start_date: "", end_date: "", provider: "", lot: ""
     }
 }
 

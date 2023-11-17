@@ -3,6 +3,7 @@ from rest_framework import serializers
 from apps.logistic.models import ILot, Lot, Pallets, Output, RegisterOutput, Records
 from .models import Motions
 
+
 class SummaryLotSerializer(serializers.ModelSerializer):
     parcels_name = serializers.CharField(source='get_parcels_name', read_only=True)
     amount_guide_kg = serializers.CharField(source='get_total_amount_guide_kg', read_only=True)
@@ -17,6 +18,7 @@ class SummaryLotSerializer(serializers.ModelSerializer):
     quantity_boxes = serializers.CharField(source='get_total_boxes', read_only=True)
     total_tare = serializers.CharField(source='get_total_tare', read_only=True)
     net_weight = serializers.CharField(source='get_total_net_weight', read_only=True)
+    usable_weight = serializers.CharField(source='get_kg_usable', read_only=True)
     brute_weight = serializers.CharField(source='get_total_brute_weight', read_only=True)
     business_maquila_name = serializers.CharField(source='maquila.business_name', read_only=True)
     transport_name = serializers.CharField(source='transport.business_name', read_only=True)
@@ -28,21 +30,11 @@ class SummaryLotSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Lot
-        exclude =(
-            'id',
-            'drive',
-            'description',
-            'discount_description',
-            'merma',
-            'stock',
-            'closed',
-            'maquila',
-            'product',
-            'provider',
-            'transport',
-            'parcel',
-            'condition',
-        )
+        exclude = (
+            'id', 'drive', 'description', 'discount_description', 'merma', 'stock', 'closed', 'maquila', 'product',
+            'provider', 'transport', 'parcel', 'condition',)
+
+
 class LotSerializer(serializers.ModelSerializer):
     parcels_name = serializers.CharField(source='get_parcels_name', read_only=True)
     amount_guide_kg = serializers.CharField(source='get_total_amount_guide_kg', read_only=True)
@@ -77,10 +69,12 @@ class LotSerializer(serializers.ModelSerializer):
         model = Lot
         fields = '__all__'
 
+
 class LotUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lot
         fields = '__all__'
+
 
 class ILotSerializer(serializers.ModelSerializer):
     net_weight = serializers.CharField(source='get_net_weight', read_only=True)
@@ -88,7 +82,7 @@ class ILotSerializer(serializers.ModelSerializer):
     boxes = serializers.CharField(source='get_quantity_boxes', read_only=True)
     weight_boxes = serializers.CharField(source='get_weight_boxes', read_only=True)
     weight_pallet = serializers.CharField(source='get_weight_pallet', read_only=True)
-    total_tare= serializers.CharField(source='get_total_tare', read_only=True)
+    total_tare = serializers.CharField(source='get_total_tare', read_only=True)
     location_name = serializers.CharField(source='location.name', read_only=True)
 
     class Meta:
@@ -124,12 +118,14 @@ class LotSummarySerializer(serializers.ModelSerializer):
     business_maquila_name = serializers.CharField(source='maquila.business_name', read_only=True)
     condition_name = serializers.CharField(source='get_condition_name', read_only=True)
     category_name = serializers.CharField(source='product.name', read_only=True)
+    price_final = serializers.CharField(source='get_final_price', read_only=True)
+    usable_weight = serializers.CharField(source='get_kg_usable', read_only=True)
 
     class Meta:
         model = Lot
         fields = (
             'id', 'net_weight', 'condition_name', 'variety', 'download_date', 'category_name', 'business_maquila_name',
-            'stock', 'lot')
+            'stock', 'lot', 'freight', 'service_download', 'price_final', 'usable_weight',)
 
 
 class ILotSummarySerializer(serializers.ModelSerializer):
@@ -162,11 +158,11 @@ class SummaryOutputSerializer(serializers.ModelSerializer):
         fields = ('output', 'date', 'item', 'kg', 'net_weight')
 
 
-
 class RecordsMPSerializer(serializers.ModelSerializer):
-    year=serializers.CharField(source='get_year',read_only=True)
-    month=serializers.CharField(source='get_month',read_only=True)
-    week=serializers.CharField(source='get_week',read_only=True)
+    year = serializers.CharField(source='get_year', read_only=True)
+    month = serializers.CharField(source='get_month', read_only=True)
+    week = serializers.CharField(source='get_week', read_only=True)
+
     class Meta:
         model = Records
         fields = '__all__'

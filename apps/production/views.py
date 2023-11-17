@@ -123,7 +123,7 @@ class OvenListView(APIView):
             if lot:
                 queryset = queryset.filter(lot__icontains=lot)
             elif start_date:
-                queryset = queryset.filter(date__gte=start_date)
+                queryset = queryset.filter(date__gte=datetime.strptime(start_date, "%d/%m/%Y"))
             else:
                 queryset = queryset[:50]
 

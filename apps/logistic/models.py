@@ -99,9 +99,9 @@ class Lot(models.Model):
                                    verbose_name="Porcentaje de Descuento Rechazo")
     discount_price = models.DecimalField(decimal_places=10, max_digits=15, default=0.00, blank=True, null=True,
                                          verbose_name='Porcentaje de Descuento Precio')
-    discount_price_soles = models.DecimalField(decimal_places=2, max_digits=4, default=0.00, blank=True, null=True,
+    discount_price_soles = models.DecimalField(decimal_places=2, max_digits=15, default=0.00, blank=True, null=True,
                                                verbose_name='Soles Descuento Precio')
-    service_downloads = models.DecimalField(decimal_places=3, max_digits=4, default=0.00, blank=True, null=True,
+    service_downloads = models.DecimalField(decimal_places=3, max_digits=9, default=0.00, blank=True, null=True,
                                             verbose_name='Servicio de descarga')
     transport = models.ForeignKey(Transport, on_delete=models.PROTECT, related_name="carrier_lot",
                                   verbose_name="Empresa de transporte", blank=True, null=True)
@@ -138,11 +138,11 @@ class Lot(models.Model):
             net_weight = self.get_total_net_weight()
             net_weight_quality = net_weight - float(quality)
             discount = net_weight * (float(self.discount) / 100) if self.discount else 0
-            discount_price = net_weight_quality * (float(self.discount_price) / 100) if self.discount_price else 0
-            service_downloads = net_weight * float(self.service_downloads) if self.service_downloads else 0
+            discount_price = float(self.get_kg_usable()) * (
+                        float(self.discount_price) / 100) if self.discount_price else 0
+            service_downloads = float(self.service_downloads) if self.service_downloads else 0
             usable_weight = net_weight - float(discount) - float(discount_price)
-            price_final = (usable_weight * float(price_camp)) + (discount_price * float(price_soles)) + float(
-                freight) + float(service_downloads)
+            price_final = ((usable_weight - discount_price) * float(price_camp)) + (discount_price * float(price_soles)) + float(freight) + float(service_downloads)
             return round(price_final, 2)
         except Exception as e:
             return 0
@@ -181,14 +181,13 @@ class Lot(models.Model):
             obj.discount_percentage = self.discount_price
             obj.discount = self.discount_price_soles
             obj.field_price = self.price_camp
-            obj.plant_price = round(self.get_final_price() / self.get_kg_usable(),
-                                    2) if self.get_kg_usable() else 0
+            obj.plant_price = round((float(self.get_final_price()) - float(self.freight) - float(self.service_downloads)) / float(self.get_kg_usable()),2) if self.get_kg_usable() else 0
             obj.freight = self.freight
             obj.palletizing_per_kg = self.service_downloads
             obj.total_to_pay_to_plant = self.get_final_price()
             obj.save()
         except Exception as e:
-            print(e)
+            pass
 
     def __str__(self):
         return self.lot
@@ -369,11 +368,10 @@ class Lot(models.Model):
                     "box_t1": sum(d.t1 for d in self.i_lot.all()), "box_t2": sum(d.t2 for d in self.i_lot.all()),
                     "box_gn": sum(d.gn for d in self.i_lot.all()), "box_ma": sum(d.ma for d in self.i_lot.all()),
                     "box_industry": sum(d.industry for d in self.i_lot.all()),
-                    "box_csa": sum(d.csa for d in self.i_lot.all()),
-                    }
+                    "box_csa": sum(d.csa for d in self.i_lot.all()), }
         except:
             return {'box_gb': 0, 'box_pa': 0, 'box_co': 0, 'box_t0': 0, 'box_t1': 0, 'box_t2': 0, 'box_gn': 0,
-                    'box_ma': 0,"box_industry": 0,"box_csa": 0}
+                    'box_ma': 0, "box_industry": 0, "box_csa": 0}
 
     def get_provider(self):
         try:
@@ -411,7 +409,7 @@ class ILot(models.Model):
     gn = models.IntegerField(default=0, verbose_name="Gandules")
     ma = models.IntegerField(default=0, verbose_name="Madera")
     industry = models.IntegerField(default=0, verbose_name="Industriales")
-    csa= models.IntegerField(default=0, verbose_name="Cosecha Arandanos")
+    csa = models.IntegerField(default=0, verbose_name="Cosecha Arandanos")
     pallet = models.ForeignKey(Pallets, on_delete=models.PROTECT, verbose_name="Pallet", related_name="pallets")
     tare = models.FloatField(default=0, verbose_name="Tara")
     c6 = models.IntegerField(default=0, verbose_name="Calibre 6")

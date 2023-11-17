@@ -236,7 +236,7 @@ const Summary = ({data}) => {
 
             <div className="text-gray-800  mt-2 text-sm font-semibold ">
                 <h2 className={"font-light"}>
-                    Peso neto: {Humanize.formatNumber(data?.net_weight, 2)} kg</h2>
+                    Peso pagado: {Humanize.formatNumber(data?.amount_net_kg, 2)} kg</h2>
                 <h2 className={"font-light"}>
                     Flete: S/ {Humanize.formatNumber(data?.freight, 2)} </h2>
                 <h2 className={"font-light"}>
@@ -248,12 +248,12 @@ const Summary = ({data}) => {
                 <h2 className={"font-light"}>% Descuento
                     ({Humanize.formatNumber(data?.discount, 2)}%): {Humanize.formatNumber((data?.discount/100)*data?.net_weight, 2)} kg</h2>
                 <h2 className={"font-light"}>% Descuento S/
-                    ({Humanize.formatNumber(data?.discount_price, 2)}%): {Humanize.formatNumber((data?.discount_price/100)*(data?.net_weight-data?.quality), 2)} kg</h2>
+                    ({Humanize.formatNumber(data?.discount_price, 2)}%): {Humanize.formatNumber((data?.discount_price/100)*(data?.amount_net_kg), 2)} kg</h2>
                 <hr/>
             </div>
             <div className="text-gray-800  text-sm font-extrabold text-center">
                 <hr/>
-                <h2 className={"font-extrabold"}>TOTAL: {data?.price_final} | {Humanize.formatNumber(data?.price_final/data?.net_weight,2)}</h2>
+                <h2 className={"font-extrabold"}>TOTAL: {data?.price_final} | {Humanize.formatNumber(data?.price_final/data?.amount_net_kg,2)}</h2>
                 <hr/>
             </div>
 

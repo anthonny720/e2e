@@ -17,10 +17,10 @@ const FormUpdateLot = ({close, data}) => {
     }, {name: 'discount', title: '% Descuento rechazo', type: 'text', maxLength: 16}, {
         name: 'discount_price', title: '% Descuento precio', type: 'text', maxLength: 16
     }, {
-        name: 'discount_price_soles', title: 'Precio soles (descuento)', type: 'text', maxLength: 5
-    }, {name: 'price_camp', title: 'Precio Campo', type: 'text', maxLength: 5}, {
+        name: 'discount_price_soles', title: 'Precio soles (descuento)', type: 'text', maxLength: 6
+    }, {name: 'price_camp', title: 'Precio Campo', type: 'text', maxLength: 6}, {
         name: 'freight', title: 'Flete', type: 'text', maxLength: 10
-    }, {name: 'service_downloads', title: 'Estiba', type: 'text', maxLength: 5},]
+    }, {name: 'service_downloads', title: 'Estiba', type: 'text', maxLength: 10},]
     /*Formik*/
     const formik = useFormik({
         initialValues: initialValues(data),

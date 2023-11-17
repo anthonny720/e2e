@@ -8,9 +8,7 @@ from rest_framework.decorators import permission_classes
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.operations_and_planning.serializers import MaterialSerializer, ProductSerializer, StockSerializer, \
-    StockEntrySerializer, StockExitSerializer, ProductDetailSerializer, StockReEntrySerializer, \
-    ProductionPlanningSerializer
+from apps.operations_and_planning.serializers import MaterialSerializer, ProductSerializer, StockSerializer, StockEntrySerializer, StockExitSerializer, ProductDetailSerializer, StockReEntrySerializer, ProductionPlanningSerializer
 from .models import (Material, Product, Stock, StockEntry, StockExit, StockReEntry, ProductionPlanning)
 from ..commercial.models import SalesProgress
 from ..commercial.serializers import SalesOrderShortSerializer
@@ -21,10 +19,12 @@ from ..util.permissions import AnalystEditorPermission, LogisticsEditorPermissio
 months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
 
 
-def get_filtered_query(category, provider, start_date, end_date):
+def get_filtered_query(category, provider, start_date, end_date,lot):
     queryset = Records.objects.filter(category__icontains=category)
     if provider:
         queryset = queryset.filter(supplier__icontains=provider)
+    if lot:
+        queryset = queryset.filter(lot__icontains=lot)
     if start_date and end_date:
         queryset = queryset.filter(
             entry_date__range=[datetime.strptime(start_date, "%d/%m/%Y"), datetime.strptime(end_date, "%d/%m/%Y")])
@@ -40,7 +40,8 @@ class ListRecordsView(APIView):
         provider = request.query_params.get('provider', None)
         start_date = request.query_params.get('start_date', None)
         end_date = request.query_params.get('end_date', None)
-        queryset = get_filtered_query(category, provider, start_date, end_date)
+        lot = request.query_params.get('lot', None)
+        queryset = get_filtered_query(category, provider, start_date, end_date,lot)
         try:
             serializer = RecordsMPSerializer(queryset, many=True)
             return Response({'data': serializer.data}, status=status.HTTP_200_OK)

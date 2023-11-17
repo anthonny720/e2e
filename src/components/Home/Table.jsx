@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {debounce, map} from "lodash";
 import Humanize from "humanize-plus";
-import {useNavigate} from "react-router-dom";
 import {EyeIcon} from "@heroicons/react/24/outline";
 import {useDispatch, useSelector} from "react-redux";
 import {get_lots} from "../../redux/actions/logistic";
@@ -26,8 +25,7 @@ const TableSummary = () => {
 
 
     const data = useSelector(state => state.Logistic.lots)
-    const navigate = useNavigate();
-    const columns = ['Packing', 'Fecha de descarga', 'Producto', 'Condición', 'Stock', 'Peso neto'];
+    const columns = ['Fecha de descarga', 'Producto', 'Condición', 'Stock', 'Peso neto', 'Precio planta', 'Flete', 'Estiba', 'Kg pagados'];
     return (<div className="w-full">
         <div className="mx-auto container bg-white ">
             <div className="w-full overflow-x-scroll scrollbar-hide max-h-96">
@@ -64,16 +62,14 @@ const TableSummary = () => {
                                     <div className={"flex gap-2 items-center w-full px-2"}>
                                         <a href={`/logistic/${value?.lot}`} target='_blank' rel="noreferrer">
                                             <EyeIcon
-                                                 className={"h-6 w-6 text-gray-400 hover:text-green-400 cursor-pointer"}/>
+                                                className={"h-6 w-6 text-gray-400 hover:text-green-400 cursor-pointer"}/>
 
                                         </a>
-                                        
+
                                         <p>{value?.lot}</p></div>
                                 </td>
 
-                                <td className="text-sm px-2 font-light whitespace-no-wrap text-gray-800  tracking-normal leading-4 text-center">
-                                    {value.business_maquila_name}
-                                </td>
+
                                 <td className="text-sm px-2 font-light whitespace-no-wrap text-gray-800  tracking-normal leading-4 text-center"> {new Date(value?.download_date).toLocaleDateString('es-PE', {
                                     year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC',
                                 })}
@@ -84,7 +80,11 @@ const TableSummary = () => {
                                 <td className={`text-sm px-2 font-light whitespace-no-wrap text-gray-800  tracking-normal leading-4 text-center `}>
                                     <p className={`${value?.stock > 0 && 'bg-green-400 p-2 rounded-2xl text-white bg-opacity-60'}`}>{Humanize.formatNumber(value?.stock, 2)}</p>
                                 </td>
-                                <td className="text-sm px-2 font-light whitespace-no-wrap text-gray-800  tracking-normal leading-4 text-center">{Humanize.formatNumber(value?.net_weight, 2)}</td>
+                                <td className={`text-sm px-2 font-light  ${value?.net_weight > 0 ? 'text-black' : 'text-red-500 font-normal'} whitespace-nowrap text-gray-800  tracking-normal leading-4 text-center `}>{Humanize.formatNumber(value?.net_weight, 2)}</td>
+                                <td className={`text-sm px-2 font-light  ${value?.price_final > 0 ? 'text-black' : 'text-red-500 font-normal'} whitespace-nowrap text-gray-800  tracking-normal leading-4 text-center `}>{Humanize.formatNumber((value?.price_final - value?.freight - value?.service_downloads) / value?.usable_weight, 2)}</td>
+                                <td className={`text-sm px-2 font-light  ${value?.freight > 0 ? 'text-black' : 'text-red-500 font-normal'} whitespace-nowrap text-gray-800  tracking-normal leading-4 text-center `}>{Humanize.formatNumber(value?.freight, 2)}</td>
+                                <td className={`text-sm px-2 font-light  ${value?.service_downloads > 0 ? 'text-black' : 'text-red-500 font-normal'} whitespace-nowrap text-gray-800  tracking-normal leading-4 text-center `}>{Humanize.formatNumber(value?.service_downloads, 2)}</td>
+                                <td className={`text-sm px-2  font-light ${value?.net_weight > 0 ? 'text-black' : 'text-red-500 font-normal'} whitespace-no-wrap text-gray-800  tracking-normal leading-4 text-center `}>{Humanize.formatNumber(value?.usable_weight, 2)}</td>
                             </tr>)
                     })}
                     </tbody>
