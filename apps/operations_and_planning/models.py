@@ -7,7 +7,13 @@ from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.text import slugify
 
+<<<<<<< HEAD
 from apps.management.models import Categories, Suppliers, Outsourcing, UnitOfMeasurement
+=======
+from apps.collection.models import Product as RawMaterial
+from apps.logistic.models import Lot
+from apps.management.models import Categories, Suppliers, Customer, Outsourcing, UnitOfMeasurement
+>>>>>>> dfddcd8ad380cc5d989c2b899a9b83231f76d977
 
 
 # Create your models here.
@@ -78,7 +84,18 @@ class Recipe(models.Model):
     material = models.ForeignKey(Material, on_delete=models.PROTECT, related_name='recipe_materials',
                                  verbose_name='Material')
 
+<<<<<<< HEAD
     quantity = models.DecimalField(verbose_name='Cantidad', max_digits=12, decimal_places=10, default=0, blank=True)
+=======
+    quantity = models.DecimalField(verbose_name='Cantidad - StandarPallet', max_digits=12, decimal_places=10, default=0,
+                                   blank=True)
+
+    quantity_euro = models.DecimalField(verbose_name='Cantidad - EuroPallet', max_digits=12, decimal_places=10,
+                                        default=0, blank=True)
+
+    quantity_loose = models.DecimalField(verbose_name='Cantidad - Suelto', max_digits=12, decimal_places=10, default=0,
+                                         blank=True)
+>>>>>>> dfddcd8ad380cc5d989c2b899a9b83231f76d977
 
     def __str__(self):
         return str(self.id)
@@ -209,6 +226,7 @@ class StockEntry(models.Model):
     stock = models.IntegerField(verbose_name='Cantidad de stock', default=0, editable=False)
 
     def __str__(self):
+<<<<<<< HEAD
         return f'{self.item.name} {self.quantity} und - S/.{str(self.price_per_unit)} - {self.arrival_date}'
 
     def save(self, *args, **kwargs):
@@ -219,6 +237,17 @@ class StockEntry(models.Model):
             if not self.pk:
                 if created:
                     stock.quantity = last.quantity if last else 0
+=======
+        return f'Ingreso de {self.quantity} unidades de {self.item.name} el {self.arrival_date}'
+
+    def save(self, *args, **kwargs):
+        try:
+            last = Stock.objects.filter(product=self.item).last()
+            stock, created = Stock.objects.get_or_create(product=self.item, date=timezone.now())
+            if not self.pk:
+                if created:
+                    stock.quantity = last.quantity
+>>>>>>> dfddcd8ad380cc5d989c2b899a9b83231f76d977
                 stock.quantity += self.quantity
                 stock.save()
                 self.stock = self.quantity
@@ -228,7 +257,11 @@ class StockEntry(models.Model):
             raise ValueError(str(e))
 
 
+<<<<<<< HEAD
 class StockReentry(models.Model):
+=======
+class StockReEntry(models.Model):
+>>>>>>> dfddcd8ad380cc5d989c2b899a9b83231f76d977
     class Meta:
         verbose_name = 'Reingreso de stock'
         verbose_name_plural = 'Reingresos de stock'
@@ -243,12 +276,20 @@ class StockReentry(models.Model):
 
     def save(self, *args, **kwargs):
         try:
+<<<<<<< HEAD
             stocks = Stock.objects.filter(product=self.stock_entry.item)
             last = stocks.last() if stocks.exists() else None
             stock, created = Stock.objects.get_or_create(product=self.stock_entry.item, date=timezone.now())
             if not self.pk:
                 if created:
                     stock.quantity = last.quantity if last else 0
+=======
+            last = Stock.objects.filter(product=self.stock_entry.item).last()
+            stock, created = Stock.objects.get_or_create(product=self.stock_entry.item, date=timezone.now())
+            if not self.pk:
+                if created:
+                    stock.quantity = last.quantity
+>>>>>>> dfddcd8ad380cc5d989c2b899a9b83231f76d977
                 stock.quantity += self.quantity
                 stock.save()
                 self.stock_entry.stock += self.quantity
@@ -266,6 +307,7 @@ class StockExit(models.Model):
         verbose_name_plural = 'Salidas de stock'
         ordering = ('-date', '-id')
 
+<<<<<<< HEAD
     OPTIONS_AREA = (('P', 'Producción'), ('C', 'Calidad'), ('ID', 'I+D'), ('PP', 'PP'),)
 
     stock_entry = models.ForeignKey(StockEntry, on_delete=models.PROTECT, related_name='stock_exits')
@@ -274,6 +316,13 @@ class StockExit(models.Model):
     area = models.CharField(verbose_name='Área', max_length=2, choices=OPTIONS_AREA, default='P')
     applicant = models.CharField(verbose_name='Solicitante', max_length=50, blank=True, null=True)
     vale_number = models.CharField(verbose_name='Número de vale o guía', max_length=50, blank=True, null=True)
+=======
+    stock_entry = models.ForeignKey(StockEntry, on_delete=models.PROTECT, related_name='stock_exits')
+    date = models.DateField(verbose_name='Fecha', auto_now=True)
+    quantity = models.IntegerField(verbose_name='Cantidad de salida')
+    guide_number = models.CharField(verbose_name='Número de guía', max_length=50, blank=True, null=True)
+    vale_number = models.CharField(verbose_name='Número de vale', max_length=50, blank=True, null=True)
+>>>>>>> dfddcd8ad380cc5d989c2b899a9b83231f76d977
     lot_id = models.CharField(verbose_name='Número de lote', max_length=50, blank=True, null=True)
 
     def __str__(self):
@@ -281,6 +330,7 @@ class StockExit(models.Model):
 
     def save(self, *args, **kwargs):
         try:
+<<<<<<< HEAD
             stocks = Stock.objects.filter(product=self.stock_entry.item)
             last = stocks.last() if stocks.exists() else None
 
@@ -288,6 +338,13 @@ class StockExit(models.Model):
             if not self.pk:
                 if created:
                     stock.quantity = last.quantity if last else 0
+=======
+            last = Stock.objects.filter(product=self.stock_entry.item).last()
+            stock, created = Stock.objects.get_or_create(product=self.stock_entry.item, date=timezone.now())
+            if not self.pk:
+                if created:
+                    stock.quantity = last.quantity
+>>>>>>> dfddcd8ad380cc5d989c2b899a9b83231f76d977
                 if self.quantity > stock.quantity:
                     raise ValueError('La cantidad de salida no puede ser mayor a la cantidad de stock.')
                 if self.quantity > self.stock_entry.stock:
@@ -296,9 +353,14 @@ class StockExit(models.Model):
                 stock.save()
                 self.stock_entry.stock -= self.quantity
                 self.stock_entry.save()
+<<<<<<< HEAD
 
             super().save(*args, **kwargs)
             stock.update_material_price()
+=======
+            stock.update_material_price()
+            super().save(*args, **kwargs)
+>>>>>>> dfddcd8ad380cc5d989c2b899a9b83231f76d977
         except Exception as e:
             raise ValueError(str(e))
 
@@ -306,7 +368,12 @@ class StockExit(models.Model):
 class ProductionPlanning(models.Model):
     class Meta:
         verbose_name = 'Planificación de producción'
+<<<<<<< HEAD
         verbose_name_plural = 'Planificación de producción'  # ordering = ['-sale__date']
+=======
+        verbose_name_plural = 'Planificación de producción'
+        # ordering = ['-sale__date']
+>>>>>>> dfddcd8ad380cc5d989c2b899a9b83231f76d977
 
     sale = models.ForeignKey('commercial.SalesProgress', on_delete=models.CASCADE, related_name='production_planning',
                              verbose_name='Orden de venta', blank=True, null=True)

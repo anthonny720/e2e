@@ -9,13 +9,22 @@ import {
     GET_RECORDS_MP_FAIL,
     GET_RECORDS_MP_SUCCESS,
     GET_SALES_PLANNING_FAIL,
+<<<<<<< HEAD
     GET_SALES_PLANNING_SUCCESS,
     GET_SCHEDULE_CALENDAR_FAIL,
     GET_SCHEDULE_CALENDAR_SUCCESS,
+=======
+    GET_SALES_PLANNING_SUCCESS, GET_SCHEDULE_CALENDAR_FAIL, GET_SCHEDULE_CALENDAR_SUCCESS,
+>>>>>>> dfddcd8ad380cc5d989c2b899a9b83231f76d977
     GET_SKU_FAIL,
     GET_SKU_SUCCESS,
     GET_SKUS_FAIL,
     GET_SKUS_SUCCESS,
+<<<<<<< HEAD
+=======
+    GET_STOCK_AVAILABLE_FAIL,
+    GET_STOCK_AVAILABLE_SUCCESS,
+>>>>>>> dfddcd8ad380cc5d989c2b899a9b83231f76d977
     GET_STOCK_ENTRIES_FAIL,
     GET_STOCK_ENTRIES_SUCCESS,
     GET_STOCK_OUTPUTS_FAIL,
@@ -188,6 +197,27 @@ export const get_stock_outputs = (params) => async dispatch => {
     }
 }
 
+<<<<<<< HEAD
+=======
+export const get_stock_available = (params) => async dispatch => {
+    const config = {
+        headers: {
+            'Authorization': `JWT ${localStorage.getItem('access')}`, 'Accept': 'application/json'
+        }, params: {...params}
+    };
+    try {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/operations/stock/available`, config);
+        if (res.status === 200) {
+            dispatch({type: GET_STOCK_AVAILABLE_SUCCESS, payload: res.data});
+        } else {
+            dispatch({type: GET_STOCK_AVAILABLE_FAIL});
+        }
+    } catch (err) {
+        dispatch({type: GET_STOCK_AVAILABLE_FAIL});
+    }
+}
+
+>>>>>>> dfddcd8ad380cc5d989c2b899a9b83231f76d977
 
 export const get_planning_sales = () => async dispatch => {
     const config = {

@@ -7,12 +7,22 @@ import Humanize from "humanize-plus";
 import Skeleton from "react-loading-skeleton";
 import {useNavigate} from "react-router-dom";
 
+<<<<<<< HEAD
 const Table = ({payload, reference}) => {
+=======
+<<<<<<< HEAD
+const Table = ({payload,reference}) => {
+=======
+const Table = ({formData, onChange, payload,reference}) => {
+    const {name, group__name} = formData
+>>>>>>> dfddcd8ad380cc5d989c2b899a9b83231f76d977
+>>>>>>> caf611d875b3ea3cb5b1653c0d8528a0c0cf7edf
     const navigate = useNavigate()
 
     return (<table className="w-full  text-sm text-left text-gray-500 " ref={reference}>
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
         <tr>
+<<<<<<< HEAD
             <th scope="col" className="px-6 py-3 text-center text-gray-400">
                 SAP
             </th>
@@ -30,18 +40,80 @@ const Table = ({payload, reference}) => {
             </th>
             <th scope="col" className="px-6 py-3 text-center text-gray-400">
                 U.M.
+=======
+            <th scope="col" className="px-6 py-3">
+                <input
+                    name="name"
+                    id="name"
+                    type="text"
+                    className="w-full bg-transparent focus:border-none focus:outline-none"
+                    value={name}
+                    onChange={e => onChange(e)}
+                    placeholder="Nombre"
+                />
+
+            </th>
+            <th scope="col" className="px-6 py-3">
+                <input
+                    name={'group__name'}
+                    id={'group__name'}
+                    type="text"
+                    className="w-full bg-transparent focus:border-none focus:outline-none"
+                    value={group__name}
+                    onChange={e => onChange(e)}
+                    placeholder="Categoría"
+                />
+            </th>
+            <th scope="col" className="px-6 py-3">
+                <input
+                    name={'performance'}
+                    id={'performance'}
+                    type="text"
+                    disabled={true}
+                    className="w-full bg-transparent focus:border-none focus:outline-none"
+                    placeholder="Rendimiento"
+                />
+            </th>
+            <th scope="col" className="px-6 py-3">
+                <input
+                    name={'capacity'}
+                    id={'capacity'}
+                    type="text"
+                    disabled={true}
+                    className="w-full bg-transparent focus:border-none focus:outline-none"
+                    placeholder="Capacidad"
+                />
+            </th>
+            <th scope="col" className="px-6 py-3">
+                <input
+                    name={'um'}
+                    id={'um'}
+                    disabled={true}
+                    type="text"
+                    className="w-full bg-transparent focus:border-none focus:outline-none"
+                    placeholder="U.M."
+                />
+>>>>>>> dfddcd8ad380cc5d989c2b899a9b83231f76d977
             </th>
         </tr>
         </thead>
         <tbody>
         {payload && payload !== null && payload !== undefined && size(payload) > 0 ? map(payload, (i, index) => <tr
             key={index} className="bg-white border-b ">
+<<<<<<< HEAD
             <td className=" py-4  text-gray-900 whitespace-nowrap md:whitespace-wrap text-xs ">
+=======
+            <td className="pr-2 py-4 font-medium text-gray-900 whitespace-nowrap ">
+>>>>>>> dfddcd8ad380cc5d989c2b899a9b83231f76d977
                 <div className={"flex gap-2"}>
                     <Menu as="div" className="relative inline-block text-left z-[100]">
                         <div>
                             <Menu.Button
+<<<<<<< HEAD
                                 className="w-full justify-center rounded-md  text-sm  ">
+=======
+                                className="w-full justify-center rounded-md  text-sm font-medium ">
+>>>>>>> dfddcd8ad380cc5d989c2b899a9b83231f76d977
 
                                 <EllipsisVerticalIcon
                                     className="ml-2 -mr-1 h-5 w-5 text-gray-400 hover:text-violet-100"
@@ -71,7 +143,12 @@ const Table = ({payload, reference}) => {
                             </Menu.Items>
                         </Transition>
                     </Menu>
+<<<<<<< HEAD
                     {i?.sap}
+=======
+<<<<<<< HEAD
+                       {i?.name}
+>>>>>>> caf611d875b3ea3cb5b1653c0d8528a0c0cf7edf
                 </div>
             </td>
             <td className="text-start py-4 pl-4  text-xs text-gray-900 whitespace-nowrap  ">
@@ -87,6 +164,23 @@ const Table = ({payload, reference}) => {
                 {Humanize.formatNumber(i?.capacity, 2)}
             </td>
             <td className="text-center py-4  text-xs text-gray-900 whitespace-nowrap  flex gap-2 justify-center">
+=======
+                    <p className={"hover:text-green-400 hover:font-bold cursor-pointer"}
+                       >{i?.name}</p>
+                </div>
+            </td>
+
+            <td className="px-8 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                {i?.group_name}
+            </td>
+            <td className="px-8 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                {Humanize.formatNumber(i?.performance, 2)}
+            </td>
+            <td className="px-8 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                {Humanize.formatNumber(i?.capacity, 2)}
+            </td>
+            <td className="px-8 py-4 font-medium text-gray-900 whitespace-nowrap  flex gap-2">
+>>>>>>> dfddcd8ad380cc5d989c2b899a9b83231f76d977
                 {i?.unit_of_measurement_name}
                 <Popover className="relative">
                     {({open}) => (<>
@@ -115,7 +209,11 @@ const Table = ({payload, reference}) => {
                                                             className="flow-root rounded-md px-2 py-2 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50">
                                                           <span className="flex items-center">
                                                             <span
+<<<<<<< HEAD
                                                                 className="text-sm  text-gray-900">Información</span>
+=======
+                                                                className="text-sm font-medium text-gray-900">Información</span>
+>>>>>>> dfddcd8ad380cc5d989c2b899a9b83231f76d977
                                                           </span>
                                                             <span
                                                                 className="block text-sm text-gray-500 overflow-x-auto scrollbar-hide">{i?.information}</span>
