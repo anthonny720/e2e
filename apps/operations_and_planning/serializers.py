@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
-from apps.operations_and_planning.models import Material, Product, Recipe, Stock, StockEntry, StockExit, StockReEntry, \
-    ProductionPlanning
+from apps.operations_and_planning.models import Material, Product, Recipe, Stock, StockEntry, StockExit, StockReentry, ProductionPlanning
 
 
 class MaterialSerializer(serializers.ModelSerializer):
@@ -70,7 +69,7 @@ class StockReEntrySerializer(serializers.ModelSerializer):
     stock_entry = StockEntrySerializer(read_only=True)
 
     class Meta:
-        model = StockReEntry
+        model = StockReentry
         fields = '__all__'
 
 

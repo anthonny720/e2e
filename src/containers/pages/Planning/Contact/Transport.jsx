@@ -27,7 +27,7 @@ const TransportBusiness = () => {
                 <CloudArrowDownIcon className={"w-6 cursor-pointer text-gray-400"}/>
             </p>
         </div>
-        <div class="relative overflow-x-auto scrollbar-hide  sm:rounded-lg p-2 max-h-[450px] md:max-h-[550px]">
+        <div className="relative overflow-x-auto scrollbar-hide  sm:rounded-lg p-2 max-h-[450px] md:max-h-[550px]">
             <Table reference={tableRef} data={payload} onLoad={get_transports} path={'transports'}/>
         </div>
     </Planning>);

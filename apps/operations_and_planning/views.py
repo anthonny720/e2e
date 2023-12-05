@@ -4,22 +4,20 @@ from datetime import datetime
 from django.db import DatabaseError
 from django.db.models import OuterRef, ProtectedError
 from rest_framework import status
-from rest_framework.decorators import permission_classes
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from apps.operations_and_planning.serializers import MaterialSerializer, ProductSerializer, StockSerializer, StockEntrySerializer, StockExitSerializer, ProductDetailSerializer, StockReEntrySerializer, ProductionPlanningSerializer
-from .models import (Material, Product, Stock, StockEntry, StockExit, StockReEntry, ProductionPlanning)
+from .models import (Material, Product, Stock, StockEntry, StockExit, StockReentry, ProductionPlanning)
 from ..commercial.models import SalesProgress
 from ..commercial.serializers import SalesOrderShortSerializer
 from ..logistic.models import Records
 from ..logistic.serializers import RecordsMPSerializer
-from ..util.permissions import AnalystEditorPermission, LogisticsEditorPermission, PlanningProductionEditorPermission
 
 months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
 
 
-def get_filtered_query(category, provider, start_date, end_date,lot):
+def get_filtered_query(category, provider, start_date, end_date, lot):
     queryset = Records.objects.filter(category__icontains=category)
     if provider:
         queryset = queryset.filter(supplier__icontains=provider)
@@ -41,7 +39,7 @@ class ListRecordsView(APIView):
         start_date = request.query_params.get('start_date', None)
         end_date = request.query_params.get('end_date', None)
         lot = request.query_params.get('lot', None)
-        queryset = get_filtered_query(category, provider, start_date, end_date,lot)
+        queryset = get_filtered_query(category, provider, start_date, end_date, lot)
         try:
             serializer = RecordsMPSerializer(queryset, many=True)
             return Response({'data': serializer.data}, status=status.HTTP_200_OK)
@@ -64,7 +62,7 @@ class BaseListView(APIView):
             queryset = self.get_queryset()
             filter_kwargs = {}
             for param in self.filter_params:
-                filter_value = self.request.query_params.get(param, None)
+                filter_value = self.request.query_params.get('name', None)
                 if filter_value:
                     filter_kwargs[f"{param}__icontains"] = filter_value
 
@@ -106,6 +104,17 @@ class BaseListView(APIView):
         except Exception as e:
             error_message = 'Se ha producido un error inesperado en el servidor. Por favor, inténtelo de nuevo más tarde.'
             return Response({'message': error_message, 'detail': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class NoMixin():
+    def post(self, request):
+        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def patch(self, request):
+        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def delete(self, request):
+        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
 class BaseDetailView(APIView):
@@ -168,46 +177,26 @@ class BaseDetailView(APIView):
             return Response({'message': error_message, 'detail': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([AnalystEditorPermission])
-class ListMaterialView(BaseListView):
+class ListMaterialView(BaseListView, NoMixin):
     model = Material
     serializer_class = MaterialSerializer
-    filter_params = ['name', 'sap']
+    filter_params = []
 
-
-@permission_classes([AnalystEditorPermission])
-class ListProductView(BaseListView):
+class ListProductView(BaseListView, NoMixin):
     model = Product
     serializer_class = ProductSerializer
-    filter_params = ['name', 'group__name']
+    filter_params = []
 
 
-@permission_classes([AnalystEditorPermission])
-class DetailMaterialView(BaseDetailView):
-    model = Material
-    serializer_class = MaterialSerializer
-
-
-@permission_classes([AnalystEditorPermission])
-class DetailProductView(BaseDetailView):
+class DetailProductView(BaseDetailView, NoMixin):
     model = Product
     serializer_class = ProductDetailSerializer
 
 
-class NoGetMixin:
-    def get(self, request):
-        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
-
-
-class NoPostMixin:
-    def post(self, request):
-        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
-
-
-class ListStockView(BaseListView, NoPostMixin):
+class ListStockView(BaseListView, NoMixin):
     model = Stock
     serializer_class = StockSerializer
-    filter_params = ['product__name', 'product__sap']
+    filter_params = ['product__name']
 
     def get_queryset(self):
         # Subconsulta para obtener la fecha máxima de cada material
@@ -219,23 +208,20 @@ class ListStockView(BaseListView, NoPostMixin):
         return latest_stocks
 
 
-@permission_classes([LogisticsEditorPermission])
-class ListStockReEntryView(BaseListView, NoPostMixin):
-    model = StockReEntry
+class ListStockReEntryView(BaseListView, NoMixin):
+    model = StockReentry
     serializer_class = StockReEntrySerializer
-    filter_params = ['stock_entry__item__name']
+    filter_params = ['stock_entry_item__name']
     date_query = 'date'
 
 
-@permission_classes([LogisticsEditorPermission])
-class ListStockEntryView(BaseListView, NoPostMixin):
+class ListStockEntryView(BaseListView, NoMixin):
     model = StockEntry
     serializer_class = StockEntrySerializer
     filter_params = ['item__name']
     date_query = 'arrival_date'
 
 
-@permission_classes([LogisticsEditorPermission])
 class ListStockExitView(APIView):
     model = StockExit
     serializer_class = StockExitSerializer
@@ -243,7 +229,7 @@ class ListStockExitView(APIView):
     def get(self, request):
         try:
             stock_exits = self.model.objects.all()
-            product_name = request.query_params.get('product__name', None)
+            product_name = request.query_params.get('name', None)
             start_date = request.query_params.get('start_date', None)
             end_date = request.query_params.get('end_date', None)
             if product_name:
@@ -256,28 +242,6 @@ class ListStockExitView(APIView):
                 stock_exits = stock_exits[:50]
 
             serializer = self.serializer_class(stock_exits, many=True)
-            return Response({'data': serializer.data}, status=status.HTTP_200_OK)
-        except DatabaseError:
-            error_message = 'No se puede procesar su solicitud debido a un error de base de datos. Por favor, inténtelo de nuevo más tarde.'
-            return Response({'message': error_message}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        except Exception as e:
-            error_message = 'Se ha producido un error inesperado en el servidor. Por favor, inténtelo de nuevo más tarde.'
-            return Response({'message': error_message, 'detail': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
-class ListStockAvailableView(BaseListView):
-    model = StockEntry
-    serializer_class = StockEntrySerializer
-
-    def get_queryset(self):
-        query = self.model.objects.filter(stock__gt=0)
-        return query
-
-    def get(self, request):
-        try:
-            stock_entries = self.get_queryset()
-            product_name = request.query_params.get('product__name', None)
-            serializer = self.serializer_class(stock_entries, many=True)
             return Response({'data': serializer.data}, status=status.HTTP_200_OK)
         except DatabaseError:
             error_message = 'No se puede procesar su solicitud debido a un error de base de datos. Por favor, inténtelo de nuevo más tarde.'
@@ -305,21 +269,20 @@ class ListPlanningProductionView(APIView):
             return Response({'message': error_message, 'detail': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-# @permission_classes([PlanningProductionEditorPermission])
-class ListProductionPlanningView(BaseListView, NoGetMixin):
+class ListProductionPlanningView(BaseListView, NoMixin):
     model = ProductionPlanning
     serializer_class = ProductionPlanningSerializer
     filter_params = []
 
 
-# @permission_classes([PlanningProductionEditorPermission])
-class DetailProductionPlanningView(BaseDetailView, NoGetMixin):
+class DetailProductionPlanningView(BaseDetailView, NoMixin):
     model = ProductionPlanning
     serializer_class = ProductionPlanningSerializer
 
     def get_object(self, id):
         query = self.model.objects.get(id=id)
         return query
+
 
 class CalendarScheduleManufacturingView(APIView):
     model = ProductionPlanning
@@ -329,9 +292,9 @@ class CalendarScheduleManufacturingView(APIView):
         try:
             query = self.model.objects.filter(sale__commercial_status='100', sale__status__in=['TBT', 'TBD', 'TBP'])
             for item in query:
-                data.append({
-                    'title': item.sale.sku + ' - ' + item.sale.client_name + " " + str(
-                        item.raw_material) + " kg", 'date': item.date, })
+                data.append(
+                    {'title': item.sale.sku + ' - ' + item.sale.client_name + " " + str(item.raw_material) + " kg",
+                     'date': item.date, })
             return Response(data, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'data': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

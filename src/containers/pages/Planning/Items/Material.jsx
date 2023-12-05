@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import Planning from "../Home";
 import NavItems from "../../../../components/Planning/Items/Nav";
 import {CloudArrowDownIcon} from "@heroicons/react/24/solid";
@@ -11,16 +11,13 @@ import {Helmet} from "react-helmet";
 
 const Material = () => {
     const tableRef = useRef(null);
-    const [formData, setFormData] = useState({sap: '', name: ''})
-
-
     const dispatch = useDispatch()
     const payload = useSelector(state => state.Operations.materials)
 
 
     useEffect(() => {
-        dispatch(get_materials(formData))
-    }, [formData])
+        dispatch(get_materials())
+    }, [])
 
 
     return (<Planning>

@@ -1,12 +1,11 @@
 import React, {useState} from 'react';
 import DateRangePicker from '@wojtekmaj/react-daterange-picker';
 
-const Filter = ({dispatch, action,dateField}) => {
+const Filter = ({dispatch, action, dateField}) => {
     const [formData, setFormData] = useState({name: '', start_date: '', end_date: ''})
     const [date, setDate] = useState();
 
-    const searchFilter = (e) => {
-        e.preventDefault();
+    const searchFilter = () => {
         dispatch(action(formData))
     }
     const onDateChange = (e) => {
@@ -19,7 +18,7 @@ const Filter = ({dispatch, action,dateField}) => {
     }
 
     return (<div className={"sm:flex hidden gap-2 bg-white rounded-full"}>
-        {dateField &&  <DateRangePicker
+        {dateField && <DateRangePicker
             className={`z-[100] rounded-2xl bg-white w-max text-gray-400 text-xs h-10 px-10 pr-10 rounded-full text-sm focus:outline-none   `}
             calendarClassName={"border-1"} onChange={onDateChange}
             value={date}/>}
@@ -30,10 +29,10 @@ const Filter = ({dispatch, action,dateField}) => {
                 name="search"
                 placeholder="Buscar"
                 value={formData?.name || ''}
-                onChange={(e) => searchFilter({...formData, name: e.target.value})}
+                onChange={(e) => setFormData({...formData, name: e.target.value})}
                 className="bg-white h-10 px-5 pr-10 rounded-full text-sm focus:outline-none"
             />
-            <button onClick={(e) => searchFilter(e)} type="submit" className="absolute right-0 top-0 mt-3 mr-4">
+            <button onClick={() => searchFilter()} type="button" className="absolute right-0 top-0 mt-3 mr-4">
                 <svg
                     className="h-4 w-4 fill-current"
                     version="1.1"

@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import Planning from "../Home";
-import {useLocation, useParams} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import {useDispatch, useSelector} from "react-redux";
-import Modal from "../../../../components/util/Modal";
-import ModalHook from "../../../../components/util/hooks";
 import {get_sku} from "../../../../redux/actions/operations";
 import {map} from "lodash";
 import Recipe from "../../../../components/Planning/Items/Products/Recipe";
@@ -16,46 +14,47 @@ function classNames(...classes) {
 }
 
 const ProductDetail = () => {
-    const {id} = useParams();
     const location = useLocation();
     const {state} = location;
     const dispatch = useDispatch();
     const payload = useSelector((state) => state.Operations.product);
-    const loading = useSelector((state) => state.Operations.loading_products);
-    const {content, setContent, isOpen, setIsOpen, openModal} = ModalHook();
 
 
     useEffect(() => {
         dispatch({type: 'GET_SKU_FAIL'});
         dispatch(get_sku(state));
-        setFormData(payload)
     }, []);
+
+    useEffect(() => {
+        setFormData(payload)
+    }, [payload]);
 
 
     const [formData, setFormData] = useState({undefined}); // Inicializar con null
 
 
     const {
-        name, unit_of_measurement_name, group_name, information, created_at, updated_at, performance, capacity
+        name, unit_of_measurement_name, group_name, information, created_at, updated_at, performance, capacity, sap
     } = formData || {}; // Desestructurar formData solo si no es null
 
 
     const list = [{
         object: created_at, label: 'Creado'
-    }, {object: updated_at, label: 'Actualizado'}, {object: performance, label: 'Rendimiento'}, {
-        object: unit_of_measurement_name, label: 'U.M.'
-    }, {object: group_name, label: 'Grupo'}, {object: information, label: 'Información'}, {
-        object: capacity, label: 'Capacidad'
-    },]
+    }, {object: updated_at, label: 'Actualizado'}, {object: sap, label: 'SAP'}, {
+        object: group_name,
+        label: 'Grupo'
+    }, {object: performance, label: 'Rendimiento'}, {
+        object: capacity,
+        label: 'Capacidad'
+    }, {object: unit_of_measurement_name, label: 'U.M.'}, {object: information, label: 'Información'},]
 
-    let panels = ['Información general', 'Recetas/BOM']
+    let panels = ['Información', 'BOM']
 
 
     return (<Planning>
         <Helmet>
             <title>{name}</title>
         </Helmet>
-        <Modal isOpen={isOpen} close={openModal} children={content}/>
         <div className={'p-2 flex relative'}>
 
             <div className={"bg-white w-full shadow-2xl "}>
@@ -76,7 +75,7 @@ const ProductDetail = () => {
                             {i}
                         </Tab>))}
                     </Tab.List>
-                    <Skeleton height={5} highlightColor={!loading ? "#22C55E" : "#F1C40F"}/>
+                    <Skeleton height={5} highlightColor={"rgba(15,241,72,0.4)"}/>
                     <Tab.Panels className="mt-2">
                         <Tab.Panel
                         >

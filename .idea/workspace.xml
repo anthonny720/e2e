@@ -4,7 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3b3e131-1067-4e99-acb5-87c2a2a9bd2b" name="Changes" comment="Commit Logistic" />
+    <list default="true" id="f3b3e131-1067-4e99-acb5-87c2a2a9bd2b" name="Changes" comment="Commit Recipe">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/operations_and_planning/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/operations_and_planning/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/operations_and_planning/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/operations_and_planning/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/operations_and_planning/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/operations_and_planning/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Planning/Contacts/Table.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Planning/Contacts/Table.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Planning/Filter.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Planning/Filter.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Planning/Items/Products/Recipe.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Planning/Items/Products/Recipe.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Planning/Items/Products/Table.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Planning/Items/Products/Table.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/pages/Planning/Contact/Customers.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/pages/Planning/Contact/Customers.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/pages/Planning/Contact/Outsourcing.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/pages/Planning/Contact/Outsourcing.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/pages/Planning/Contact/Suppliers.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/pages/Planning/Contact/Suppliers.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/pages/Planning/Contact/SuppliersRawMaterial.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/pages/Planning/Contact/SuppliersRawMaterial.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/pages/Planning/Contact/Transport.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/pages/Planning/Contact/Transport.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/pages/Planning/Items/Material.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/pages/Planning/Items/Material.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/pages/Planning/Items/ProductDetail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/pages/Planning/Items/ProductDetail.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/pages/Planning/Items/Products.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/pages/Planning/Items/Products.jsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,6 +34,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -29,6 +47,9 @@
         <option name="url" value="https://github.com/anthonny720/e2e.git" />
       </UrlAndAccount>
     </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="PackageJsonUpdateNotifier">
     <dismissed value="$PROJECT_DIR$/package.json" />
@@ -43,23 +64,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/data_/Documents/Development/e2e",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/data_/Documents/Development/e2e&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="ReactDesignerToolWindowState">
     <option name="myId2Visible">
       <map>
@@ -111,7 +132,7 @@
       <workItem from="1701522358863" duration="11315000" />
       <workItem from="1701553266085" duration="3731000" />
       <workItem from="1701753622653" duration="2489000" />
-      <workItem from="1701756163069" duration="656000" />
+      <workItem from="1701756163069" duration="7678000" />
     </task>
     <task id="LOCAL-00001" summary="Commit Logistic">
       <option name="closed" value="true" />
@@ -143,6 +164,7 @@
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
     <MESSAGE value="Commit Logistic" />
-    <option name="LAST_COMMIT_MESSAGE" value="Commit Logistic" />
+    <MESSAGE value="Commit Recipe" />
+    <option name="LAST_COMMIT_MESSAGE" value="Commit Recipe" />
   </component>
 </project>

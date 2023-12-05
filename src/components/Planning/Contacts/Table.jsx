@@ -66,7 +66,7 @@ const Table = ({data, onLoad, path, reference}) => {
         <tbody>
         {data && data !== null && data !== undefined && size(data) > 0 ? map(data, (i, index) => <tr
             className="bg-white border-b" key={index}>
-            <td className="pr-2 py-4 font-medium text-gray-900 whitespace-nowrap ">
+            <td className="pr-2 py-4 text-xs text-gray-900 whitespace-nowrap ">
                 <div className={"flex gap-2"}>
                     <Menu as="div" className="relative inline-block text-left z-[100]">
                         <div>
@@ -102,10 +102,10 @@ const Table = ({data, onLoad, path, reference}) => {
                     <p>{i.display_name}</p>
                 </div>
             </td>
-            <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+            <td className="px-6 py-4 text-xs text-gray-900 whitespace-nowrap ">
                 {i?.email}
             </td>
-            <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+            <td className="px-6 py-4 text-xs text-gray-900 whitespace-nowrap ">
                 {i?.phone}
             </td>
 

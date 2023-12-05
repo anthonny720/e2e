@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import Planning from "../Home";
 import NavItems from "../../../../components/Planning/Items/Nav";
 import {CloudArrowDownIcon} from "@heroicons/react/24/solid";
@@ -12,17 +12,13 @@ import {get_skus} from "../../../../redux/actions/operations";
 const Products = () => {
     const tableRef = useRef(null);
 
-    const [formData, setFormData] = useState({
-        name: '', group__name: ''
-    })
-
 
     const dispatch = useDispatch();
     const payload = useSelector(state => state.Operations.products)
 
     useEffect(() => {
-        dispatch(get_skus(formData))
-    }, [dispatch, payload]);
+        dispatch(get_skus())
+    }, []);
 
 
     return (<Planning>
