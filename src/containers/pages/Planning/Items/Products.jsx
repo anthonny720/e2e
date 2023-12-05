@@ -16,6 +16,12 @@ const Products = () => {
         name: '', group__name: ''
     })
 
+<<<<<<< HEAD
+=======
+    const onChange = e => {
+        setFormData({...formData, [e.target.name]: e.target.value})
+    }
+>>>>>>> dfddcd8ad380cc5d989c2b899a9b83231f76d977
 
     const dispatch = useDispatch();
     const payload = useSelector(state => state.Operations.products)
@@ -47,7 +53,11 @@ const Products = () => {
         </div>
 
         <div className="relative overflow-x-auto scrollbar-hide  sm:rounded-lg p-2  max-h-[450px] md:max-h-[550px]">
+<<<<<<< HEAD
             <Table reference={tableRef} payload={payload}/>
+=======
+            <Table reference={tableRef} payload={payload} formData={formData} onChange={onChange}/>
+>>>>>>> dfddcd8ad380cc5d989c2b899a9b83231f76d977
         </div>
     </Planning>);
 };

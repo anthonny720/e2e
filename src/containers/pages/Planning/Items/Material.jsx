@@ -14,6 +14,13 @@ const Material = () => {
     const [formData, setFormData] = useState({sap: '', name: ''})
 
 
+<<<<<<< HEAD
+=======
+    const onChange = e => {
+        setFormData({...formData, [e.target.name]: e.target.value})
+    }
+
+>>>>>>> dfddcd8ad380cc5d989c2b899a9b83231f76d977
     const dispatch = useDispatch()
     const payload = useSelector(state => state.Operations.materials)
 
@@ -50,6 +57,11 @@ const Material = () => {
             <div
                 className="relative overflow-x-scroll scrollbar-hide  sm:rounded-lg p-2  max-h-[450px] md:max-h-[550px]">
                 <Table reference={tableRef}
+<<<<<<< HEAD
+=======
+                       formData={formData}
+                       onChange={onChange}
+>>>>>>> dfddcd8ad380cc5d989c2b899a9b83231f76d977
                        payload={payload}
                 />
             </div>

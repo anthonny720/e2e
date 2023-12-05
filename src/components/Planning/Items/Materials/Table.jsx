@@ -1,15 +1,27 @@
 import React, {Fragment} from 'react';
 import {map, size} from "lodash";
+<<<<<<< HEAD
 import {Popover, Transition} from "@headlessui/react";
 import {InformationCircleIcon} from "@heroicons/react/24/solid";
 import Humanize from "humanize-plus";
 import Skeleton from "react-loading-skeleton";
 
 const Table = ({payload, reference}) => {
+=======
+import {Menu, Popover, Transition} from "@headlessui/react";
+import {EllipsisVerticalIcon, InformationCircleIcon, PencilIcon} from "@heroicons/react/24/solid";
+import {EyeIcon, TrashIcon} from "@heroicons/react/24/outline";
+import Humanize from "humanize-plus";
+import Skeleton from "react-loading-skeleton";
+
+const Table = ({formData, onChange, payload,reference}) => {
+    const {sap, name} = formData
+>>>>>>> dfddcd8ad380cc5d989c2b899a9b83231f76d977
 
     return (<table className="w-full  text-sm text-left text-gray-500 " ref={reference}>
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
         <tr>
+<<<<<<< HEAD
             <th scope="col" className="px-6 py-3  text-center text-gray-400">
                 SAP
             </th>
@@ -26,6 +38,62 @@ const Table = ({payload, reference}) => {
 
             <th scope="col" className="px-6 py-3  text-center text-gray-400">
                 U.M.
+=======
+            <th scope="col" className="px-6 py-3 w-max">
+                <input
+                    name={'sap'}
+                    id={'sap'}
+                    type="text"
+                    className="w-full bg-transparent focus:border-none focus:outline-none"
+                    value={sap}
+                    onChange={e => onChange(e)}
+                    placeholder="SAP"
+                />
+            </th>
+            <th scope="col" className="px-6 py-3 w-max">
+                <input
+                    name="name"
+                    id="name"
+                    type="text"
+                    className="w-full bg-transparent focus:border-none focus:outline-none"
+                    value={name}
+                    onChange={e => onChange(e)}
+                    placeholder="Nombre"
+                />
+
+            </th>
+            <th scope="col" className="px-6 py-3 w-max">
+                <input
+                    name={'group'}
+                    id={'group'}
+                    type="text"
+                    className="w-full bg-transparent focus:border-none focus:outline-none"
+                    disabled={true}
+                    placeholder="Grupo"
+                />
+            </th>
+
+            <th scope="col" className="px-6 py-3 w-max">
+                <input
+                    name={'price'}
+                    id={'price'}
+                    disabled={true}
+                    type="text"
+                    className="w-full bg-transparent focus:border-none focus:outline-none"
+                    placeholder="Precio"
+                />
+            </th>
+
+            <th scope="col" className="px-6 py-3">
+                <input
+                    name={'um'}
+                    id={'um'}
+                    disabled={true}
+                    type="text"
+                    className="w-full bg-transparent focus:border-none focus:outline-none"
+                    placeholder="U.M."
+                />
+>>>>>>> dfddcd8ad380cc5d989c2b899a9b83231f76d977
             </th>
         </tr>
 
@@ -33,6 +101,7 @@ const Table = ({payload, reference}) => {
         <tbody>
         {payload && payload !== null && payload !== undefined && size(payload) > 0 ? map(payload, (i, index) => <tr
             key={index} className="bg-white border-b ">
+<<<<<<< HEAD
             <td className="text-center text-xs py-4  text-gray-900 whitespace-nowrap ">
                     {i?.sap}
             </td>
@@ -46,6 +115,55 @@ const Table = ({payload, reference}) => {
                 {Humanize.formatNumber(i?.price, 2)}
             </td>
             <td className="text-center text-xs py-4  text-gray-900 whitespace-nowrap  flex gap-2">
+=======
+            <td className="pr-2 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                <div className={"flex gap-2"}>
+                    <Menu as="div" className="relative inline-block text-left z-[100]">
+                        <div>
+                            <Menu.Button
+                                className="w-full justify-center rounded-md  text-sm font-medium ">
+
+                                <EllipsisVerticalIcon
+                                    className="ml-2 -mr-1 h-5 w-5 text-gray-400 hover:text-violet-100"
+                                    aria-hidden="true"
+                                />
+                            </Menu.Button>
+                        </div>
+                        <Transition
+                            as={Fragment}
+                            enter="transition ease-out duration-100"
+                            enterFrom="transform opacity-0 scale-95"
+                            enterTo="transform opacity-100 scale-100"
+                            leave="transition ease-in duration-75"
+                            leaveFrom="transform opacity-100 scale-100"
+                            leaveTo="transform opacity-0 scale-95"
+                        >
+                            <Menu.Items
+                                className="absolute bottom-2 mb-2 w-8  divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                <div className="px-2 py-2 cursor-pointer">
+                                    <Menu.Item>
+                                        <EyeIcon title={"Ver"}
+                                                    className={'w-4 text-blue-400 '}/>
+                                    </Menu.Item>
+
+                                </div>
+                            </Menu.Items>
+                        </Transition>
+                    </Menu>
+                    <p>{i?.sap}</p>
+                </div>
+            </td>
+            <td className="px-8 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                {i?.name}
+            </td>
+            <td className="px-8 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                {i?.group_name}
+            </td>
+            <td className="px-8 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                {Humanize.formatNumber(i?.price, 2)}
+            </td>
+            <td className="px-8 py-4 font-medium text-gray-900 whitespace-nowrap  flex gap-2">
+>>>>>>> dfddcd8ad380cc5d989c2b899a9b83231f76d977
                 {i?.unit_of_measurement_name}
                 <Popover className="relative">
                     {({open}) => (<>
@@ -74,7 +192,11 @@ const Table = ({payload, reference}) => {
                                                             className="flow-root rounded-md px-2 py-2 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50">
                                                           <span className="flex items-center">
                                                             <span
+<<<<<<< HEAD
                                                                 className="text-sm  text-gray-900">Información</span>
+=======
+                                                                className="text-sm font-medium text-gray-900">Información</span>
+>>>>>>> dfddcd8ad380cc5d989c2b899a9b83231f76d977
                                                           </span>
                                                             <span
                                                                 className="block text-sm text-gray-500 overflow-x-auto scrollbar-hide">{i?.information}</span>

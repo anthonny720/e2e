@@ -15,6 +15,11 @@ import {
     GET_SKU_SUCCESS,
     GET_SKUS_FAIL,
     GET_SKUS_SUCCESS,
+<<<<<<< HEAD
+=======
+    GET_STOCK_AVAILABLE_FAIL,
+    GET_STOCK_AVAILABLE_SUCCESS,
+>>>>>>> dfddcd8ad380cc5d989c2b899a9b83231f76d977
     GET_STOCK_ENTRIES_FAIL,
     GET_STOCK_ENTRIES_SUCCESS,
     GET_STOCK_OUTPUTS_FAIL,
@@ -23,8 +28,17 @@ import {
     GET_STOCK_REENTRIES_SUCCESS,
     GET_STOCKS_FAIL,
     GET_STOCKS_SUCCESS,
+<<<<<<< HEAD
     LOADING_RECORDS_MP_FAIL,
     LOADING_RECORDS_MP_SUCCESS,
+=======
+    LOADING_MATERIALS_PRODUCTS_FAIL,
+    LOADING_MATERIALS_PRODUCTS_SUCCESS,
+    LOADING_RECORDS_MP_FAIL,
+    LOADING_RECORDS_MP_SUCCESS,
+    LOADING_STOCK_FAIL,
+    LOADING_STOCK_SUCCESS,
+>>>>>>> dfddcd8ad380cc5d989c2b899a9b83231f76d977
     UPDATE_SCHEDULE_MANUFACTURING_FAIL,
     UPDATE_SCHEDULE_MANUFACTURING_SUCCESS,
 } from "../actions/types";
@@ -33,6 +47,10 @@ const initialState = {
     lots: null,
     summary: null,
     loading: false,
+<<<<<<< HEAD
+=======
+    loading_products: false,
+>>>>>>> dfddcd8ad380cc5d989c2b899a9b83231f76d977
     materials: null,
     products: null,
     product: null,
@@ -40,6 +58,11 @@ const initialState = {
     stock_entries: null,
     stock_reentries: null,
     stock_outputs: null,
+<<<<<<< HEAD
+=======
+    stock_available: null,
+    loading_stock: false,
+>>>>>>> dfddcd8ad380cc5d989c2b899a9b83231f76d977
     planning: null,
     calendar: null
 
@@ -58,6 +81,27 @@ export default function Operations(state = initialState, action) {
             return {
                 ...state, stock_reentries: null
             }
+<<<<<<< HEAD
+=======
+
+
+        case LOADING_STOCK_FAIL:
+            return {
+                ...state, loading_stock: false
+            }
+        case LOADING_STOCK_SUCCESS:
+            return {
+                ...state, loading_stock: true
+            }
+        case GET_STOCK_AVAILABLE_SUCCESS:
+            return {
+                ...state, stock_available: payload.data
+            }
+        case GET_STOCK_AVAILABLE_FAIL:
+            return {
+                ...state, stock_available: null
+            }
+>>>>>>> dfddcd8ad380cc5d989c2b899a9b83231f76d977
         case GET_STOCK_OUTPUTS_SUCCESS:
             return {
                 ...state, stock_outputs: payload.data
@@ -106,6 +150,17 @@ export default function Operations(state = initialState, action) {
             return {
                 ...state, products: null
             }
+<<<<<<< HEAD
+=======
+        case LOADING_MATERIALS_PRODUCTS_SUCCESS:
+            return {
+                ...state, loading_products: true
+            }
+        case LOADING_MATERIALS_PRODUCTS_FAIL:
+            return {
+                ...state, loading_products: false
+            }
+>>>>>>> dfddcd8ad380cc5d989c2b899a9b83231f76d977
         case LOADING_RECORDS_MP_SUCCESS:
             return {
                 ...state, loading: true
