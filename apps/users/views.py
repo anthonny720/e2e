@@ -54,7 +54,7 @@ class UpdateUserAPIView(APIView):
             user.last_name = request.data['last_name']
             user.email = request.data['email']
             user.role = request.data['role']
-            user.permissions = request.data['permissions']
+            user.area = request.data['area']
             if request.data['password'] != '':
                 user.set_password(request.data['password'])
             user.save()

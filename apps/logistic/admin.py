@@ -68,5 +68,6 @@ class RegisterOutputAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
 
 @admin.register(Records)
 class RecordsAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
-    list_display = ('lot',)
+    list_display = ('lot','category')
+    list_filter = ('category','condition')
     list_per_page = 25

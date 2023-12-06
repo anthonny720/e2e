@@ -25,9 +25,14 @@ class Samples(models.Model):
         RECEIVED_LIMA = 'RL', 'Recibido en Lima'
         SCHEDULE_COURIER = 'SC', 'Programar courier'
         SENT_TO_CLIENT = 'STC', 'Enviado al cliente'
+        NOT_DELIVERED = 'ND', 'No entregado'
+        RETURN = 'R', 'Devolución'
+        CANCELLED = 'C', 'Cancelado'
 
     date = models.DateField(verbose_name='Fecha de solicitud', auto_now_add=True)
-    delivery_date = models.DateField(verbose_name='Fecha de entrega')
+    delivery_date = models.DateField(verbose_name='Fecha de envío')
+    tracking = models.CharField(max_length=50, verbose_name='Tracking', blank=True, null=True)
+
     applicant = models.CharField(max_length=50, verbose_name='Solicitante')
     code = models.CharField(max_length=50, verbose_name='Código', unique=True)
     client = models.CharField(max_length=50, verbose_name='Cliente')
@@ -44,7 +49,7 @@ class Samples(models.Model):
     comments = models.TextField(verbose_name='Comentarios', blank=True, null=True)
     courier = models.CharField(max_length=50, verbose_name='Courier')
     status = models.CharField(max_length=19, choices=Status.choices, verbose_name='Estado', default=Status.ACCEPTED)
-    drive = models.URLField(max_length=50, verbose_name='Código', blank=True, null=True)
+    drive = models.URLField(max_length=200, verbose_name='Código', blank=True, null=True)
     use = models.CharField(max_length=50, verbose_name='Usuario', blank=True, null=True)
     updated = models.DateTimeField(auto_now=True)
     history = HistoricalRecords()

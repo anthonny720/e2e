@@ -13,10 +13,9 @@ class UserCreateSerializer(serializers.UserCreateSerializer):
             'first_name',
             'last_name',
             'get_full_name',
+            'get_area_name',
             'get_role_name',
-            'get_permission_name',
             'get_short_name',
             'get_admin',
             'password',
-            'permissions',
             'role', )

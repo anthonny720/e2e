@@ -15,7 +15,6 @@ User = get_user_model()
 
 # Create your models here.
 
-
 class Boxes(models.Model):
     name = models.CharField(max_length=100, verbose_name="Nombre")
     weight = models.DecimalField(max_digits=4, decimal_places=2, verbose_name="Peso")
@@ -139,11 +138,12 @@ class Lot(models.Model):
             net_weight_quality = net_weight - float(quality)
             discount = net_weight * (float(self.discount) / 100) if self.discount else 0
             discount_price = float(self.get_kg_usable()) * (
-                        float(self.discount_price) / 100) if self.discount_price else 0
+                    float(self.discount_price) / 100) if self.discount_price else 0
             service_downloads = float(self.service_downloads) if self.service_downloads else 0
             usable_weight = net_weight - float(discount) - float(discount_price)
-            price_final = ((usable_weight - discount_price) * float(price_camp)) + (discount_price * float(price_soles)) + float(freight) + float(service_downloads)
-            return round(price_final, 2)
+            price_final = ((usable_weight - discount_price) * float(price_camp)) + (
+                        discount_price * float(price_soles)) + float(freight) + float(service_downloads)
+            return round(price_final, 4)
         except Exception as e:
             return 0
 
@@ -181,7 +181,9 @@ class Lot(models.Model):
             obj.discount_percentage = self.discount_price
             obj.discount = self.discount_price_soles
             obj.field_price = self.price_camp
-            obj.plant_price = round((float(self.get_final_price()) - float(self.freight) - float(self.service_downloads)) / float(self.get_kg_usable()),2) if self.get_kg_usable() else 0
+            obj.plant_price = round(
+                (float(self.get_final_price()) - float(self.freight) - float(self.service_downloads)) / float(
+                    self.get_kg_usable()), 2) if self.get_kg_usable() else 0
             obj.freight = self.freight
             obj.palletizing_per_kg = self.service_downloads
             obj.total_to_pay_to_plant = self.get_final_price()

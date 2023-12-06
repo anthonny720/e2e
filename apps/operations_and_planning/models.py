@@ -18,7 +18,7 @@ class ItemsProxy(models.Model):
         abstract = True
 
     name = models.CharField(max_length=200, verbose_name="Nombre", blank=True)
-    sap = models.CharField(max_length=10, verbose_name='Código SAP', blank=True, null=True)
+    sap = models.CharField(max_length=20, verbose_name='Código SAP', blank=True, null=True)
     group = models.ForeignKey(Categories, verbose_name='Grupo de producto', blank=True, null=True,
                               on_delete=models.PROTECT, related_name='%(class)s_group')
     unit_of_measurement = models.ForeignKey(UnitOfMeasurement, verbose_name='Unidad de medida', blank=True, null=True,
@@ -36,7 +36,7 @@ class Product(ItemsProxy):
         verbose_name = 'Producto'
         verbose_name_plural = 'Productos'
 
-    performance = models.DecimalField(verbose_name='% Rendimiento', max_digits=3, decimal_places=1, default=0,
+    performance = models.DecimalField(verbose_name='% Rendimiento', max_digits=4, decimal_places=1, default=0,
                                       blank=False)
     capacity = models.IntegerField(verbose_name='Capacidad', default=0, blank=False)
     recipe = models.ManyToManyField('Material', related_name='products_recipes', verbose_name='Recetario',
@@ -56,8 +56,7 @@ class Material(ItemsProxy):
     price = models.DecimalField(verbose_name='Precio', max_digits=6, decimal_places=3, default=0, blank=False)
 
     def save(self, *args, **kwargs):
-        creating_new_instance = not self.pk  # Check if the instance is being created
-        # Call the superclass save() method to save the instance
+        creating_new_instance = not self.pk
         super().save(*args, **kwargs)
 
         if creating_new_instance:
@@ -102,9 +101,9 @@ class Stock(models.Model):
         total_cost = sum(entry.price_per_unit * entry.stock for entry in stock_entries)
         total_quantity = sum(entry.stock for entry in stock_entries)
         if total_quantity > 0:
-            unit_price = total_cost / total_quantity  # Calculate the unit price
-            self.product.price = unit_price  # Update the product price
-            self.product.save()  # Save the product
+            unit_price = total_cost / total_quantity
+            self.product.price = unit_price
+            self.product.save()
 
     def get_price(self):
         try:
@@ -115,9 +114,7 @@ class Stock(models.Model):
     def calculate_daily_consumption_average(self):
         try:
             today = date.today()
-            three_months_ago = today - timedelta(days=3 * 30)  # Subtract 3 months from the current date
-
-            # Filter stock exits in the last 3 months related to this specific product
+            three_months_ago = today - timedelta(days=3 * 30)
             stock_exits_last_three_months = StockExit.objects.filter(stock_entry__item=self.product,
                                                                      date__gte=three_months_ago, date__lte=today)
 
@@ -306,7 +303,8 @@ class StockExit(models.Model):
 class ProductionPlanning(models.Model):
     class Meta:
         verbose_name = 'Planificación de producción'
-        verbose_name_plural = 'Planificación de producción'  # ordering = ['-sale__date']
+        verbose_name_plural = 'Planificación de producción'
+        ordering = ['-sale__date']
 
     sale = models.ForeignKey('commercial.SalesProgress', on_delete=models.CASCADE, related_name='production_planning',
                              verbose_name='Orden de venta', blank=True, null=True)

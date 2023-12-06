@@ -1,17 +1,10 @@
 from django.urls import path
 
-from apps.management.views import (ListCustomerView,
-                                   ListSuppliersView,
-                                   ListOutsourcingView,
-                                   ListTransportView,
-                                   ListStorageAreaView,
-                                   ListLocationView,
-                                   ListCostProductionView,
-                                   ListUnitOfMeasurementView,
-                                   ListCategoriesView,
-                                    DetailCustomerView, DetailSuppliersView, DetailOutsourcingView,
-                                   DetailTransportView, DetailSupplierRMView, ListSuppliersRMView, DetailContactView,
-                                   AddContactView)
+from apps.management.views import (ListCustomerView, ListSuppliersView, ListOutsourcingView, ListTransportView,
+                                   ListStorageAreaView, ListLocationView, ListCostProductionView,
+                                   ListUnitOfMeasurementView, ListCategoriesView, DetailCustomerView,
+                                   DetailSuppliersView, DetailOutsourcingView, DetailTransportView,
+                                   DetailSupplierRMView, ListSuppliersRMView)
 
 app_name = "management"
 urlpatterns = [
@@ -29,7 +22,4 @@ urlpatterns = [
     path('suppliers/<str:slug>', DetailSuppliersView.as_view()),
     path('outsourcings/<str:slug>', DetailOutsourcingView.as_view()),
     path('transports/<str:slug>', DetailTransportView.as_view()),
-    path('suppliers_rm/<str:slug>', DetailSupplierRMView.as_view()),
-    path('contacts', AddContactView.as_view()),
-    path('contacts/<int:id>', DetailContactView.as_view()),
-]
+    path('suppliers_rm/<str:slug>', DetailSupplierRMView.as_view())]

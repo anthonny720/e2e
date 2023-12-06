@@ -2,18 +2,18 @@ import React, {useEffect} from 'react';
 import {map} from "lodash";
 import {useDispatch, useSelector} from "react-redux";
 import {get_analysis} from "../../redux/actions/quality";
-import {PaintBrushIcon} from "@heroicons/react/24/outline";
+import Humanize from "humanize-plus";
 
-const TableMango = ({update,reference,params}) => {
+const TableMango = ({update, reference, params}) => {
     const data = useSelector(state => state.Quality.analysis)
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const data={
-            'start_date' : params ? new Date(params?.[0]).toLocaleDateString('es-PE', {timeZone: 'America/Lima'}) : '',
-            'end_date' : params ? new Date(params?.[1]).toLocaleDateString('es-PE', {timeZone: 'America/Lima'}) : ''
+        const data = {
+            'start_date': params ? new Date(params?.[0]).toLocaleDateString('es-PE', {timeZone: 'America/Lima'}) : '',
+            'end_date': params ? new Date(params?.[1]).toLocaleDateString('es-PE', {timeZone: 'America/Lima'}) : ''
         }
-        dispatch(get_analysis('mango',params))
+        dispatch(get_analysis('mango', data))
     }, [params]);
 
     const RandomColoredText = ({text}) => {
@@ -21,9 +21,7 @@ const TableMango = ({update,reference,params}) => {
     };
 
 
-    const columns = [' ', 'Semana', 'Fecha de Ingreso', 'Lote', 'Color 1', 'Color 2', 'Color 2.5', 'Color 3', 'Color >= 3.5', 'Brix < 7', 'Brix 7-8', 'Brix 8-9', 'Brix >9'
-        , 'Peso <280', 'Peso 280-300', 'Peso >300', 'Daños mecánicos', 'Rajados', 'Daños de sol', 'Antracnosis', 'Podrido', 'Latex', 'Queresa', 'Insectos', 'Maduro', 'Sobremaduro', 'Total defectos'
-    ]
+    const columns = [' ', 'Semana', 'Fecha de Ingreso', 'Lote', 'Color 1', 'Color 1.5', 'Color 2', 'Color 2.5', 'Color 3', 'Color >= 3.5', 'Brix < 7', 'Brix 7-8', 'Brix 8-9', 'Brix >9', 'Peso <280', 'Peso 280-300', 'Peso >300', 'Daños mecánicos', 'Rajados', 'Daños de sol', 'Antracnosis', 'Podrido', 'Latex', 'Queresa', 'Insectos', 'Maduro', 'Sobremaduro', 'Total defectos']
 
     return (<div className="w-full">
         <div className="mx-auto container bg-white ">
@@ -85,7 +83,7 @@ const TableMango = ({update,reference,params}) => {
                             <td className="text-sm px-6 whitespace-no-wrap text-gray-800 font-normal  text-center">{item?.insect_bite}</td>
                             <td className="text-sm px-6 whitespace-no-wrap text-gray-800 font-normal  text-center">{item?.mature}</td>
                             <td className="text-sm px-6 whitespace-no-wrap text-gray-800 font-normal  text-center">{item?.overripe}</td>
-                            <td className="text-sm px-6 whitespace-no-wrap text-gray-800 font-normal  text-center">{item?.total_defects}</td>
+                            <td className="text-sm px-6 whitespace-no-wrap text-gray-800 font-normal  text-center">{Humanize.formatNumber(item?.total_defects, 2)}</td>
 
                         </tr>)
 

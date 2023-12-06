@@ -7,10 +7,9 @@ from apps.users.models import UserAccount
 
 # Register your models here.
 @admin.register(UserAccount)
-class SamplesAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
-    list_display = ('email', 'first_name', 'last_name', 'role', 'permissions',)
+class UsersAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
+    list_display = ('email', 'first_name', 'last_name', 'area', 'role',)
     search_fields = ('first_name', 'email', 'last_name',)
     ordering = ['first_name']
-    list_filter = ('role', 'permissions',)
-    list_editable = ('role',)
+    list_filter = ('area',)
     list_per_page = 25

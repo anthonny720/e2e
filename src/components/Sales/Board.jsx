@@ -46,9 +46,9 @@ const Board = ({view, data,handleFilter}) => {
                     </div>
                 </div>
                 <div className="p-4 w-full ">
-                    <h2 className="text-sm font-semibold mb-4 text-black">Recibido por el cliente</h2>
+                    <h2 className="text-sm font-semibold mb-4 text-black">Finalizado</h2>
                     <div className={"max-h-40 lg:max-h-96 overflow-y-scroll scrollbar-hide w-full"}>
-                        {data && map(filter(data, (item) => item.status === 'STC'), (item) => <Cards key={item.id}
+                        {data && map(filter(data, (item) => item.status === 'STC' || item.status === 'ND' || item.status === 'R' || item.status === 'C' ), (item) => <Cards key={item.id}
                                                                                                      filter={handleFilter}
                                                                                                      view={view}
                                                                                                      data={item}/>)}

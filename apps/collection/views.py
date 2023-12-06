@@ -1,17 +1,12 @@
 from django.db import DatabaseError
-from django.db.models import Q
 from rest_framework import status
-from rest_framework.decorators import permission_classes
-from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from apps.collection.models import Product, Parcel
 from apps.collection.serializers import ProductSerializer, ParcelSerializer
-from apps.util.permissions import CertificationsEditorPermission, CollectionEditorPermission
+from apps.util.permissions import CustomPermission, UserRoles
 
-
-# Create your views here.
 
 class ListProductView(APIView):
     def get(self, request):
@@ -27,11 +22,10 @@ class ListProductView(APIView):
             return Response({'error': error_message, 'detail': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-
-
-
-@permission_classes([CollectionEditorPermission])
 class ListCreateParcelView(APIView):
+    permission_classes = [CustomPermission]
+    allowed_roles = [UserRoles.ASISTENTE_ACOPIO.value]
+
     def get(self, request):
         try:
             queryset = Parcel.objects.all()
@@ -75,8 +69,10 @@ class ListCreateParcelView(APIView):
             return Response({'error': error_message, 'detail': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([CollectionEditorPermission])
 class UpdateParcelView(APIView):
+    permission_classes = [CustomPermission]
+    allowed_roles = [UserRoles.ASISTENTE_ACOPIO.value]
+
     def patch(self, request, pk):
         try:
             parcel = Parcel.objects.get(pk=pk)
@@ -98,10 +94,7 @@ class ProviderListView(APIView):
         providers = []
         try:
             for p in Product.objects.get(name__icontains=category).product_provider.all():
-                providers.append({
-                    'id': p.id,
-                    'business_name': p.business_name}
-                )
+                providers.append({'id': p.id, 'business_name': p.business_name})
             return Response({'data': providers}, status=status.HTTP_200_OK)
         except Exception as e:
             error_message = 'Se ha producido un error inesperado en el servidor. Por favor, inténtelo de nuevo más tarde.'

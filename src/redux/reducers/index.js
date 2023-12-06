@@ -13,5 +13,4 @@ import Commercial from "./commercial";
 
 export default combineReducers({
     Collection, Management, Logistic, Alert, Quality, Sales, Operations, Production, Auth, Commercial
-
 });

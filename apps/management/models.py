@@ -32,8 +32,7 @@ class CustomerSupplierProxy(models.Model):
     email = models.EmailField(max_length=255, blank=True, null=True, verbose_name="Correo Electrónico")
     phone = models.CharField(max_length=20, blank=True, null=True, verbose_name="Teléfono")
     slug = models.SlugField(max_length=255, blank=True, null=True, verbose_name="Slug")
-    web= models.URLField(max_length=200, verbose_name='Sitio Web', blank=True, null=True)
-
+    web = models.URLField(max_length=200, verbose_name='Sitio Web', blank=True, null=True)
 
     def __str__(self):
         return self.display_name
@@ -47,25 +46,24 @@ class Customer(CustomerSupplierProxy):
     class Meta:
         verbose_name = 'Cliente'
         verbose_name_plural = 'Clientes'
-    history = HistoricalRecords()
 
+    history = HistoricalRecords()
 
 
 class Suppliers(CustomerSupplierProxy):
     documents = models.URLField(max_length=200, verbose_name='Drive', blank=True, null=True)
     history = HistoricalRecords()
+
     class Meta:
         verbose_name = 'Proveedor'
         verbose_name_plural = 'Proveedores'
-
-
-
 
 
 class Outsourcing(CustomerSupplierProxy):
     class Meta:
         verbose_name = 'Planta industrial'
         verbose_name_plural = "Planta industrial"
+
     history = HistoricalRecords()
 
 
@@ -75,7 +73,6 @@ class Transport(CustomerSupplierProxy):
         verbose_name_plural = 'Empresas de Transporte'
 
     history = HistoricalRecords()
-
 
 
 class StorageArea(models.Model):
@@ -146,5 +143,3 @@ class Categories(models.Model):
 
     def __str__(self):
         return self.name
-
-

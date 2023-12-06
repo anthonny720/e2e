@@ -18,6 +18,18 @@ class PineappleConditioning(models.Model):
     cost = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Costo', default=6.28)
     history = HistoricalRecords()
 
+    def kg_procesados(self):
+        try:
+            return self.logistic - self.reject
+        except:
+            return 0
+
+    def kg_habilitados(self):
+        try:
+            return self.logistic - self.reject - self.crown - self.shell_trunk
+        except:
+            return 0
+
     class Meta:
         verbose_name = 'Acondicionado de Piña'
         verbose_name_plural = 'Acondicionado de Piña'
@@ -60,15 +72,18 @@ class PineapplePacking(models.Model):
         verbose_name_plural = 'Envasado de Piña'
         ordering = ['-date']
 
+    def rendimiento(self):
+        try:
+            return str(round(((self.pt_total + self.pt_local + self.pt_aggregated + self.pt_quality)/self.process)*100,2))+ '%'
+        except:
+            return 0
+
     def __str__(self):
         return f'{self.date.strftime("%d/%m/%Y")} - {self.lot}'
 
 
 class MOD(models.Model):
     date = models.DateField(verbose_name='Fecha')
-    product = models.CharField(max_length=50, verbose_name='Producto', blank=True)
-    process = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Kg Proceso', default=0)
-    pt = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='PT', default=0)
     worker_rest_day_cost = models.DecimalField(max_digits=7, decimal_places=2,
                                                verbose_name='Costo Día Descanso Trabajador', default=0)
     worker_night_shift_cost = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Costo Noche Trabajador',
@@ -85,8 +100,7 @@ class MOD(models.Model):
                                                       verbose_name='Costo Noche Controller', default=0)
     controller_day_shift_cost = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Costo Día Controller',
                                                     default=0)
-    conditioning = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Costo Acondicionado',
-                                           default=0)
+    conditioning = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Costo Acondicionado', default=0)
     cmo_packing = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Costo Envasado', default=0)
 
     cmo_rest = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Costo Descanso', default=0)
@@ -108,7 +122,7 @@ class Ovens(models.Model):
         verbose_name_plural = 'Hornos'
         ordering = ['-date']
 
-    OVEN_CHOICES = (('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5'), ('6', '6'), ('7', '7'),('C','C'))
+    OVEN_CHOICES = (('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5'), ('6', '6'), ('7', '7'), ('C', 'C'))
 
     date = models.DateField(verbose_name='Fecha')
     product = models.CharField(max_length=50, verbose_name='Producto', blank=True)
@@ -119,13 +133,16 @@ class Ovens(models.Model):
     oven = models.CharField(max_length=1, verbose_name='Horno', blank=True, choices=OVEN_CHOICES, default='1')
     cars = models.IntegerField(verbose_name='Carros', default=0)
     trays = models.IntegerField(verbose_name='Bandejas', default=0)
-    kg_enable = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Kg Habilitados', default=0,blank=True)
-    kg_brute_balance = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Kg Brutos Balanza', default=0,blank=True)
-    tare = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Tara', default=0,blank=True)
+    kg_enable = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Kg Habilitados', default=0,
+                                    blank=True)
+    kg_brute_balance = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Kg Brutos Balanza', default=0,
+                                           blank=True)
+    tare = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Tara', default=0, blank=True)
     kg_enable_balance = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Kg Habilitados Balanza',
-                                            default=0,blank=True)
-    diff_enable = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Diferencia Habilitados', default=0,blank=True)
-    kg_trays = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Kg Bandejas', default=0,blank=True)
+                                            default=0, blank=True)
+    diff_enable = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Diferencia Habilitados', default=0,
+                                      blank=True)
+    kg_trays = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Kg Bandejas', default=0, blank=True)
     kg_car = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Peso coche', default=9.8)
     kg_tray = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Peso Bandeja', default=1.68)
 

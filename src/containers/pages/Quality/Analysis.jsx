@@ -52,14 +52,13 @@ const Analysis = () => {
         </Helmet>
 
         <Modal isOpen={isOpen} close={openModal} children={content}/>
-        <div className={"flex gap-4 w-full flex-col  md:flex-col   md:px-16 mt-8 px-4"}>
-            <Summary onTableChange={handleTableChange}/>
-            <div className={"bg-white w-full rounded-lg p-4 mt-2"}>
 
-
+        <div className={"flex gap-4 w-full flex-col  md:flex-col  md:px-16 mt-8 px-4"}>
+            <Summary onTableChange={handleTableChange} selected={activeTable}/>
+            <div className={"bg-white w-full rounded-lg p-4 mt-2 z-10"}>
                 <h1 className={"text-black font-bold text-start  pt-4 text-xl md:text-2xl overflow-scroll scrollbar-hide"}>Análisis
                     de Materia Prima</h1>
-                <div className={"flex sm:flex-row flex-col items-center justify-between w-full "}>
+                <div className={"flex sm:flex-row flex-col items-center justify-between w-full -z-10"}>
                     <RangeDate value={params} onChange={setParams}/>
                     <DownloadTableExcel
                         filename={`Análisis ${activeTable}`}
@@ -78,11 +77,16 @@ const Analysis = () => {
                     </DownloadTableExcel>
                 </div>
 
-                {activeTable === "Piña" && <TablePineapple update={handleUpdateForm} reference={tableRef} params={params}/>}
-                {activeTable === "Mango" && <TableMango update={handleUpdateForm} reference={tableRef} params={params} />}
-                {activeTable === "Banano" && <TableBanana update={handleUpdateForm} reference={tableRef} params={params}/>}
-                {activeTable === "Arándano" && <TableBlueberry update={handleUpdateForm} reference={tableRef} params={params}/>}
-                {activeTable === "Aguaymanto" && <TableGoldenberry update={handleUpdateForm} reference={tableRef} params={params}/>}
+                {activeTable === "Piña" &&
+                    <TablePineapple update={handleUpdateForm} reference={tableRef} params={params}/>}
+                {activeTable === "Mango" &&
+                    <TableMango update={handleUpdateForm} reference={tableRef} params={params}/>}
+                {activeTable === "Banana" &&
+                    <TableBanana update={handleUpdateForm} reference={tableRef} params={params}/>}
+                {activeTable === "Arándano" &&
+                    <TableBlueberry update={handleUpdateForm} reference={tableRef} params={params}/>}
+                {activeTable === "Aguaymanto" &&
+                    <TableGoldenberry update={handleUpdateForm} reference={tableRef} params={params}/>}
 
 
             </div>

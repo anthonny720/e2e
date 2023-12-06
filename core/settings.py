@@ -28,16 +28,15 @@ CORS_ALLOW_CREDENTIALS = True
 #     CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000']
 
 # Application definition
-DJANGO_APPS = ["admin_interface",
-    "colorfield",'django.contrib.admin', 'django.contrib.auth', 'django.contrib.contenttypes', 'django.contrib.sessions',
-               'django.contrib.messages', 'django.contrib.staticfiles', ]
+DJANGO_APPS = ["admin_interface", "colorfield", 'django.contrib.admin', 'django.contrib.auth',
+               'django.contrib.contenttypes', 'django.contrib.sessions', 'django.contrib.messages',
+               'django.contrib.staticfiles', ]
 
 PROJECT_APPS = ['apps.collection', 'apps.users', 'apps.logistic', 'apps.sales', 'apps.management',
-                'apps.operations_and_planning', 'apps.quality_assurance', 'apps.production', 'apps.commercial',
-                'apps.finances']
+                'apps.operations_and_planning', 'apps.quality_assurance', 'apps.production', 'apps.commercial', ]
 
 THIRD_PARTY_APPS = ['corsheaders', 'simple_history', 'rest_framework', 'import_export', 'djoser',
-                    'rest_framework_simplejwt', 'rest_framework_simplejwt.token_blacklist','django_countries', ]
+                    'rest_framework_simplejwt', 'rest_framework_simplejwt.token_blacklist', 'django_countries', ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
 
 MIDDLEWARE = ['django.middleware.security.SecurityMiddleware', 'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -59,9 +58,7 @@ TEMPLATES = [{'BACKEND': 'django.template.backends.django.DjangoTemplates', 'DIR
 WSGI_APPLICATION = 'core.wsgi.application'
 
 # Database
-DATABASES = {
-    "default": env.db("DATABASE_URL", default="postgres:///e2e"),
-}
+DATABASES = {"default": env.db("DATABASE_URL", default="postgres:///e2e"), }
 
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
@@ -92,14 +89,13 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'build/static')]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Rest Framework
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
-    'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',), }
+REST_FRAMEWORK = {'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
+                  'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',), }
 
 # JWT
 SIMPLE_JWT = {'AUTH_HEADER_TYPES': ('JWT',), 'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10080),
-              'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
-              'BLACKLIST_AFTER_ROTATION': True, 'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',)}
+              'REFRESH_TOKEN_LIFETIME': timedelta(days=30), 'BLACKLIST_AFTER_ROTATION': True,
+              'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',)}
 
 # Djoser
 DJOSER = {'LOGIN_FIELD': 'email', 'SERIALIZERS': {'user_create': 'apps.users.serializers.UserCreateSerializer',

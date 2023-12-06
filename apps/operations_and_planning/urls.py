@@ -1,6 +1,8 @@
 from django.urls import path
 
-from apps.operations_and_planning.views import ListRecordsView, ListMaterialView, ListProductView, DetailProductView, ListStockView, ListStockEntryView, ListStockExitView, ListStockReEntryView, ListPlanningProductionView, ListProductionPlanningView, DetailProductionPlanningView, CalendarScheduleManufacturingView
+from apps.operations_and_planning.views import ListRecordsView, ListMaterialView, ListProductView, DetailProductView, \
+    ListStockView, ListStockEntryView, ListStockExitView, ListStockReEntryView, ListPlanningProductionView, \
+    ListProductionPlanningView, DetailProductionPlanningView, CalendarScheduleManufacturingView, SimulatorView
 
 app_name = "operations_and_planning"
 
@@ -13,4 +15,4 @@ urlpatterns = [path('materials', ListMaterialView.as_view()), path('products', L
                path('manufacturing/calendar', CalendarScheduleManufacturingView.as_view()),
                path('products/<int:id>', DetailProductView.as_view()),
                path('records/<str:category>', ListRecordsView.as_view()),
-               ]
+               path('simulator', SimulatorView.as_view())]

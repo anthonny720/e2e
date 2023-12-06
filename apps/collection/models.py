@@ -1,18 +1,9 @@
-import uuid
-
 from django.db import models
 
 from apps.management.models import CustomerSupplierProxy
 from apps.sales.models import HistoricalRecords
 
 
-def custom_doc_file(instance, filename):
-    ext = filename.split('.')[-1]
-    filename = "%s.%s" % (uuid.uuid4(), ext)
-    return '/'.join(['products', instance.name, filename])
-
-
-# Create your models here.
 class Product(models.Model):
     class Meta:
         verbose_name = 'Producto'
@@ -20,7 +11,7 @@ class Product(models.Model):
         ordering = ['name']
 
     name = models.CharField(max_length=100, verbose_name='Nombre')
-    enable = models.BooleanField(verbose_name='Estado',default=False)
+    enable = models.BooleanField(verbose_name='Estado', default=False)
 
     history = HistoricalRecords()
 
@@ -84,8 +75,6 @@ class Provider(CustomerSupplierProxy):
         return self.business_name
 
 
-
-
 class Parcel(models.Model):
     class Meta:
         verbose_name = 'Parcela'
@@ -104,8 +93,6 @@ class Parcel(models.Model):
         FRESH = 'F', 'Fresco'
         PT = 'PT', 'Producto Terminado'
 
-
-
     area = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Área', blank=True, null=True, default=0)
     type_mp = models.CharField(max_length=100, verbose_name='Tipo de MP', choices=TypeMP.choices,
                                default=TypeMP.CONVENTIONAL)
@@ -118,13 +105,16 @@ class Parcel(models.Model):
     variety = models.CharField(max_length=100, verbose_name='Variedad', blank=True, null=True)
 
     status = models.CharField(max_length=100, verbose_name='Estado', choices=Status.choices, default=Status.PRESENCE)
-    sample_type = models.CharField(max_length=100, verbose_name='Tipo de Muestra', choices=SampleType.choices, default=SampleType.FRESH)
-    certifications=models.TextField(max_length=200, verbose_name='Certificaciones', blank=True, null=True,default='Orgánico: \nBiosuisse: \nFairtrade: \n')
+    sample_type = models.CharField(max_length=100, verbose_name='Tipo de Muestra', choices=SampleType.choices,
+                                   default=SampleType.FRESH)
+    certifications = models.TextField(max_length=200, verbose_name='Certificaciones', blank=True, null=True,
+                                      default='Orgánico: \nBiosuisse: \nFairtrade: \n')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Actualizado')
     history = HistoricalRecords()
 
     def get_sample_type_name(self):
         return self.get_sample_type_display()
+
     def __str__(self):
         return str(self.parcel)
 

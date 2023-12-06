@@ -12,6 +12,8 @@ import {
     GET_SALES_PLANNING_SUCCESS,
     GET_SCHEDULE_CALENDAR_FAIL,
     GET_SCHEDULE_CALENDAR_SUCCESS,
+    GET_SIMULATOR_FAIL,
+    GET_SIMULATOR_SUCCESS,
     GET_SKU_FAIL,
     GET_SKU_SUCCESS,
     GET_SKUS_FAIL,
@@ -26,6 +28,8 @@ import {
     GET_STOCKS_SUCCESS,
     LOADING_RECORDS_MP_FAIL,
     LOADING_RECORDS_MP_SUCCESS,
+    LOADING_SIMULATOR_FAIL,
+    LOADING_SIMULATOR_SUCCESS,
     UPDATE_SCHEDULE_MANUFACTURING_FAIL,
     UPDATE_SCHEDULE_MANUFACTURING_SUCCESS
 } from "./types";
@@ -288,5 +292,30 @@ export const get_schedule_calendar = () => async dispatch => {
         }
     } catch (err) {
         dispatch({type: GET_SCHEDULE_CALENDAR_FAIL});
+    }
+}
+
+export const search_simulator = (form) => async dispatch => {
+    dispatch({type: LOADING_SIMULATOR_SUCCESS});
+
+    const config = {
+        headers: {
+            'Authorization': `JWT ${localStorage.getItem('access')}`, 'Accept': 'application/json'
+        }
+    };
+
+    try {
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/operations/simulator`, form, config);
+
+        if (res.status === 200) {
+            dispatch({type: GET_SIMULATOR_SUCCESS, payload: res.data});
+        }
+    } catch (err) {
+        dispatch({type: GET_SIMULATOR_FAIL});
+
+    } finally {
+        setTimeout(() => {
+            dispatch({type: LOADING_SIMULATOR_FAIL})
+        }, 4000);
     }
 }

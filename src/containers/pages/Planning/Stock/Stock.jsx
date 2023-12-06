@@ -117,7 +117,7 @@ const Inventory = () => {
                             <td className=" py-4 text-center text-xs text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer ">
                                 {Humanize.formatNumber(item?.reorder_point, 2)}
                             </td>
-                        </tr>) : <tr class="bg-white border-b  ">
+                        </tr>) : <tr className="bg-white border-b  ">
                         <td colSpan={14}
                             className=" py-4 text-center text-center text-xs text-gray-400 whitespace-nowrap  ">
                             No hay datos

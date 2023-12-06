@@ -9,7 +9,7 @@ const TableMOD = ({reference}) => {
 
     const data = useSelector(state => state.Production.mod)
 
-    const columns = ['Fecha', 'Producto', 'Kg proceso', 'Kg Pt','CMO Acondicionado','CMO Envasado','CMO Descanso', 'CMO Total', 'CMO Descanso Operario', 'CMO Noche Operario', 'CMO Dia Operario', 'CMO Operario', 'CMO Descanso Supervisor', 'CMO Día Supervisor', 'CMO Supervisor', 'CMO Descanso Controller', 'CMO Noche Controller', 'CMO Dia Controller', 'CMO Controller']
+    const columns = ['Fecha', 'CMO Acondicionado','CMO Envasado','CMO Descanso', 'CMO Total', 'CMO Descanso Operario', 'CMO Noche Operario', 'CMO Dia Operario', 'CMO Operario', 'CMO Descanso Supervisor', 'CMO Día Supervisor', 'CMO Supervisor', 'CMO Descanso Controller', 'CMO Noche Controller', 'CMO Dia Controller', 'CMO Controller']
 
     return (<div className="w-full">
         <div className="mx-auto container bg-white ">
@@ -33,16 +33,6 @@ const TableMOD = ({reference}) => {
                             <td className=" md:sticky md:left-0 text-sm bg-white  whitespace-no-wrap text-gray-800 font-normal leading-4 text-center ">{new Date(item?.date + "T00:00:00").toLocaleDateString('es-ES', {
                                 year: 'numeric', month: 'numeric', day: 'numeric', timeZone: 'UTC'
                             })}</td>
-                            <td className="text-sm bg-white px-6 whitespace-no-wrap text-gray-800 font-bold leading-4 text-center ">{item?.product}</td>
-
-                            <td
-                                className=" text-sm bg-white px-6 whitespace-no-wrap text-green-800 font-bold  text-center">
-                                {Humanize.formatNumber(item?.process, 2)}
-                            </td>
-                            <td
-                                className=" text-sm bg-white px-6 whitespace-no-wrap text-green-800 font-bold  text-center">
-                                {Humanize.formatNumber(item?.pt, 2)}
-                            </td>
                             <td className="text-sm bg-white px-6 whitespace-no-wrap text-sky-800 font-bold  text-center ">
                                  <p className={"bg-sky-200 bg-opacity-60 rounded-lg w-full p-2"}>
                                     {Humanize.formatNumber(item?.conditioning, 2)}</p>

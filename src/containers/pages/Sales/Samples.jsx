@@ -10,8 +10,8 @@ import {Helmet} from "react-helmet";
 
 const Samples = () => {
     const {content, setContent, isOpen, setIsOpen, openModal} = ModalHook();
-    const samples=useSelector(state=>state.Sales.samples);
-    const dispatch= useDispatch();
+    const samples = useSelector(state => state.Sales.samples);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(get_samples())
@@ -20,7 +20,6 @@ const Samples = () => {
     const handleFilter = (data) => {
         dispatch(get_samples(data))
     }
-
 
 
     const handleView = (data) => {
@@ -36,7 +35,7 @@ const Samples = () => {
         </Helmet>
         <Modal isOpen={isOpen} close={openModal} children={content}/>
         <div className={"flex gap-4 w-full h-screen flex-col"}>
-            <Board handleFilter={handleFilter} data={samples?samples:[]} view={handleView}/>
+            <Board handleFilter={handleFilter} data={samples ? samples : []} view={handleView}/>
 
 
         </div>

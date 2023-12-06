@@ -53,7 +53,7 @@ const Cards = ({view, data, filter}) => {
 
             <div className="flex space-x-2 text-gray-400 text-sm items-center flex-wrap gap-2 justify-center ">
                 <div
-                    className={`${data?.status === "A" ? 'bg-red-500' : data?.status === 'DP' ? 'bg-orange-500' : data?.status === 'WD' ? 'bg-orange-400' : data?.status === 'ST' ? 'bg-yellow-400' : data?.status === 'RL' ? 'bg-teal-400' : data?.status === 'SC' ? 'bg-cyan-400' : data?.status === 'STC' ? 'bg-green-400' : 'bg-gray-400'}  text-white px-1 rounded-lg text-[8px] w-11/12`}>
+                    className={`${data?.status === "A" ? 'bg-red-500' : data?.status === 'DP' ? 'bg-orange-500' : data?.status === 'WD' ? 'bg-orange-400' : data?.status === 'ST' ? 'bg-yellow-400' : data?.status === 'RL' ? 'bg-teal-400' : data?.status === 'SC' ? 'bg-cyan-400' : data?.status === 'STC' ? 'bg-green-400' :  'bg-black'}  text-white px-1 rounded-lg text-[8px] w-11/12`}>
                     <select value={data?.status} onChange={(v) => handleUpdate(v.target.value)} id="countries"
                             className={"bg-transparent w-full focus:text-black ring-0"}>
                         <option value="A">Solicitud recepcionada y validada</option>
@@ -63,6 +63,9 @@ const Cards = ({view, data, filter}) => {
                         <option value="RL">Recibido en Lima</option>
                         <option value="SC">Programar courier</option>
                         <option value="STC">Enviado al cliente</option>
+                        <option value="ND">No entregado</option>
+                        <option value="R">Devolución</option>
+                        <option value="C">Cancelado</option>
                     </select>
                 </div>
                 <div className={"bg-blue-400 text-white px-1 rounded-lg text-[8px] px-4"}><p>{data?.market_name}</p>
@@ -80,7 +83,7 @@ const Cards = ({view, data, filter}) => {
                     <p>
                         {(data?.status === "A" || data?.status === 'DP' || data?.status === 'WD') && getTimeDifference(new Date(data?.delivery_date + "T00:00:00-05:00"))}
                         {(data?.status === "ST" || data?.status === 'RL' || data?.status === 'SC') && 'En ruta'}
-                        {data?.status === "STC" && 'Entregado'}
+                        {data?.status === "STC" && 'Entregado'} {data?.status === "ND" && 'No entregado'} {data?.status === "R" && 'Devolución'} {data?.status === "C" && 'Cancelado'}
 
                     </p>
                 </div>

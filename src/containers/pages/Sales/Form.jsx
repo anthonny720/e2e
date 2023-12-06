@@ -21,7 +21,7 @@ const Form = () => {
     })
 
     const columns = [{
-        name: 'delivery_date', title: 'Fecha de envío', type: 'date', maxLength: 50,
+        name: 'delivery_date', title: 'Fecha de envío (Tarma)', type: 'date', maxLength: 50,
     }, {name: 'applicant', title: 'Solicitante', type: 'text', maxLength: 50,}, {
         name: 'code', title: 'Código', type: 'text', maxLength: 50,
     }, {name: 'client', title: 'Cliente', type: 'text', maxLength: 150,}, {

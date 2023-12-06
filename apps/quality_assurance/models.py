@@ -1,5 +1,3 @@
-import datetime
-
 from django.db import models
 from simple_history.models import HistoricalRecords
 
@@ -29,7 +27,7 @@ class Pineapple(models.Model):
     class Meta:
         verbose_name = "Análisis de Piña"
         verbose_name_plural = "Análisis de Piña"
-        ordering = ['-id']
+        ordering = ['-lot__download_date']
 
     def __str__(self):
         return self.lot.lot
@@ -42,19 +40,6 @@ class Pineapple(models.Model):
             return self.maturation_0_plant + self.maturation_1_plant + self.maturation_2_plant + self.maturation_3_plant + self.maturation_4_plant + self.maturation_5_plant
         except:
             return 0
-
-    def get_pending(self):
-        try:
-            updated = datetime.datetime.strptime(str(self.updated_at), '%Y-%m-%d %H:%M:%S.%f').strftime(
-                '%Y-%m-%d %H:%M')
-            created = datetime.datetime.strptime(str(self.created_at), '%Y-%m-%d %H:%M:%S.%f').strftime(
-                '%Y-%m-%d %H:%M')
-            if updated != created:
-                return False
-            else:
-                return True
-        except:
-            return False
 
 
 class Goldenberry(models.Model):
@@ -105,23 +90,10 @@ class Goldenberry(models.Model):
         except:
             return 0
 
-    def get_pending(self):
-        try:
-            updated = datetime.datetime.strptime(str(self.updated_at), '%Y-%m-%d %H:%M:%S.%f').strftime(
-                '%Y-%m-%d %H:%M')
-            created = datetime.datetime.strptime(str(self.created_at), '%Y-%m-%d %H:%M:%S.%f').strftime(
-                '%Y-%m-%d %H:%M')
-            if updated != created:
-                return False
-            else:
-                return True
-        except:
-            return False
-
     class Meta:
         verbose_name = "Análisis de Aguaymanto"
         verbose_name_plural = "Análisis de Aguaymanto"
-        ordering = ['-id']
+        ordering = ['-lot__download_date']
 
 
 class Banano(models.Model):
@@ -161,23 +133,10 @@ class Banano(models.Model):
         except:
             return 0
 
-    def get_pending(self):
-        try:
-            updated = datetime.datetime.strptime(str(self.updated_at), '%Y-%m-%d %H:%M:%S.%f').strftime(
-                '%Y-%m-%d %H:%M')
-            created = datetime.datetime.strptime(str(self.created_at), '%Y-%m-%d %H:%M:%S.%f').strftime(
-                '%Y-%m-%d %H:%M')
-            if updated != created:
-                return False
-            else:
-                return True
-        except:
-            return False
-
     class Meta:
         verbose_name = "Análisis de Banano"
         verbose_name_plural = "Análisis de Banano"
-        ordering = ['-id']
+        ordering = ['-lot__download_date']
 
 
 class Blueberry(models.Model):
@@ -210,23 +169,10 @@ class Blueberry(models.Model):
     class Meta:
         verbose_name = "Análisis de Arándanos"
         verbose_name_plural = "Análisis de Arándanos"
-        ordering = ['-id']
+        ordering = ['-lot__download_date']
 
     def get_lot(self):
         return self.lot.lot
-
-    def get_pending(self):
-        try:
-            updated = datetime.datetime.strptime(str(self.updated_at), '%Y-%m-%d %H:%M:%S.%f').strftime(
-                '%Y-%m-%d %H:%M')
-            created = datetime.datetime.strptime(str(self.created_at), '%Y-%m-%d %H:%M:%S.%f').strftime(
-                '%Y-%m-%d %H:%M')
-            if updated != created:
-                return False
-            else:
-                return True
-        except:
-            return False
 
     def __str__(self):
         return self.lot.lot
@@ -290,20 +236,7 @@ class Mango(models.Model):
     class Meta:
         verbose_name = "Análisis de Mango"
         verbose_name_plural = "Análisis de Mango"
-        ordering = ['-id']
-
-    def get_pending(self):
-        try:
-            updated = datetime.datetime.strptime(str(self.updated_at), '%Y-%m-%d %H:%M:%S.%f').strftime(
-                '%Y-%m-%d %H:%M')
-            created = datetime.datetime.strptime(str(self.created_at), '%Y-%m-%d %H:%M:%S.%f').strftime(
-                '%Y-%m-%d %H:%M')
-            if updated != created:
-                return False
-            else:
-                return True
-        except:
-            return False
+        ordering = ['-lot__download_date']
 
     def get_total_defects(self):
         try:
@@ -324,5 +257,3 @@ class Mango(models.Model):
 
     def __str__(self):
         return self.lot.lot
-
-

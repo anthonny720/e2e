@@ -6,8 +6,7 @@ from .views import ListCreateLotView, DetailLotView, ListCreateILotView, ListCre
 
 app_name = 'logistic'
 
-urlpatterns = [
-    path('lots', ListCreateLotView.as_view(), name='list-create-lot'),
+urlpatterns = [path('lots', ListCreateLotView.as_view(), name='list-create-lot'),
     path('lots/<str:lot>', DetailLotView.as_view(), name='detail-lot'),
     path('lots/<str:lot>/data', ListCreateILotView.as_view(), name='list-create-data-lot'),
     path('lots/<str:lot>/data/<int:pk>', UpdateILotView.as_view(), name='update-data-lot'),

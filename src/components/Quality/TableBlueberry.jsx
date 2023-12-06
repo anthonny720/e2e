@@ -2,18 +2,17 @@ import React, {useEffect} from 'react';
 import {map} from "lodash";
 import {useDispatch, useSelector} from "react-redux";
 import {get_analysis} from "../../redux/actions/quality";
-import {PaintBrushIcon} from "@heroicons/react/24/outline";
 
-const TableBlueberry = ({update,reference,params}) => {
+const TableBlueberry = ({update, reference, params}) => {
     const data = useSelector(state => state.Quality.analysis)
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const data={
-            'start_date' : params ? new Date(params?.[0]).toLocaleDateString('es-PE', {timeZone: 'America/Lima'}) : '',
-            'end_date' : params ? new Date(params?.[1]).toLocaleDateString('es-PE', {timeZone: 'America/Lima'}) : ''
+        const data = {
+            'start_date': params ? new Date(params?.[0]).toLocaleDateString('es-PE', {timeZone: 'America/Lima'}) : '',
+            'end_date': params ? new Date(params?.[1]).toLocaleDateString('es-PE', {timeZone: 'America/Lima'}) : ''
         }
-        dispatch(get_analysis('blueberry',data))
+        dispatch(get_analysis('blueberry', data))
     }, [params]);
 
 
@@ -22,7 +21,7 @@ const TableBlueberry = ({update,reference,params}) => {
     };
 
 
-    const columns = [' ', 'Semana', 'Fecha de Ingreso', 'Lote', 'Brix prom', 'Brix max', 'Brix min', 'Fruta inmadura', 'Pedicelo desgastado', 'Restos de flores','Fruta blanda o sobremadura','Cicatrices','Deshidratada']
+    const columns = [' ', 'Semana', 'Fecha de Ingreso', 'Lote', 'Brix prom', 'Brix max', 'Brix min', 'Fruta inmadura', 'Pedicelo desgastado', 'Restos de flores', 'Fruta blanda o sobremadura', 'Cicatrices', 'Deshidratada']
 
     return (<div className="w-full">
         <div className="mx-auto container bg-white ">

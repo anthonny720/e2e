@@ -1,5 +1,5 @@
 import React from 'react';
-import {map} from "lodash";
+import {map, orderBy} from "lodash";
 import generateRandomColor from "../util/colors";
 import {TrashIcon} from "@heroicons/react/24/outline";
 
@@ -20,7 +20,7 @@ const TableUsers = ({data, update, remove}) => {
     };
 
 
-    const columns = ['Nombre', 'Permisos', 'Rol', 'Operaciones']
+    const columns = ['Nombre', 'Area', 'Cargo', 'Operaciones']
 
     return (<div className="w-full">
         <div className="mx-auto container bg-white ">
@@ -30,14 +30,14 @@ const TableUsers = ({data, update, remove}) => {
                     <tr className="w-full h-16">
                         {map(columns, (value, index) => {
                             return (<th key={index}
-                                        className=" text-gray-400  font-light  pr-6 text-left text-sm tracking-normal leading-4 text-center">
+                                        className=" text-gray-400  font-light  pr-6  text-sm tracking-normal leading-4 text-center">
                                 {value}
                             </th>);
                         })}
                     </tr>
                     </thead>
                     <tbody>
-                    {data && map(data, (value, index) => {
+                    {data && map(orderBy(data, ['first_name'], ['asc']), (value, index) => {
                         return (<tr className="h-10 border-gray-300  border-b  " key={index}>
                             <td className="text-sm  pr-6 whitespace-no-wrap text-gray-800 font-bold  leading-4 text-center flex gap-2 p-2 items-center justify-center">
                                 <RandomColoredText text={value?.get_full_name?.[0]}/>
@@ -46,7 +46,7 @@ const TableUsers = ({data, update, remove}) => {
                                     <span className={"text-xs"}>{value?.email}</span>
                                 </div>
                             </td>
-                            <td className="text-sm pr-6 whitespace-no-wrap text-gray-800 font-normal   leading-4 text-center ">{value?.get_permission_name}</td>
+                            <td className="text-sm pr-6 whitespace-no-wrap text-gray-800 font-normal   leading-4 text-center ">{value?.get_area_name}</td>
                             <td className="text-sm pr-6 whitespace-no-wrap text-gray-800 font-normal   leading-4 text-center ">{value?.get_role_name}</td>
                             <td className="text-sm pr-6 whitespace-no-wrap text-gray-800 font-normal   leading-4 text-center flex justify-center items-center gap-2">
                                 <svg onClick={() => update(value)} xmlns="http://www.w3.org/2000/svg"

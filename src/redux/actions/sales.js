@@ -16,8 +16,7 @@ export const get_samples = (params) => async dispatch => {
     const config = {
         headers: {
             'Authorization': `JWT ${localStorage.getItem('access')}`, 'Accept': 'application/json'
-        },
-        params: {...params}
+        }, params: {...params}
     };
 
     try {

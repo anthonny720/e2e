@@ -5,7 +5,6 @@ from django.db import DatabaseError
 from django.db.models import Sum
 from django.shortcuts import get_object_or_404
 from rest_framework import status
-from rest_framework.decorators import permission_classes
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -14,8 +13,7 @@ from apps.logistic.serializers import LotSerializer, ILotSerializer, MotionsSeri
     OutputSerializer, LotSummarySerializer, RegisterOutputSerializer, SummaryOutputSerializer, LotUpdateSerializer
 from apps.management.models import Location
 from apps.quality_assurance.models import Pineapple, Banano, Mango, Blueberry, Goldenberry
-from apps.util.permissions import RawMaterialEditorPermission, LogisticsEditorPermission, \
-    CollectionEditorPermission
+from apps.util.permissions import CustomPermission, UserRoles
 
 
 class ListPalletsView(APIView):
@@ -30,8 +28,9 @@ class ListPalletsView(APIView):
 
 
 # Create your views here.
-@permission_classes([RawMaterialEditorPermission])
 class ListCreateLotView(APIView):
+    permission_classes = [CustomPermission]
+    allowed_roles = [UserRoles.OPERARIO_LOGISTICA_MP.value]
     def get(self, request, format=None):
 
         try:
@@ -73,8 +72,9 @@ class ListCreateLotView(APIView):
             return Response({'error': error_message, 'detail': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([RawMaterialEditorPermission | CollectionEditorPermission])
 class DetailLotView(APIView):
+    permission_classes = [CustomPermission]
+    allowed_roles = [UserRoles.OPERARIO_LOGISTICA_MP.value]
 
     def get(self, request, *args, **kwargs):
         lot = get_object_or_404(Lot, lot=kwargs['lot'])
@@ -97,8 +97,9 @@ class DetailLotView(APIView):
             return Response({'message': error_message, 'detail': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([RawMaterialEditorPermission])
 class ListCreateILotView(APIView):
+    permission_classes = [CustomPermission]
+    allowed_roles = [UserRoles.OPERARIO_LOGISTICA_MP.value]
     def get(self, request, *args, **kwargs):
         try:
             lot = kwargs['lot']
@@ -133,8 +134,9 @@ class ListCreateILotView(APIView):
             return Response({'error': error_message, 'detail': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([RawMaterialEditorPermission])
 class UpdateILotView(APIView):
+    permission_classes = [CustomPermission]
+    allowed_roles = [UserRoles.OPERARIO_LOGISTICA_MP.value]
     def delete(self, request, *args, **kwargs):
         lot = kwargs['lot']
         query = Lot.objects.get(lot=lot)
@@ -170,8 +172,9 @@ class UpdateILotView(APIView):
         return Response({"message": "Item actualizado correctamente"}, status=status.HTTP_200_OK)
 
 
-@permission_classes([RawMaterialEditorPermission | LogisticsEditorPermission])
 class ListCreateMotionsView(APIView):
+    permission_classes = [CustomPermission]
+    allowed_roles = [UserRoles.OPERARIO_LOGISTICA_MP.value]
     def get(self, request):
         try:
             queryset = Motions.objects.all()
@@ -218,8 +221,9 @@ class ListCreateMotionsView(APIView):
         return Response({'success': True}, status=status.HTTP_201_CREATED)
 
 
-@permission_classes([RawMaterialEditorPermission | LogisticsEditorPermission])
 class DeleteMotionView(APIView):
+    permission_classes = [CustomPermission]
+    allowed_roles = [UserRoles.OPERARIO_LOGISTICA_MP.value]
     def delete(self, request, pk, format=None):
         motion = get_object_or_404(Motions, id=pk)
         old_origin_quantity = motion.origin.stock
@@ -244,16 +248,17 @@ class ListLotStockView(APIView):
             return Response({'error': error_message, 'detail': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([RawMaterialEditorPermission])
 class ListCreateOutputView(APIView):
+    permission_classes = [CustomPermission]
+    allowed_roles = [UserRoles.OPERARIO_LOGISTICA_MP.value]
     def get(self, request):
         try:
             queryset = Output.objects.all()
             date_start = request.query_params.get('start_date', None)
             date_end = request.query_params.get('end_date', None)
             if date_start and date_end:
-                queryset = queryset.filter(
-                    date__range=[datetime.strptime(date_start, "%d/%m/%Y"), datetime.strptime(date_end, "%d/%m/%Y")])
+                queryset = queryset.filter(date__gte=datetime.strptime(date_start, "%d/%m/%Y"),
+                                           date__lte=datetime.strptime(date_end, "%d/%m/%Y"))
             else:
                 queryset = queryset.filter(date__range=[datetime.now().date(), datetime.now().date()])
 
@@ -300,8 +305,9 @@ class ListCreateOutputView(APIView):
             return Response({'error': error_message, 'detail': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([RawMaterialEditorPermission])
 class DeleteOutputView(APIView):
+    permission_classes = [CustomPermission]
+    allowed_roles = [UserRoles.OPERARIO_LOGISTICA_MP.value]
     def delete(self, request, *args, **kwargs):
         output = get_object_or_404(Output, id=kwargs.get('pk'))
         try:
@@ -324,6 +330,8 @@ class DeleteOutputView(APIView):
 
 
 class AddOutputItemsView(APIView):
+    permission_classes = [CustomPermission]
+    allowed_roles = [UserRoles.OPERARIO_LOGISTICA_MP.value]
 
     def post(self, request, format=None):
         try:

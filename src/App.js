@@ -49,6 +49,7 @@ import SellDetail from "./containers/pages/Planning/Sell/Detail";
 import CalendarPlanning from "./containers/pages/Planning/Production/Calendar";
 import ReEntry from "./containers/pages/Planning/Stock/ReEntry";
 import Oven from "./containers/pages/Production/Oven";
+import SellSimulator from "./containers/pages/Planning/Sell/Simulator";
 
 
 const App = () => {
@@ -92,6 +93,7 @@ const App = () => {
                         <Route exact path="/planning/sales" element={<SellOpen/>}/>
                         <Route exact path="/planning/sales/:slug" element={<SellDetail/>}/>
                         <Route exact path="/planning/sales/done" element={<SellDone/>}/>
+                        <Route exact path="/planning/sales/simulator" element={<SellSimulator/>}/>
                         <Route exact path="/planning/manufacturing" element={<Production/>}/>
                         <Route exact path="/planning/manufacturing/calendar" element={<CalendarPlanning/>}/>
                         <Route exact path="/planning/inventory" element={<Inventory/>}/>

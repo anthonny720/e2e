@@ -1,16 +1,11 @@
 from datetime import datetime
-
 from django.db import DatabaseError
 from rest_framework import status
-from rest_framework.decorators import permission_classes
-from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
 from apps.sales.models import Samples
 from apps.sales.serializers import SamplesSerializer
-from apps.util.permissions import CommercialEditorPermission, LogisticsEditorPermission, \
-    PlanningLogisticEditorPermission
+from apps.util.permissions import CustomPermission, UserRoles
 
 
 class ListSamplesView(APIView):
@@ -38,7 +33,6 @@ class ListSamplesView(APIView):
             return Response({'error': error_message, 'detail': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([AllowAny])
 class CreateSampleView(APIView):
     def post(self, request):
         try:
@@ -54,9 +48,15 @@ class CreateSampleView(APIView):
             return Response({'error': error_message, 'detail': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([CommercialEditorPermission | LogisticsEditorPermission | PlanningLogisticEditorPermission])
 class UpdateSampleView(APIView):
-
+    permission_classes = [CustomPermission]
+    allowed_roles = [UserRoles.PLANNER_PRODUCCION.value,
+                     UserRoles.SUPERVISOR_INVESTIGACION_DESARROLLO.value,
+                     UserRoles.ASISTENTES_CERTIFICACIONES.value,
+                     UserRoles.OPERARIO_LOGISTICA_ALMACEN.value,
+                     UserRoles.PLANNER_LOGISTICA.value,
+                     UserRoles.ANALISTA_INTELIGENCIA_COMERCIAL.value,
+                     ]
     def patch(self, request, pk):
         try:
             sample = Samples.objects.get(pk=pk)

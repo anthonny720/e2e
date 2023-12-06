@@ -13,6 +13,10 @@ const NavSales = () => {
                      className={window.location.pathname === '/planning/sales/done' ? ' text-xs  font-medium text-white bg-green-400 px-6 flex flex-col justify-center items-center' : 'mt-2 text-xs px-6  font-medium text-gray-500 hover:text-green-400 flex flex-col justify-center items-center'}>
                 Finalizado
             </NavLink>
+            <NavLink to="/planning/sales/simulator"
+                     className={window.location.pathname === '/planning/sales/simulator' ? ' text-xs  font-medium text-white bg-green-400 px-6 flex flex-col justify-center items-center' : 'mt-2 text-xs px-6  font-medium text-gray-500 hover:text-green-400 flex flex-col justify-center items-center'}>
+                Simulador
+            </NavLink>
 
 
         </Popover.Group>

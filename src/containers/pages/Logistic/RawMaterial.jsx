@@ -34,6 +34,8 @@ const RawMaterial = () => {
     const zones = useSelector(state => state.Management.storage)
 
     useEffect(() => {
+        dispatch({type:'GET_LOT_FAIL'})
+        dispatch({type:'GET_DATA_LOT_FAIL'})
         dispatch(get_lot(lot))
         dispatch(get_storage_areas())
         dispatch(get_pallets())

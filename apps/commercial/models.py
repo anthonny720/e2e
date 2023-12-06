@@ -336,9 +336,7 @@ class SalesProgress(models.Model):
         result = []
         if product:
             for i in product.recipe_products.all():
-                result.append(
-                    {'name': i.material.name, 'quantity_standar': i.quantity, 'quantity_euro': i.quantity_euro,
-                     'quantity_loose': i.quantity_loose})
+                result.append({'name': i.material.name, 'quantity': i.quantity})
         return result
 
     def get_first_date(self):

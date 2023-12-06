@@ -1,18 +1,22 @@
 # Create your views here.
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from django.db import DatabaseError
-from django.db.models import OuterRef, ProtectedError
+from django.db.models import OuterRef, ProtectedError, Avg, Sum
+from django.utils import timezone
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.operations_and_planning.serializers import MaterialSerializer, ProductSerializer, StockSerializer, StockEntrySerializer, StockExitSerializer, ProductDetailSerializer, StockReEntrySerializer, ProductionPlanningSerializer
+from apps.operations_and_planning.serializers import MaterialSerializer, ProductSerializer, StockSerializer, \
+    StockEntrySerializer, StockExitSerializer, ProductDetailSerializer, StockReEntrySerializer, \
+    ProductionPlanningSerializer
 from .models import (Material, Product, Stock, StockEntry, StockExit, StockReentry, ProductionPlanning)
 from ..commercial.models import SalesProgress
 from ..commercial.serializers import SalesOrderShortSerializer
 from ..logistic.models import Records
 from ..logistic.serializers import RecordsMPSerializer
+from ..util.permissions import CustomPermission, UserRoles
 
 months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
 
@@ -182,6 +186,7 @@ class ListMaterialView(BaseListView, NoMixin):
     serializer_class = MaterialSerializer
     filter_params = []
 
+
 class ListProductView(BaseListView, NoMixin):
     model = Product
     serializer_class = ProductSerializer
@@ -222,33 +227,11 @@ class ListStockEntryView(BaseListView, NoMixin):
     date_query = 'arrival_date'
 
 
-class ListStockExitView(APIView):
+class ListStockExitView(BaseListView, NoMixin):
     model = StockExit
     serializer_class = StockExitSerializer
-
-    def get(self, request):
-        try:
-            stock_exits = self.model.objects.all()
-            product_name = request.query_params.get('name', None)
-            start_date = request.query_params.get('start_date', None)
-            end_date = request.query_params.get('end_date', None)
-            if product_name:
-                stock_exits = stock_exits.filter(stock_entry__item__name__icontains=product_name)
-
-            if start_date and end_date:
-                stock_exits = stock_exits.filter(
-                    date__range=[datetime.strptime(start_date, "%d/%m/%Y"), datetime.strptime(end_date, "%d/%m/%Y")])
-            else:
-                stock_exits = stock_exits[:50]
-
-            serializer = self.serializer_class(stock_exits, many=True)
-            return Response({'data': serializer.data}, status=status.HTTP_200_OK)
-        except DatabaseError:
-            error_message = 'No se puede procesar su solicitud debido a un error de base de datos. Por favor, inténtelo de nuevo más tarde.'
-            return Response({'message': error_message}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        except Exception as e:
-            error_message = 'Se ha producido un error inesperado en el servidor. Por favor, inténtelo de nuevo más tarde.'
-            return Response({'message': error_message, 'detail': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    filter_params = ['stock_entry__item__name']
+    date_query = 'date'
 
 
 class ListPlanningProductionView(APIView):
@@ -269,13 +252,19 @@ class ListPlanningProductionView(APIView):
             return Response({'message': error_message, 'detail': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-class ListProductionPlanningView(BaseListView, NoMixin):
+class ListProductionPlanningView(BaseListView):
+    permission_classes = [CustomPermission]
+    allowed_roles = [UserRoles.PLANNER_PRODUCCION.value]
+
     model = ProductionPlanning
     serializer_class = ProductionPlanningSerializer
     filter_params = []
 
 
-class DetailProductionPlanningView(BaseDetailView, NoMixin):
+class DetailProductionPlanningView(BaseDetailView):
+
+    permission_classes = [CustomPermission]
+    allowed_roles = [UserRoles.PLANNER_PRODUCCION.value]
     model = ProductionPlanning
     serializer_class = ProductionPlanningSerializer
 
@@ -297,4 +286,46 @@ class CalendarScheduleManufacturingView(APIView):
                      'date': item.date, })
             return Response(data, status=status.HTTP_200_OK)
         except Exception as e:
-            return Response({'data': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'message': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class SimulatorView(APIView):
+
+    def post(self, request):
+        try:
+            data = request.data
+            sku = data['sku']
+            quantity = data['quantity']
+            result = []
+            product = Product.objects.get(id=sku)
+            name = product.name.split(' ')[0].capitalize()
+            condition = product.name.split(' ')[1].capitalize()
+            three_months_ago = timezone.now() - timedelta(days=360)
+            history = Records.objects.filter(category__icontains=name, condition__icontains=condition,
+                                             entry_date__range=[three_months_ago, timezone.now()], field_price__gt=0,
+                                             palletizing_per_kg__gt=0, freight__gt=0).order_by('-entry_date')
+            average_price_camp = history.aggregate(avg_price_camp=Avg('field_price'))['avg_price_camp']
+
+            sum_download_per_kg = history.aggregate(sum_download_per_kg=Sum('palletizing_per_kg'))['sum_download_per_kg']
+            sum_freight = history.aggregate(sum_freight=Sum('freight'))['sum_freight']
+            sum_usable_weight = history.aggregate(sum_usable_weight=Sum('usable_weight'))['sum_usable_weight']
+            download_per_kg = sum_download_per_kg / sum_usable_weight if sum_usable_weight else None
+            freight_per_kg = sum_freight / sum_usable_weight if sum_usable_weight else None
+
+            result.append({'name': "Materia Prima", 'calculate': (float(quantity) / float(product.performance)) * 100,
+                           'category': product.group.name, 'unit': product.unit_of_measurement.name,
+                           'price': average_price_camp})
+            result.append({'name': "Servicio Descarga", 'calculate': (float(quantity) / float(product.performance))*100,
+                           'category': product.group.name, 'unit': product.unit_of_measurement.name,
+                           'price': download_per_kg})
+            result.append({'name': "Flete", 'calculate': (float(quantity) / float(product.performance))*100,
+                           'category': product.group.name, 'unit': product.unit_of_measurement.name,
+                           'price': freight_per_kg})
+            for i in product.recipe_products.all():
+                result.append(
+                    {'name': i.material.name, 'quantity': i.quantity, 'calculate': float(i.quantity) * float(quantity),
+                     'category': i.material.group.name, 'unit': i.material.unit_of_measurement.name,
+                     'price': i.material.price})
+            return Response({'data': result}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'message': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

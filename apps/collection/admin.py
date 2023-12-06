@@ -8,7 +8,7 @@ from apps.collection.models import Product, Parcel, Provider
 # Register your models here.
 @admin.register(Product)
 class ProductAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
-    list_display = ('name',)
+    list_display = ('name','enable')
     search_fields = ('name',)
     ordering = ['name']
     list_per_page = 25
