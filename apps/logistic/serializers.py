@@ -125,7 +125,7 @@ class LotSummarySerializer(serializers.ModelSerializer):
         model = Lot
         fields = (
             'id', 'net_weight', 'condition_name', 'variety', 'download_date', 'category_name', 'business_maquila_name',
-            'stock', 'lot', 'freight', 'service_download', 'price_final', 'usable_weight',)
+            'stock', 'lot', 'freight', 'service_downloads', 'price_final', 'usable_weight',)
 
 
 class ILotSummarySerializer(serializers.ModelSerializer):

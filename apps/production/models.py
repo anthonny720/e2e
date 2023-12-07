@@ -74,7 +74,9 @@ class PineapplePacking(models.Model):
 
     def rendimiento(self):
         try:
-            return str(round(((self.pt_total + self.pt_local + self.pt_aggregated + self.pt_quality)/self.process)*100,2))+ '%'
+            return str(
+                round(((self.pt_total + self.pt_local + self.pt_aggregated + self.pt_quality) / self.process) * 100,
+                      2)) + '%'
         except:
             return 0
 
@@ -128,8 +130,8 @@ class Ovens(models.Model):
     product = models.CharField(max_length=50, verbose_name='Producto', blank=True)
     lot = models.CharField(max_length=12, verbose_name='Lote', blank=True)
     presentation = models.CharField(max_length=50, verbose_name='Presentación', blank=True)
-    maturation = models.CharField(max_length=50, verbose_name='Maduración', blank=True)
-    width = models.CharField(max_length=50, verbose_name='Espesor', blank=True)
+    maturation = models.CharField(max_length=50, verbose_name='Maduración', blank=True, default=0)
+    width = models.CharField(max_length=50, verbose_name='Espesor', blank=True, default=0)
     oven = models.CharField(max_length=1, verbose_name='Horno', blank=True, choices=OVEN_CHOICES, default='1')
     cars = models.IntegerField(verbose_name='Carros', default=0)
     trays = models.IntegerField(verbose_name='Bandejas', default=0)

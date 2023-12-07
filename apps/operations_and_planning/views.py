@@ -8,9 +8,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.operations_and_planning.serializers import MaterialSerializer, ProductSerializer, StockSerializer, \
-    StockEntrySerializer, StockExitSerializer, ProductDetailSerializer, StockReEntrySerializer, \
-    ProductionPlanningSerializer
+from apps.operations_and_planning.serializers import MaterialSerializer, ProductSerializer, StockSerializer, StockEntrySerializer, StockExitSerializer, ProductDetailSerializer, StockReEntrySerializer, ProductionPlanningSerializer
 from .models import (Material, Product, Stock, StockEntry, StockExit, StockReentry, ProductionPlanning)
 from ..commercial.models import SalesProgress
 from ..commercial.serializers import SalesOrderShortSerializer

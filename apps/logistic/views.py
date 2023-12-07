@@ -9,8 +9,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from apps.logistic.models import Lot, ILot, Motions, Pallets, Output, RegisterOutput
-from apps.logistic.serializers import LotSerializer, ILotSerializer, MotionsSerializer, PalletsSerializer, \
-    OutputSerializer, LotSummarySerializer, RegisterOutputSerializer, SummaryOutputSerializer, LotUpdateSerializer
+from apps.logistic.serializers import LotSerializer, ILotSerializer, MotionsSerializer, PalletsSerializer, OutputSerializer, LotSummarySerializer, RegisterOutputSerializer, SummaryOutputSerializer, LotUpdateSerializer
 from apps.management.models import Location
 from apps.quality_assurance.models import Pineapple, Banano, Mango, Blueberry, Goldenberry
 from apps.util.permissions import CustomPermission, UserRoles
@@ -74,7 +73,7 @@ class ListCreateLotView(APIView):
 
 class DetailLotView(APIView):
     permission_classes = [CustomPermission]
-    allowed_roles = [UserRoles.OPERARIO_LOGISTICA_MP.value]
+    allowed_roles = [UserRoles.OPERARIO_LOGISTICA_MP.value, UserRoles.ASISTENTE_ACOPIO.value,]
 
     def get(self, request, *args, **kwargs):
         lot = get_object_or_404(Lot, lot=kwargs['lot'])

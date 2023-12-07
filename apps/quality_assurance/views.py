@@ -4,10 +4,8 @@ from rest_framework import status
 from rest_framework.generics import ListAPIView, RetrieveUpdateAPIView
 from rest_framework.response import Response
 
-from .models import (Blueberry as blueberry, Banano as banano, Goldenberry as goldenberry, Mango as mango,
-                     Pineapple as pineapple, )
-from .serializers import (BlueberrySerializer, BananoSerializer, GoldenberrySerializer, MangoSerializer,
-                          PineappleSerializer, )
+from .models import (Blueberry as blueberry, Banano as banano, Goldenberry as goldenberry, Mango as mango,Pineapple as pineapple, )
+from .serializers import (BlueberrySerializer, BananoSerializer, GoldenberrySerializer, MangoSerializer,PineappleSerializer, )
 from ..util.permissions import CustomPermission, UserRoles
 
 

@@ -1,8 +1,10 @@
 from datetime import datetime
+
 from django.db import DatabaseError
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
 from apps.sales.models import Samples
 from apps.sales.serializers import SamplesSerializer
 from apps.util.permissions import CustomPermission, UserRoles
@@ -34,9 +36,15 @@ class ListSamplesView(APIView):
 
 
 class CreateSampleView(APIView):
+    permission_classes = [CustomPermission]
+    allowed_roles = [UserRoles.EJECUTIVO_REGIONAL.value, UserRoles.ANALISTA_INTELIGENCIA_COMERCIAL.value,
+                     UserRoles.JEFE_VENTAS_MARKETING.value, UserRoles.GERENTE_COMERCIAL.value]
+
     def post(self, request):
         try:
             serializer = SamplesSerializer(data=request.data)
+            user = request.user
+            serializer.initial_data['applicant'] = user.first_name + ' ' + user.last_name
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response({'message': 'Solicitud registrada'}, status=status.HTTP_201_CREATED)
@@ -50,13 +58,10 @@ class CreateSampleView(APIView):
 
 class UpdateSampleView(APIView):
     permission_classes = [CustomPermission]
-    allowed_roles = [UserRoles.PLANNER_PRODUCCION.value,
-                     UserRoles.SUPERVISOR_INVESTIGACION_DESARROLLO.value,
-                     UserRoles.ASISTENTES_CERTIFICACIONES.value,
-                     UserRoles.OPERARIO_LOGISTICA_ALMACEN.value,
-                     UserRoles.PLANNER_LOGISTICA.value,
-                     UserRoles.ANALISTA_INTELIGENCIA_COMERCIAL.value,
-                     ]
+    allowed_roles = [UserRoles.PLANNER_PRODUCCION.value, UserRoles.SUPERVISOR_INVESTIGACION_DESARROLLO.value,
+                     UserRoles.ASISTENTES_CERTIFICACIONES.value, UserRoles.OPERARIO_LOGISTICA_ALMACEN.value,
+                     UserRoles.PLANNER_LOGISTICA.value, UserRoles.ANALISTA_INTELIGENCIA_COMERCIAL.value, ]
+
     def patch(self, request, pk):
         try:
             sample = Samples.objects.get(pk=pk)

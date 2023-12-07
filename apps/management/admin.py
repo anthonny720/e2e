@@ -2,8 +2,7 @@ from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
 from simple_history.admin import SimpleHistoryAdmin
 
-from apps.management.models import Customer, Suppliers, Outsourcing, Transport, StorageArea, Location, \
-    UnitOfMeasurement, Categories, CostProduction, ContactPeople
+from apps.management.models import Customer, Suppliers, Outsourcing, Transport, StorageArea, Location, UnitOfMeasurement, Categories, CostProduction, ContactPeople
 
 
 # Register your models here.

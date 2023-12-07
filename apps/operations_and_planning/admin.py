@@ -2,8 +2,7 @@ from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
 from simple_history.admin import SimpleHistoryAdmin
 
-from apps.operations_and_planning.models import Material, Product, Recipe, Stock, StockEntry, StockExit, StockReentry, \
-    ProductionPlanning
+from apps.operations_and_planning.models import Material, Product, Recipe, Stock, StockEntry, StockExit, StockReentry, ProductionPlanning
 
 
 # Register your models here.

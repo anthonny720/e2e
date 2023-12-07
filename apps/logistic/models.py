@@ -142,7 +142,7 @@ class Lot(models.Model):
             service_downloads = float(self.service_downloads) if self.service_downloads else 0
             usable_weight = net_weight - float(discount) - float(discount_price)
             price_final = ((usable_weight - discount_price) * float(price_camp)) + (
-                        discount_price * float(price_soles)) + float(freight) + float(service_downloads)
+                    discount_price * float(price_soles)) + float(freight) + float(service_downloads)
             return round(price_final, 4)
         except Exception as e:
             return 0

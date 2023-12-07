@@ -5,8 +5,7 @@ from rest_framework.views import APIView
 
 from apps.collection.models import Provider
 from apps.collection.serializers import SupplierRMSerializer
-from apps.management.models import Customer, Suppliers, Outsourcing, Transport, StorageArea, Location, CostProduction, \
-    UnitOfMeasurement, Categories
+from apps.management.models import Customer, Suppliers, Outsourcing, Transport, StorageArea, Location, CostProduction, UnitOfMeasurement, Categories
 from apps.management.serializers import (CustomerSerializer, SuppliersSerializer, OutsourcingSerializer,
                                          TransportSerializer, StorageAreaSerializer, LocationSerializer,
                                          CostProductionSerializer, UnitOfMeasurementSerializer, CategoriesSerializer)

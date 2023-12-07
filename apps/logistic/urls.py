@@ -1,8 +1,6 @@
 from django.urls import path
 
-from .views import ListCreateLotView, DetailLotView, ListCreateILotView, ListCreateMotionsView, DeleteMotionView, \
-    ListPalletsView, UpdateILotView, ListLotStockView, ListCreateOutputView, DeleteOutputView, AddOutputItemsView, \
-    ListOutputItemsView
+from .views import ListCreateLotView, DetailLotView, ListCreateILotView, ListCreateMotionsView, DeleteMotionView, ListPalletsView, UpdateILotView, ListLotStockView, ListCreateOutputView, DeleteOutputView, AddOutputItemsView, ListOutputItemsView
 
 app_name = 'logistic'
 

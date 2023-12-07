@@ -47,7 +47,7 @@ const Cards = ({view, data, filter}) => {
                 <p onClick={() => {
                     view(data)
                 }}
-                   className="text-xs text-black font-semibold  text-center cursor-pointer hover:font-bold">{data?.code}</p>
+                   className="text-xs text-black font-semibold  text-center cursor-pointer hover:font-bold">{data?.code} - {data?.client}</p>
 
             </div>
 
@@ -68,7 +68,7 @@ const Cards = ({view, data, filter}) => {
                         <option value="C">Cancelado</option>
                     </select>
                 </div>
-                <div className={"bg-blue-400 text-white px-1 rounded-lg text-[8px] px-4"}><p>{data?.market_name}</p>
+                <div className={"bg-blue-400 text-white px-1 rounded-lg text-[8px] px-4"}><p>{data?.country}</p>
                 </div>
                 <div className={"bg-yellow-400 text-white px-1 rounded-lg text-[8px] px-4"}>
                     <p>{data?.packing_type_name}</p></div>
