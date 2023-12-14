@@ -4,19 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3b3e131-1067-4e99-acb5-87c2a2a9bd2b" name="Changes" comment="Update sales models and frontend">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/commercial/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/commercial/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/commercial/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/commercial/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/commercial/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/commercial/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/commercial/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/commercial/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/commercial/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/commercial/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/operations_and_planning/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/operations_and_planning/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/production/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/production/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Planning/Sell/PDF.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Planning/Sell/PDF.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Planning/Sell/Table.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Planning/Sell/Table.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/pages/Planning/Sell/Open.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/pages/Planning/Sell/Open.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/pages/Planning/Sell/Simulator.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/pages/Planning/Sell/Simulator.jsx" afterDir="false" />
+    <list default="true" id="f3b3e131-1067-4e99-acb5-87c2a2a9bd2b" name="Changes" comment="Update sales">
+      <change beforePath="$PROJECT_DIR$/src/containers/pages/Planning/Sell/Done.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/pages/Planning/Sell/Done.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,7 +131,7 @@
       <workItem from="1702388173459" duration="969000" />
       <workItem from="1702490204045" duration="22000" />
       <workItem from="1702564117495" duration="5673000" />
-      <workItem from="1702571297193" duration="13351000" />
+      <workItem from="1702571297193" duration="13705000" />
     </task>
     <task id="LOCAL-00001" summary="Commit Logistic">
       <option name="closed" value="true" />
@@ -200,7 +189,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701982535168</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Update sales">
+      <option name="closed" value="true" />
+      <created>1702587023812</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1702587023812</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -237,7 +234,8 @@
     <MESSAGE value="Commit Recipe" />
     <MESSAGE value="Update fix" />
     <MESSAGE value="Update sales models and frontend" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update sales models and frontend" />
+    <MESSAGE value="Update sales" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update sales" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
