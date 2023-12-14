@@ -1,78 +1,49 @@
 import React, {Fragment} from 'react';
-import {Menu, Transition} from "@headlessui/react";
+import {Disclosure, Menu, Transition} from "@headlessui/react";
 import {EllipsisVerticalIcon} from "@heroicons/react/24/solid";
 import {EyeIcon, LinkIcon} from "@heroicons/react/24/outline";
-import {map, size} from "lodash";
+import {map, size, sumBy} from "lodash";
 import Skeleton from "react-loading-skeleton";
 import Humanize from "humanize-plus";
 import {useNavigate} from "react-router-dom";
+import {ChevronUpIcon} from '@heroicons/react/20/solid'
+import {useDispatch} from "react-redux";
+import {get_sales_order} from "../../../redux/actions/commercial";
 
-const Table = ({data, reference, formData, setFormData, date}) => {
+const Table = ({data, reference}) => {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
 
-    const {sku, client_name, fcl_name, po_number, pfi_number, commercial_status} = formData
-
-    const list = [{name: 'month', placeholder: 'Mes', disabled: true}, {
-        name: 'year', placeholder: 'Año', disabled: true
-    }, {
-        name: 'commercial_status', placeholder: 'Gestión', onChange: e => onChange(e), value: commercial_status, disabled: false
-    }, {
-        name: 'client_name',
-        value: client_name,
-        placeholder: 'Cliente',
-        disabled: false,
-        onChange: e => onChange(e)
-    }, {name: 'po_number', value: po_number, placeholder: '#Orden', onChange: e => onChange(e), disabled: false}, {
-        name: 'pfi_number', value: pfi_number, placeholder: '# PFI', onChange: e => onChange(e), disabled: false
-    }, {
-        name: 'fcl_name',value:fcl_name, placeholder: 'FCL', onChange: e => onChange(e), disabled: false
-    }, {name: 'sku', value: sku, placeholder: 'SKU', onChange: e => onChange(e), disabled: false}, {
-        name: 'quantity', placeholder: 'Kg', disabled: true
-    }, {name: 'raw_material', placeholder: 'MP', disabled: true}, {
-        name: 'market', placeholder: 'Mercado', disabled: true
-    },
-
-        {name: 'start_date', placeholder: 'Inicio', disabled: true}, {
-            name: 'finish_date', placeholder: 'Fin', disabled: true
-        }, {
-            name: 'shipping_date', placeholder: 'Envío', disabled: true
-        }, {name: 'etd', placeholder: 'ETD', disabled: true}, {
-            name: 'eta', placeholder: 'ETA', disabled: true
-        }, {name: 'delivery', placeholder: 'Estatus', disabled: true},]
-    const onChange = e => {
-        setFormData({...formData, [e.target.name]: e.target.value})
+    const getDetail = (slug) => {
+        dispatch(get_sales_order(slug));
     }
 
-    console.log(data)
 
-        return (<div className="relative overflow-x-auto scrollbar-hide  sm:rounded-lg p-2  max-h-[450px] md:max-h-[550px]">
-            <table className="w-full  text-sm text-left text-gray-500 " ref={reference}>
-                <thead className="text-xs text-gray-700 whitespace-nowrap uppercase   overflow-x-scroll scrollbar-hide ">
-                <tr>
-                    {map(list, (item, index) => (<th scope="col" key={index}>
-                        <input
-                            name={item.name}
-                            id={item.name}
-                            type="text"
-                            className="hover:text-green-400  text-center outline-none bg-transparent w-full"
-                            value={item.value}
-                            disabled={item.disabled}
-                            onChange={item.onChange}
-                            placeholder={item.placeholder}
-                        />
+    const list = ['Mes', 'Año', 'Gestión', 'Cliente', '#Orden', '# PFI', 'FCL', 'SKU', 'Kg', 'MP', 'Mercado', 'Inicio', 'Fin', 'Envío', 'ETD', 'ETA', 'Estatus']
+
+    return (<div className="relative overflow-x-auto scrollbar-hide  sm:rounded-lg  max-h-[450px] md:max-h-[550px]">
+        <table className="w-full  text-xs text-gray-500 " ref={reference}>
+            <thead className="whitespace-nowrap uppercase   overflow-x-scroll scrollbar-hide ">
+            <tr>
+                {map(list, (item, index) => (
+                    <th scope="col" className="px-4 py-3 text-center text-gray-400" key={index}>
+                        {item}
+
                     </th>))}
 
 
-                </tr>
+            </tr>
 
-                </thead>
-                <tbody>
-                {data && data !== null && data !== undefined && size(data) > 0 ? map(data, (i, index) =>
-                    <tr className="bg-white border-b" key={index}>
+            </thead>
+            <tbody>
+            {data && data !== null && data !== undefined && size(data) > 0 ? map(data, (i, index) =>
 
-                        <td className="pr-2 py-4 font-medium text-gray-900 whitespace-nowrap  overflow-x-scroll scrollbar-hide">
+                <tr className="bg-white border-b hover:bg-green-100 " key={index}>
+
+
+                    <td className="py-1 font-normal text-black whitespace-nowrap  overflow-x-scroll scrollbar-hide">
                         <div className={"flex gap-2"}>
 
                             <Menu as="div" className="relative inline-block text-left z-[100]">
@@ -96,7 +67,7 @@ const Table = ({data, reference, formData, setFormData, date}) => {
                                     leaveTo="transform opacity-0 scale-95"
                                 >
                                     <Menu.Items
-                                        className="absolute -bottom-6 mb-2 w-8  divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                        className="absolute top-0.5  w-max flex  divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                         <div className="px-2 py-1 cursor-pointer">
                                             <Menu.Item>
                                                 <EyeIcon onClick={() => navigate(`/planning/sales/${i?.slug}`)}
@@ -120,61 +91,84 @@ const Table = ({data, reference, formData, setFormData, date}) => {
                                     </Menu.Items>
                                 </Transition>
                             </Menu>
-                             <p className={"hover:text-green-400 cursor-pointer px-6 whitespace-nowrap"}>{i?.month}</p>
+                            <p className={"px-6  text-xs font-normal text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer hover:font-bold "}>{i?.month}</p>
                         </div>
                     </td>
-                    <td className="hover:text-green-400 cursor-pointer px-6 whitespace-nowrap">{i?.year}</td>
-                    <td className="hover:text-green-400 cursor-pointer px-6 whitespace-nowrap ">{i?.commercial_status} %</td>
-                    <td className="hover:text-green-400 cursor-pointer px-6 whitespace-nowrap ">{i?.client_name} </td>
-                    <td className="hover:text-green-400 cursor-pointer px-6 whitespace-nowrap">
+                    <td className="px-6  text-xs font-normal text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer hover:font-bold ">{i?.year}</td>
+                    <td className="px-6  text-xs font-normal text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer hover:font-bold  ">{i?.commercial_status} %</td>
+                    <td className="px-6  text-xs font-normal text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer hover:font-bold  ">{i?.client_name} </td>
+                    <td className="px-6  text-xs font-normal text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer hover:font-bold ">
                         <a href={i?.drive} target='_blank' rel="noreferrer">{i?.po_number}</a>
                     </td>
-                    <td className="hover:text-green-400 cursor-pointer px-6 whitespace-nowrap">
+                    <td className="px-6  text-xs font-normal text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer hover:font-bold ">
                         <a href={i?.drive} target='_blank' rel="noreferrer">{i?.pfi_number}</a></td>
-                    <td className="hover:text-green-400 cursor-pointer px-6 whitespace-nowrap">{i?.fcl_name}</td>
-                    <td className="hover:text-green-400 cursor-pointer px-6 whitespace-nowrap ">{i?.sku}</td>
-                    <td className="hover:text-green-400 cursor-pointer px-6 whitespace-nowrap">{Humanize.formatNumber(i?.kg, 2)}</td>
-                    <td className="hover:text-green-400 cursor-pointer px-6 whitespace-nowrap">{Humanize.formatNumber(i?.mp, 2)}</td>
-                    <td className="hover:text-green-400 cursor-pointer px-6 whitespace-nowrap">{i?.market === 'N' ? 'Nacional' : 'Internacional'}</td>
-                    <td className="hover:text-green-400 cursor-pointer px-6 whitespace-nowrap">{i?.start_process ? new Date(i?.start_process + "T00:00:00").toLocaleDateString('es-PE', {
+                    <td className="px-6  text-xs font-normal text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer hover:font-bold ">{i?.fcl_name}</td>
+                    <Disclosure>
+                        {({open}) => (<>
+                            <Disclosure.Button
+                                className="flex w-full justify-between rounded-lg  px-4 py-2 text-left text-sm font-medium ">
+                                <td className="px-6  text-xs font-normal text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer hover:font-bold  ">{i?.sku}</td>
+                                <ChevronUpIcon onClick={() => getDetail(i?.slug)}
+                                               className={`${open ? 'rotate-180 transform' : ''} h-5 w-5 text-purple-500`}
+                                />
+                            </Disclosure.Button>
+                            <Disclosure.Panel className="px-4 pb-2 pt-4 text-xs text-gray-500 font-normal">
+                                {map(i?.recipe, (item, index) => (
+                                    <div className={"grid grid-cols-3 gap-4 mb-0.5 text-center"} key={index}>
+                                        <div className={"text-left"}>•{item?.name} </div>
+                                        <div>{Humanize.formatNumber(item?.quantity * i?.kg, 5)} {item?.unit}</div>
+                                        <div>S/{Humanize.formatNumber(item?.quantity * item?.price, 2)}</div>
+                                    </div>))}
+
+                                <div className={"text-center"}> Total: &nbsp;
+                                    S/{Humanize.formatNumber(sumBy(i?.recipe, (item, index) => (item?.quantity * item?.price * i?.kg)), 2)}
+                                </div>
+
+                            </Disclosure.Panel>
+                        </>)}
+                    </Disclosure>
+                    <td className="px-6  text-xs font-normal text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer hover:font-bold ">{Humanize.formatNumber(i?.kg, 2)}</td>
+                    <td className="px-6  text-xs font-normal text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer hover:font-bold ">{Humanize.formatNumber(i?.mp, 2)}</td>
+                    <td className="px-6  text-xs font-normal text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer hover:font-bold ">{i?.market === 'N' ? 'Nacional' : 'Internacional'}</td>
+                    <td className="px-6  text-xs font-normal text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer hover:font-bold ">{i?.start_process ? new Date(i?.start_process + "T00:00:00").toLocaleDateString('es-PE', {
                         year: 'numeric', month: 'numeric', day: 'numeric'
                     }) : 'Sin fecha'}</td>
-                    <td className="hover:text-green-400 cursor-pointer px-6 whitespace-nowrap">{i?.end_process ? new Date(i?.end_process + "T00:00:00").toLocaleDateString('es-PE', {
+                    <td className="px-6  text-xs font-normal text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer hover:font-bold ">{i?.end_process ? new Date(i?.end_process + "T00:00:00").toLocaleDateString('es-PE', {
                         year: 'numeric', month: 'numeric', day: 'numeric'
                     }) : 'Sin fecha'}</td>
-                    <td className="hover:text-green-400 cursor-pointer px-6 whitespace-nowrap">{i?.load_date ? new Date(i?.load_date + "T00:00:00").toLocaleDateString('es-PE', {
+                    <td className="px-6  text-xs font-normal text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer hover:font-bold ">{i?.load_date ? new Date(i?.load_date + "T00:00:00").toLocaleDateString('es-PE', {
                         year: 'numeric', month: 'numeric', day: 'numeric'
                     }) : 'Sin fecha'}</td>
-                    <td className="hover:text-green-400 cursor-pointer px-6 whitespace-nowrap">{i?.etd ? new Date(i?.etd + "T00:00:00").toLocaleDateString('es-PE', {
+                    <td className="px-6  text-xs font-normal text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer hover:font-bold ">{i?.etd ? new Date(i?.etd + "T00:00:00").toLocaleDateString('es-PE', {
                         year: 'numeric', month: 'numeric', day: 'numeric'
                     }) : 'Sin fecha'}</td>
-                    <td className="hover:text-green-400 cursor-pointer px-6 whitespace-nowrap">{i?.eta ? new Date(i?.eta + "T00:00:00").toLocaleDateString('es-PE', {
+                    <td className="px-6  text-xs font-normal text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer hover:font-bold ">{i?.eta ? new Date(i?.eta + "T00:00:00").toLocaleDateString('es-PE', {
                         year: 'numeric', month: 'numeric', day: 'numeric'
                     }) : 'Sin fecha'}</td>
-                    <td className={`hover:text-green-400 cursor-pointer px-6 whitespace-nowrap`}>
+                    <td className={`px-6  text-xs font-normal text-gray-900 whitespace-nowrap hover:text-green-400 hover:cursor-pointer hover:font-bold `}>
                         <p className={"font-bold"}>
                             {i?.status === 'TBT' ? 'Por etiquetar' : i?.status === 'TBD' ? 'Por despachar' : i?.status === 'TBP' ? 'Por procesar' : 'Procesado'}
                         </p>
                     </td>
                 </tr>) : <tr className={"gap-4"}>
-                <td className={"text-center py-4 px-2"}><Skeleton count={5} height={20}/></td>
-                <td className={"text-center px-2 py-4"}><Skeleton count={5} height={20}/></td>
-                <td className={"text-center px-2 py-4"}><Skeleton count={5} height={20}/></td>
-                <td className={"text-center px-2 py-4"}><Skeleton count={5} height={20}/></td>
-                <td className={"text-center px-2 py-4"}><Skeleton count={5} height={20}/></td>
-                <td className={"text-center px-2 py-4"}><Skeleton count={5} height={20}/></td>
-                <td className={"text-center px-2 py-4"}><Skeleton count={5} height={20}/></td>
-                <td className={"text-center px-2 py-4"}><Skeleton count={5} height={20}/></td>
-                <td className={"text-center px-2 py-4"}><Skeleton count={5} height={20}/></td>
-                <td className={"text-center px-2 py-4"}><Skeleton count={5} height={20}/></td>
-                <td className={"text-center px-2 py-4"}><Skeleton count={5} height={20}/></td>
-                <td className={"text-center px-2 py-4"}><Skeleton count={5} height={20}/></td>
-                <td className={"text-center px-2 py-4"}><Skeleton count={5} height={20}/></td>
-                <td className={"text-center px-2 py-4"}><Skeleton count={5} height={20}/></td>
-                <td className={"text-center px-2 py-4"}><Skeleton count={5} height={20}/></td>
-                <td className={"text-center px-2 py-4"}><Skeleton count={5} height={20}/></td>
-                <td className={"text-center px-2 py-4"}><Skeleton count={5} height={20}/></td>
-                <td className={"text-center px-2 py-4"}><Skeleton count={5} height={20}/></td>
+                <td className={"font-normal  px-2"}><Skeleton count={5} height={20}/></td>
+                <td className={"font-normal px-2 "}><Skeleton count={5} height={20}/></td>
+                <td className={"font-normal px-2 "}><Skeleton count={5} height={20}/></td>
+                <td className={"font-normal px-2 "}><Skeleton count={5} height={20}/></td>
+                <td className={"font-normal px-2 "}><Skeleton count={5} height={20}/></td>
+                <td className={"font-normal px-2 "}><Skeleton count={5} height={20}/></td>
+                <td className={"font-normal px-2 "}><Skeleton count={5} height={20}/></td>
+                <td className={"font-normal px-2 "}><Skeleton count={5} height={20}/></td>
+                <td className={"font-normal px-2 "}><Skeleton count={5} height={20}/></td>
+                <td className={"font-normal px-2 "}><Skeleton count={5} height={20}/></td>
+                <td className={"font-normal px-2 "}><Skeleton count={5} height={20}/></td>
+                <td className={"font-normal px-2 "}><Skeleton count={5} height={20}/></td>
+                <td className={"font-normal px-2 "}><Skeleton count={5} height={20}/></td>
+                <td className={"font-normal px-2 "}><Skeleton count={5} height={20}/></td>
+                <td className={"font-normal px-2 "}><Skeleton count={5} height={20}/></td>
+                <td className={"font-normal px-2 "}><Skeleton count={5} height={20}/></td>
+                <td className={"font-normal px-2 "}><Skeleton count={5} height={20}/></td>
+                <td className={"font-normal px-2 "}><Skeleton count={5} height={20}/></td>
             </tr>}
             </tbody>
         </table>

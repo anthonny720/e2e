@@ -306,8 +306,8 @@ class ProductionPlanning(models.Model):
         verbose_name_plural = 'Planificación de producción'
         ordering = ['-sale__date']
 
-    sale = models.ForeignKey('commercial.SalesProgress', on_delete=models.CASCADE, related_name='production_planning',
-                             verbose_name='Orden de venta', blank=True, null=True)
+    # sale = models.ForeignKey('commercial.SalesProgress', on_delete=models.CASCADE, related_name='production_planning',
+    #                          verbose_name='Orden de venta', blank=True, null=True)
     date = models.DateField(verbose_name='Fecha', default=timezone.now)
     raw_material = models.DecimalField(verbose_name='Materia Prima', max_digits=9, decimal_places=2, default=0,
                                        blank=True)
@@ -329,28 +329,28 @@ class ProductionPlanning(models.Model):
         self.stock_end = self.stock_start + self.expected
         super().save(force_insert, force_update, using, update_fields)
 
-        try:
-            self.sale.update_date_manufacturing()
-            self.sale.save()
-        except:
-            pass
+        # try:
+        #     self.sale.update_date_manufacturing()
+        #     self.sale.save()
+        # except:
+        #     pass
 
-    def get_missing(self):
-        try:
-            quantity = self.sale.kg
-            if quantity > self.stock_end:
-                return quantity - self.stock_end
-            else:
-                return 0
-        except:
-            return 0
-
-    def surplus(self):
-        try:
-            quantity = self.sale.kg
-            if quantity < self.stock_end:
-                return self.stock_end - quantity
-            else:
-                return 0
-        except:
-            return 0
+    # def get_missing(self):
+    #     try:
+    #         quantity = self.sale.kg
+    #         if quantity > self.stock_end:
+    #             return quantity - self.stock_end
+    #         else:
+    #             return 0
+    #     except:
+    #         return 0
+    #
+    # def surplus(self):
+    #     try:
+    #         quantity = self.sale.kg
+    #         if quantity < self.stock_end:
+    #             return self.stock_end - quantity
+    #         else:
+    #             return 0
+    #     except:
+    #         return 0

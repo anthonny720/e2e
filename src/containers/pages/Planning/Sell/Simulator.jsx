@@ -27,6 +27,7 @@ const SellSimulator = () => {
     useEffect(() => {
         dispatch({type: 'GET_SIMULATOR_FAIL'})
         dispatch(get_skus())
+        dispatch({type:'LOADING_SIMULATOR_SUCCESS'})
     }, []);
 
     const handleSearch = () => {

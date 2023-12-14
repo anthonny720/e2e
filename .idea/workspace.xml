@@ -4,25 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3b3e131-1067-4e99-acb5-87c2a2a9bd2b" name="Changes" comment="Update fix">
-      <change beforePath="$PROJECT_DIR$/apps/logistic/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/logistic/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/logistic/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/logistic/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/logistic/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/logistic/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/logistic/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/logistic/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/management/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/management/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/management/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/management/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/operations_and_planning/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/operations_and_planning/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/operations_and_planning/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/operations_and_planning/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/operations_and_planning/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/operations_and_planning/views.py" afterDir="false" />
+    <list default="true" id="f3b3e131-1067-4e99-acb5-87c2a2a9bd2b" name="Changes" comment="Update sales models and frontend">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/commercial/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/commercial/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/commercial/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/commercial/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/commercial/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/commercial/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/commercial/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/commercial/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/commercial/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/commercial/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/operations_and_planning/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/operations_and_planning/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/production/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/production/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/quality_assurance/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/quality_assurance/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/sales/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/sales/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/sales/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/sales/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/sales/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/sales/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/sales/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/sales/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Sales/Cards.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Sales/Cards.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Sales/Request.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Sales/Request.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/pages/Sales/Form.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/pages/Sales/Form.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Planning/Sell/PDF.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Planning/Sell/PDF.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Planning/Sell/Table.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Planning/Sell/Table.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/pages/Planning/Sell/Open.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/pages/Planning/Sell/Open.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/pages/Planning/Sell/Simulator.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/pages/Planning/Sell/Simulator.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -143,7 +137,12 @@
       <workItem from="1701791150330" duration="18532000" />
       <workItem from="1701867831375" duration="25021000" />
       <workItem from="1701899140211" duration="1498000" />
-      <workItem from="1701970836916" duration="7300000" />
+      <workItem from="1701970836916" duration="11928000" />
+      <workItem from="1702062647339" duration="80000" />
+      <workItem from="1702388173459" duration="969000" />
+      <workItem from="1702490204045" duration="22000" />
+      <workItem from="1702564117495" duration="5673000" />
+      <workItem from="1702571297193" duration="13351000" />
     </task>
     <task id="LOCAL-00001" summary="Commit Logistic">
       <option name="closed" value="true" />
@@ -193,7 +192,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701888125627</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Update sales models and frontend">
+      <option name="closed" value="true" />
+      <created>1701982535168</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1701982535168</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -229,7 +236,8 @@
     <MESSAGE value="Commit Logistic" />
     <MESSAGE value="Commit Recipe" />
     <MESSAGE value="Update fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update fix" />
+    <MESSAGE value="Update sales models and frontend" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update sales models and frontend" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

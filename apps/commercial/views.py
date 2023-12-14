@@ -19,30 +19,24 @@ class ListSalesProgressView(APIView):
             queryset = self.model.objects.all().order_by('-date')
             sku = self.request.query_params.get('sku', None)
             client_name = self.request.query_params.get('client_name', None)
-            po_number = self.request.query_params.get('po_number', None)
-            pfi_number = self.request.query_params.get('pfi_number', None)
-            commercial_status = self.request.query_params.get('commercial_status', None)
             month = self.request.query_params.get('month', None)
             year = self.request.query_params.get('year', None)
             fcl_name = self.request.query_params.get('fcl_name', None)
-
+            type_sale = self.request.query_params.get('type_sale', "true")
             if sku:
                 queryset = queryset.filter(sku__icontains=sku)
             if client_name:
                 queryset = queryset.filter(client_name__icontains=client_name)
-            if po_number:
-                queryset = queryset.filter(po_number__icontains=po_number)
-            if pfi_number:
-                queryset = queryset.filter(pfi_number__icontains=pfi_number)
-            if commercial_status:
-                queryset = queryset.filter(commercial_status__icontains=commercial_status)
             if month:
-                queryset = queryset.filter(date__month=month)
+                queryset = queryset.filter(month=month)
             if year:
-                queryset = queryset.filter(date__year=year)
+                queryset = queryset.filter(year=year)
             if fcl_name:
                 queryset = queryset.filter(fcl_name__icontains=fcl_name)
-
+            if type_sale == "true":
+                queryset = queryset.filter(type_sale__icontains="R")
+            else:
+                queryset = queryset.filter(type_sale__icontains="P")
             serializer = self.serializer_class(queryset, many=True)
             return Response({'data': serializer.data}, status=status.HTTP_200_OK)
         except DatabaseError:
@@ -57,7 +51,7 @@ class DetailSalesOrderView(APIView):
     model = SalesProgress
     serializer_class = SalesProgressSerializer
 
-    def get(self, request,slug, *args, **kwargs):
+    def get(self, request, slug, *args, **kwargs):
         try:
             queryset = self.model.objects.get(slug=slug)
             serializer = self.serializer_class(queryset, many=False)

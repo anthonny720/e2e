@@ -8,6 +8,8 @@ from apps.commercial.models import Proforma, SKU_PFI, DispatchInfo, Invoice, Sal
 class SKU_PFIInline(admin.TabularInline):  # O use admin.StackedInline según sus preferencias
     model = SKU_PFI
     extra = 1
+
+
 # Register your models here.
 @admin.register(Proforma)
 class ProformaAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
@@ -30,25 +32,28 @@ class SKU_PFIAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
 
 @admin.register(DispatchInfo)
 class DispatchInfoAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
-    list_display = ('load_date', 'ship', 'etd', 'eta','booking')
+    list_display = ('load_date', 'ship', 'etd', 'eta', 'booking')
     search_fields = ('booking',)
     ordering = ['-load_date']
     date_hierarchy = 'load_date'
     list_per_page = 25
 
+
 @admin.register(Invoice)
 class InvoiceAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
-    list_display = ('invoice_number', 'invoice_date', 'proforma', 'pfi_number','due_date')
-    search_fields = ('invoice_number','pfi_number')
+    list_display = ('invoice_number', 'invoice_date', 'proforma', 'pfi_number', 'due_date')
+    search_fields = ('invoice_number', 'pfi_number')
     ordering = ['-invoice_date']
     date_hierarchy = 'invoice_date'
     list_per_page = 25
 
+
 @admin.register(SalesProgress)
 class SalesProgressAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
-    list_display = ('sku', 'commercial_status', 'client_name', 'kg','price_total','date')
-    search_fields = ('sku','fcl_name','client_name')
-    list_filter = ('commercial_status','fcl_name','client_name')
+    list_display = ('sku', 'commercial_status', 'client_name', 'kg', 'month',)
+    search_fields = ('sku', 'fcl_name', 'client_name')
+    list_filter = (
+    'commercial_status', 'fcl_name', 'client_name', 'type_sale', 'month', 'year', 'region', 'market', 'kam', 'country',)
     ordering = ['-date']
     date_hierarchy = 'date'
     list_per_page = 25

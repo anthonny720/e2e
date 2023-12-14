@@ -4,9 +4,8 @@ from apps.commercial.models import SalesProgress
 
 
 class SalesProgressSerializer(serializers.ModelSerializer):
-    month = serializers.CharField(source='get_month_display')
-    year = serializers.CharField(source='get_year_display')
     recipe = serializers.SerializerMethodField()
+
     class Meta:
         model = SalesProgress
         fields = '__all__'
@@ -20,8 +19,7 @@ class SalesOrderShortSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SalesProgress
-        fields = ('id', 'client_name', 'fcl_name', 'sku', 'kg', 'mp',
-                  'planning')
+        fields = ('id', 'client_name', 'fcl_name', 'sku', 'kg', 'mp', 'planning')
 
     def get_planning(self, obj):
         return obj.get_planning()

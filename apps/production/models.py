@@ -115,7 +115,7 @@ class MOD(models.Model):
         ordering = ['-date']
 
     def __str__(self):
-        return f'{self.date.strftime("%d/%m/%Y")} - {self.product}'
+        return f'{self.date.strftime("%d/%m/%Y")}'
 
 
 class Ovens(models.Model):

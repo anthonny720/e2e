@@ -231,7 +231,7 @@ const PDFSell = ({data}) => {
                     }]}>
                         <Text key={index} style={[styles.gridItemFull, {
                             color: "black",
-                            fontSize: "12px",
+                            fontSize: "10px",
                             fontWeight: "extrabold",
                             fontFamily: "Times-Roman",
                             marginTop: "4px",
@@ -244,10 +244,7 @@ const PDFSell = ({data}) => {
                             fontFamily: "Times-Roman",
                             marginTop: "4px",
                             textAlign: "flex-start",
-                        }]}>• {Humanize.formatNumber(Math.ceil(item?.quantity_standar, 2) * data?.kg)} und (S) |
-                            • {Humanize.formatNumber(Math.ceil(item?.quantity_euro, 2) * data?.kg)} und (E) |
-                            • {Humanize.formatNumber(Math.ceil(item?.quantity_loose, 2) * data?.kg)} und (CS)
-                        </Text>
+                        }]}>• {Humanize.formatNumber(item?.quantity * data?.kg,4)} {item?.unit}  - S/ {Humanize.formatNumber(item?.price * item?.quantity * data?.kg,4)}                       </Text>
 
                     </View>))}
                 </View>

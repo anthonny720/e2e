@@ -1,6 +1,5 @@
 from django import dispatch
 from django.db import models
-from django.db.models import Min, Max
 from django.db.models.signals import post_save
 from django_countries.fields import CountryField
 from simple_history.models import HistoricalRecords
@@ -29,6 +28,7 @@ class Proforma(models.Model):
         PAYMENT_30 = '30', '30'
         PAYMENT_60 = '60', '60'
         PAYMENT_90 = '90', '90'
+        PAYMENT_100 = '100', '100'
         PAYMENT_120 = '120', '120'
 
     class MarketChoices(models.TextChoices):
@@ -54,6 +54,7 @@ class Proforma(models.Model):
         CFR = 'CFR', 'CFR'
         CFR_HAMBURG = 'CFR_HAMBURG', 'CFR Hamburgo'
         CFR_MIAMI = 'CFR_MIAMI', 'CFR Miami'
+        FCA = 'FCA', 'FCA'
 
     kam = models.ForeignKey('users.UserAccount', on_delete=models.CASCADE, verbose_name='KAM')
     commercial_status = models.CharField(max_length=4, choices=StatusChoices.choices, verbose_name='Estado comercial',
@@ -86,15 +87,23 @@ class Proforma(models.Model):
 
 
 class SKU_PFI(models.Model):
+    class CategoryChoices(models.TextChoices):
+        E = 'E', 'Exportacion'
+        A = 'A', 'A'
+        B = 'B', 'B'
+        C = 'C', 'C'
+
     class Meta:
         verbose_name_plural = 'SKU Proformas'
         verbose_name = 'SKU Proforma'
 
-    proforma = models.ForeignKey(Proforma, on_delete=models.CASCADE, verbose_name='Proforma')
+    proforma = models.ForeignKey(Proforma, on_delete=models.CASCADE, verbose_name='Proforma', blank=True, null=True)
     client = models.ForeignKey(Customer, on_delete=models.CASCADE, verbose_name='Cliente', blank=True, null=True)
     sku = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='SKU')
     kg = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Kg')
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='$ Precio(kg)')
+    category = models.CharField(max_length=1, verbose_name='Categoría', choices=CategoryChoices.choices,
+                                default=CategoryChoices.E)
 
     def __str__(self):
         return self.sku.name
@@ -104,37 +113,40 @@ class SKU_PFI(models.Model):
 def create_progress(sender, instance, created, **kwargs):
     if created:
         SalesProgress.objects.create(kam=instance.proforma.kam.get_full_name(),
-                                     commercial_status=instance.proforma.commercial_status,
+                                     commercial_status=instance.proforma.get_commercial_status_display(),
                                      date=instance.proforma.commercial_dispatch_date,
                                      po_number=instance.proforma.po_number, pfi_number=instance.proforma.pfi_number,
-                                     payment_terms=instance.proforma.payment_terms, market=instance.proforma.market,
-                                     region=instance.proforma.region, country=instance.proforma.country,
+                                     payment_terms=instance.proforma.get_payment_terms_display(),
+                                     market=instance.proforma.get_market_display(),
+                                     region=instance.proforma.get_region_display(), country=instance.proforma.country,
                                      port_city_destination=instance.proforma.port_city_destination,
-                                     transport_mode=instance.proforma.transport_mode, sku_id=instance,
-                                     incoterm=instance.proforma.incoterm, sku=instance.sku.name, kg=instance.kg,
-                                     price=instance.price, client_name=instance.client.business_name,
-                                     drive=instance.proforma.drive, client_initials=instance.client)
+                                     transport_mode=instance.proforma.get_transport_mode_display(), sku_id=instance,
+                                     incoterm=instance.proforma.get_incoterm_display(), sku=instance.sku.name,
+                                     kg=instance.kg, price=instance.price, client_name=instance.client.business_name,
+                                     drive=instance.proforma.drive, client_initials=instance.proforma.client,
+                                     category=instance.get_category_display())
     else:
         progress = SalesProgress.objects.get(sku_id=instance)
         progress.kam = instance.proforma.kam.get_full_name()
-        progress.commercial_status = instance.proforma.commercial_status
+        progress.commercial_status = instance.proforma.get_commercial_status_display()
         progress.date = instance.proforma.commercial_dispatch_date
         progress.po_number = instance.proforma.po_number
         progress.pfi_number = instance.proforma.pfi_number
-        progress.payment_terms = instance.proforma.payment_terms
-        progress.market = instance.proforma.market
-        progress.region = instance.proforma.region
+        progress.payment_terms = instance.proforma.get_payment_terms_display()
+        progress.market = instance.proforma.get_market_display()
+        progress.region = instance.proforma.get_region_display()
         progress.country = instance.proforma.country
         progress.port_city_destination = instance.proforma.port_city_destination
-        progress.transport_mode = instance.proforma.transport_mode
+        progress.transport_mode = instance.proforma.get_transport_mode_display()
         progress.sku_id = instance
-        progress.incoterm = instance.proforma.incoterm
+        progress.incoterm = instance.proforma.get_incoterm_display()
         progress.sku = instance.sku.name
         progress.kg = instance.kg
         progress.price = instance.price
         progress.client_name = instance.client.business_name
-        progress.client_initials = instance.client
+        progress.client_initials = instance.proforma.client
         progress.drive = instance.proforma.drive
+        progress.category = instance.get_category_display()
         progress.save()
 
 
@@ -212,25 +224,34 @@ class SalesProgress(models.Model):
         TO_BE_PROCESSED = 'TBP', 'Por procesar'
         PROCESSED = 'P', 'Procesado'
 
+    class StatusSaleChoices(models.TextChoices):
+        P = 'P', 'Plan',
+        R = 'R', 'Real'
+
     sku_id = models.ForeignKey(SKU_PFI, on_delete=models.CASCADE, verbose_name='SKU', related_name='sku_sales',
                                blank=True, null=True)
     dispatch_id = models.ForeignKey(DispatchInfo, on_delete=models.CASCADE, verbose_name='Despacho',
                                     related_name='dispatch', blank=True, null=True)
     sku = models.CharField(max_length=255, verbose_name='SKU', blank=True, null=True)
     drive = models.URLField(max_length=255, verbose_name='Drive', blank=True, null=True)
+    category = models.CharField(max_length=11, verbose_name='Categoría', blank=True, null=True)
+    type_sale = models.CharField(max_length=1, verbose_name='Tipo de venta', choices=StatusSaleChoices.choices,
+                                 blank=True, null=True, default=StatusSaleChoices.P)
     kg = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Kg', blank=True, null=True)
     commercial_status = models.CharField(max_length=3, verbose_name='Estado comercial', blank=True, null=True)
     client_name = models.CharField(max_length=255, verbose_name='Cliente final', blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Precio', blank=True, null=True)
-    incoterm = models.CharField(max_length=4, verbose_name='Incoterm', blank=True, null=True)
+    incoterm = models.CharField(max_length=13, verbose_name='Incoterm', blank=True, null=True)
     fcl_name = models.CharField(max_length=255, verbose_name='FCL', blank=True, null=True)
     status = models.CharField(max_length=16, verbose_name='Estado', choices=StatusChoices.choices,
                               default=StatusChoices.TO_BE_PROCESSED)
-    price_total = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Total', blank=True, null=True)
-    price_m = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Precio Mil', blank=True, null=True)
-    cost_fob = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Costo FOB', blank=True, null=True)
-    price_fob = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Precio FOB', blank=True, null=True)
-    cost_exw = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Costo EXW', blank=True, null=True)
+    price_total = models.DecimalField(max_digits=10, decimal_places=4, verbose_name='Total', blank=True, null=True)
+    price_m = models.DecimalField(max_digits=10, decimal_places=4, verbose_name='Precio Mil', blank=True, null=True)
+    cost_fob = models.DecimalField(max_digits=10, decimal_places=4, verbose_name='Costo FOB', blank=True, null=True)
+    price_fob = models.DecimalField(max_digits=10, decimal_places=4, verbose_name='Precio FOB', blank=True, null=True)
+    cost_exw = models.DecimalField(max_digits=10, decimal_places=4, verbose_name='Costo EXW', blank=True, null=True)
+    month = models.CharField(max_length=20, verbose_name='Mes', blank=True, null=True)
+    year = models.CharField(max_length=20, verbose_name='Año', blank=True, null=True)
     date = models.DateField(verbose_name='Fecha', blank=True, null=True)
     kam = models.CharField(max_length=255, verbose_name='KAM', blank=True, null=True)
     po_number = models.CharField(max_length=255, verbose_name='PO', blank=True, null=True)
@@ -243,7 +264,7 @@ class SalesProgress(models.Model):
     country = models.CharField(max_length=20, verbose_name='País', blank=True, null=True)
     port_city_destination = models.CharField(max_length=100, verbose_name='Puerto/Ciudad de destino', blank=True,
                                              null=True)
-    transport_mode = models.CharField(max_length=10, verbose_name='Modo de transporte', blank=True, null=True)
+    transport_mode = models.CharField(max_length=15, verbose_name='Modo de transporte', blank=True, null=True)
     load_date = models.DateField(verbose_name='Fecha de carga', blank=True, null=True)
     ship = models.CharField(max_length=50, verbose_name='Nave', blank=True, null=True)
     etd = models.DateField(verbose_name='ETD', blank=True, null=True)
@@ -267,12 +288,22 @@ class SalesProgress(models.Model):
     history = HistoricalRecords()
 
     def __str__(self):
-        if self.sku:
-            return self.sku + ' - ' + self.client_name + ' - ' + self.fcl_name + ' - ' + str(self.kg) + 'kg'
-        else:
-            return 'No SKU'
+        try:
+            if self.sku:
+                return self.sku + ' - ' + self.client_name + ' - ' + self.fcl_name + ' - ' + str(self.kg) + 'kg'
+            else:
+                return 'No SKU'
+        except:
+            return ''
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        # if self.id:
+        #     # if self.type_sale == 'P':
+        #     #     return None
+
+        if self.date:
+            self.month = self.date.strftime('%B')
+            self.year = self.date.strftime('%Y')
 
         if self.kg and self.price:
             self.price_total = self.kg * self.price
@@ -294,17 +325,17 @@ class SalesProgress(models.Model):
             sku = SKU_PFI.objects.filter(id=self.sku_id.id).first()
             if sku:
                 self.kam = sku.proforma.kam.get_full_name()
-                self.commercial_status = sku.proforma.commercial_status
+                self.commercial_status = sku.proforma.get_commercial_status_display()
                 self.date = sku.proforma.commercial_dispatch_date
                 self.po_number = sku.proforma.po_number
                 self.pfi_number = sku.proforma.pfi_number
-                self.payment_terms = sku.proforma.payment_terms
-                self.market = sku.proforma.market
-                self.region = sku.proforma.region
+                self.payment_terms = sku.proforma.get_payment_terms_display()
+                self.market = sku.proforma.get_market_display()
+                self.region = sku.proforma.get_region_display()
                 self.country = sku.proforma.country
                 self.port_city_destination = sku.proforma.port_city_destination
-                self.transport_mode = sku.proforma.transport_mode
-                self.incoterm = sku.proforma.incoterm
+                self.transport_mode = sku.proforma.get_transport_mode_display()
+                self.incoterm = sku.proforma.get_incoterm_display()
                 self.sku = sku.sku.name
                 self.kg = sku.kg
                 self.price = sku.price
@@ -336,40 +367,12 @@ class SalesProgress(models.Model):
         result = []
         if product:
             for i in product.recipe_products.all():
-                result.append({'name': i.material.name, 'quantity': i.quantity})
+                result.append({'name': i.material.name, 'quantity': i.quantity, 'unit': i.material.unit_of_measurement.name,
+                               'price': i.material.price})
         return result
 
-    def get_first_date(self):
-        return self.production_planning.aggregate(first_date=Min('date'))['first_date']
+    # def get_first_date(self):  #     return self.production_planning.aggregate(first_date=Min('date'))['first_date']  #  # def get_last_date(self):  #     return self.production_planning.aggregate(last_date=Max('date'))['last_date']
 
-    def get_last_date(self):
-        return self.production_planning.aggregate(last_date=Max('date'))['last_date']
+    # def update_date_manufacturing(self):  #     try:  #         first_date = self.get_first_date()  #         last_date = self.get_last_date()  #  #         # Actualizar start_date y end_date con las fechas obtenidas  #         self.start_date = first_date  #         self.finish_date = last_date  #  #         # Guardar los cambios en la instancia de SalesOrder  #         self.save()  #     except:  #         pass
 
-    def update_date_manufacturing(self):
-        try:
-            first_date = self.get_first_date()
-            last_date = self.get_last_date()
-
-            # Actualizar start_date y end_date con las fechas obtenidas
-            self.start_date = first_date
-            self.finish_date = last_date
-
-            # Guardar los cambios en la instancia de SalesOrder
-            self.save()
-        except:
-            pass
-
-    def get_planning(self):
-        try:
-            query = self.production_planning.all().order_by('date')
-            payload = []
-            for item in query:
-                payload.append({'id': item.id, 'date': item.date, 'raw_material': item.raw_material,
-                                'performance': item.performance, 'expected': item.expected,
-                                'stock_start': item.stock_start, 'stock_end': item.stock_end,
-                                'process_plant_name': item.process_plant.display_name,
-                                'process_plant': item.process_plant.id, 'missing': item.get_missing(),
-                                'surplus': item.surplus()})
-            return payload
-        except Exception as e:
-            return [str(e)]
+    # def get_planning(self):  #     try:  #         query = self.production_planning.all().order_by('date')  #         payload = []  #         for item in query:  #             payload.append({'id': item.id, 'date': item.date, 'raw_material': item.raw_material,  #                             'performance': item.performance, 'expected': item.expected,  #                             'stock_start': item.stock_start, 'stock_end': item.stock_end,  #                             'process_plant_name': item.process_plant.display_name,  #                             'process_plant': item.process_plant.id, 'missing': item.get_missing(),  #                             'surplus': item.surplus()})  #         return payload  #     except Exception as e:  #         return [str(e)]
