@@ -66,12 +66,12 @@ const TableProduction = ({reference}) => {
 
                             <td className="text-sm bg-white px-6 whitespace-nowrap text-yellow-800 font-bold leading-4 text-center ">
                                 <p className={"bg-yellow-400 bg-opacity-60 rounded-lg w-full p-2"}>
-                                    {Humanize.formatNumber(item?.logistic - item?.reject - item?.crown - item?.shell_trunk - item?.pulp, 2)}</p>
+                                    {Humanize.formatNumber(item?.logistic - item?.reject - item?.organic, 2)}</p>
                             </td>
 
                             <td className="text-sm bg-white px-6 whitespace-nowrap text-yellow-800 font-normal leading-4 text-center ">
                                 <p className={"bg-yellow-400 bg-opacity-60 rounded-lg w-full p-2"}>
-                                    {Humanize.formatNumber((item?.logistic - item?.reject - item?.crown - item?.shell_trunk - item?.pulp) / (item?.logistic - item?.reject) * 100, 2)}</p>
+                                    {Humanize.formatNumber((item?.logistic - item?.reject - item?.organic) / (item?.logistic - item?.reject) * 100, 2)}</p>
 
                             </td>
                             <td className="text-sm bg-white px-6 whitespace-nowrap text-gray-800 font-normal leading-4 text-center ">{item?.people}</td>

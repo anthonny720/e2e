@@ -54,11 +54,10 @@ const TablePacking = ({reference}) => {
 
                             <td className="text-sm bg-white px-6 whitespace-nowrap text-gray-800 font-normal leading-4 text-center ">{item?.cut}</td>
                             <td className="text-sm bg-white px-6 whitespace-nowrap text-gray-800 font-normal leading-4 text-center ">{item?.customer}</td>
-                            <td className="text-sm bg-white px-6 whitespace-nowrap text-gray-800 font-normal leading-4 text-center ">{item?.lot_packing}</td>
 
                             <td className="text-sm bg-white px-6 whitespace-nowrap text-blue-800 font-bold leading-4 text-center ">
                                 <p className={"bg-blue-400 bg-opacity-60 rounded-lg w-full p-2"}>
-                                    {Humanize.formatNumber(item?.pt_a + item?.pt_aggregated, 2)}</p>
+                                    {Humanize.formatNumber(parseFloat(item?.pt_a) + parseFloat(item?.pt_aggregated), 2)}</p>
                             </td>
                             <td className="text-sm bg-white px-6 whitespace-nowrap text-orange-800 font-bold leading-4 text-center ">
                                 <p className={"bg-orange-400 bg-opacity-60 rounded-lg w-full p-2"}>

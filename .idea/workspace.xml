@@ -4,21 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="19ca0cc6-d734-4ce5-b9ff-b949ce0b5f69" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/e2e.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/e2e.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="19ca0cc6-d734-4ce5-b9ff-b949ce0b5f69" name="Changes" comment="Update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/production/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/production/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/users/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/users/serializers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/asset-manifest.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/index.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/static/css/main.737d284a.css" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/static/css/main.737d284a.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/js/main.f2179325.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/js/main.f2179325.js.LICENSE.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/js/main.f2179325.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/main.f7ea8af3.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/main.f7ea8af3.js.LICENSE.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/main.f7ea8af3.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/static/media/cerros-grabado-verde.171db28be3cbea5f894c.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/static/media/delivery-service.8bc166fb1a2e07368550766f30d029e1.svg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/static/media/firma1.090a91cc9400a54d40d4.png" beforeDir="false" />
@@ -27,7 +21,6 @@
       <change beforePath="$PROJECT_DIR$/build/static/media/sign-up-form.cd941b2a12cb5b599fdf37c715e6c5e9.svg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Production/Pineapple/TablePacking.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Production/Pineapple/TablePacking.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Production/Pineapple/TableProcess.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Production/Pineapple/TableProcess.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/pages/Production/MOD.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/pages/Production/MOD.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,11 +101,25 @@
       <workItem from="1708365085681" duration="42000" />
       <workItem from="1708442480430" duration="21000" />
       <workItem from="1708442516670" duration="26000" />
-      <workItem from="1708980192840" duration="1720000" />
+      <workItem from="1708980192840" duration="2301000" />
+      <workItem from="1708984290556" duration="506000" />
     </task>
+    <task id="LOCAL-00001" summary="Update">
+      <option name="closed" value="true" />
+      <created>1708982220130</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1708982220130</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Update" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update" />
   </component>
 </project>
