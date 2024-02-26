@@ -8,9 +8,7 @@ class PineappleConditioning(models.Model):
     presentation = models.CharField(max_length=20, verbose_name='Presentación')
     logistic = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Kg Logística')
     reject = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Kg Rechazo')
-    crown = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Kg Corona')
-    shell_trunk = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Kg Cáscara/Tronco')
-    pulp = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Kg Pulpa')
+    organic = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Kg Residuos organicos')
     brix = models.DecimalField(max_digits=4, decimal_places=2, verbose_name='Brix')
     ph = models.DecimalField(max_digits=4, decimal_places=2, verbose_name='pH')
     people = models.IntegerField(verbose_name='Personas', default=0)
@@ -26,7 +24,7 @@ class PineappleConditioning(models.Model):
 
     def kg_habilitados(self):
         try:
-            return self.logistic - self.reject - self.crown - self.shell_trunk
+            return self.logistic - self.reject - self.organic
         except:
             return 0
 
@@ -43,17 +41,12 @@ class PineapplePacking(models.Model):
     date = models.DateField(verbose_name='Fecha')
     date_packing = models.DateField(verbose_name='Fecha de Envasado')
     lot = models.CharField(max_length=12, verbose_name='Lote')
-    logistic = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Kg Logística')
-    process = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Kg Proceso')
     cut = models.CharField(max_length=20, verbose_name='Corte')
     lot_packing = models.CharField(max_length=12, verbose_name='Lote de Envasado')
     customer = models.CharField(max_length=50, verbose_name='Cliente')
-    boxes = models.IntegerField(verbose_name='Cajas', default=0, blank=True)
-    bags = models.IntegerField(verbose_name='Bolsas', default=0, blank=True)
-    bags_extra = models.IntegerField(verbose_name='Bolsas Extra', default=0, blank=True)
-    pt_total = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='PT Total', default=0)
-    pt_local = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='PT Local', default=0, blank=True)
-    pt_subproduct = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='PT Subproducto', default=0,
+    pt_a = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='CAT A', default=0)
+    pt_c = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='CAT C', default=0, blank=True)
+    pt_b = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='CAT B', default=0,
                                         blank=True)
     pt_merma = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='PT Merma', default=0, blank=True)
     pt_quality = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='PT Calidad', default=0, blank=True)
@@ -72,13 +65,6 @@ class PineapplePacking(models.Model):
         verbose_name_plural = 'Envasado de Piña'
         ordering = ['-date']
 
-    def rendimiento(self):
-        try:
-            return str(
-                round(((self.pt_total + self.pt_local + self.pt_aggregated + self.pt_quality) / self.process) * 100,
-                      2)) + '%'
-        except:
-            return 0
 
     def __str__(self):
         return f'{self.date.strftime("%d/%m/%Y")} - {self.lot}'

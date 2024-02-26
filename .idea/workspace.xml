@@ -4,90 +4,66 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3b3e131-1067-4e99-acb5-87c2a2a9bd2b" name="Changes" comment="Update sales">
-      <change beforePath="$PROJECT_DIR$/src/containers/pages/Planning/Sell/Done.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/pages/Planning/Sell/Done.jsx" afterDir="false" />
+    <list default="true" id="19ca0cc6-d734-4ce5-b9ff-b949ce0b5f69" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/e2e.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/e2e.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/production/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/production/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/users/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/users/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/asset-manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/css/main.737d284a.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/css/main.737d284a.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/main.f2179325.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/main.f2179325.js.LICENSE.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/main.f2179325.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/media/cerros-grabado-verde.171db28be3cbea5f894c.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/media/delivery-service.8bc166fb1a2e07368550766f30d029e1.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/media/firma1.090a91cc9400a54d40d4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/media/firma2.fb25fb35c6d86112c3aa.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/media/logo.837271bcd7338d488e72.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/media/sign-up-form.cd941b2a12cb5b599fdf37c715e6c5e9.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Production/Pineapple/TablePacking.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Production/Pineapple/TablePacking.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Production/Pineapple/TableProcess.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Production/Pineapple/TableProcess.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/pages/Production/MOD.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/pages/Production/MOD.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ChangesViewManager" show_ignored="true">
-    <option name="groupingKeys">
-      <option value="directory" />
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="RESET_MODE" value="HARD" />
-  </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-  }
-}</component>
-  <component name="GithubPullRequestsUISettings">
-    <option name="selectedUrlAndAccountId">
-      <UrlAndAccount>
-        <option name="accountId" value="c9d6ecc8-4b52-471c-a2de-428192a7adbf" />
-        <option name="url" value="https://github.com/anthonny720/e2e.git" />
-      </UrlAndAccount>
-    </option>
-  </component>
-  <component name="MarkdownSettingsMigration">
-    <option name="stateVersion" value="1" />
-  </component>
-  <component name="PackageJsonUpdateNotifier">
-    <dismissed value="$PROJECT_DIR$/package.json" />
-  </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 1
+  &quot;associatedIndex&quot;: 8
 }</component>
-  <component name="ProjectId" id="2YyN2R7HQTR1w2NKUDBz4U6HwNY" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectId" id="2c4JpACPk5W6czjNxqBOCxZa1Vq" />
   <component name="ProjectViewState">
-    <option name="compactDirectories" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/data_/Documents/Development/e2e/src/containers/pages/Planning/Sell&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Anthonny Gómez/Documents/Development/e2e&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\PyCharm 2023.2\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="ReactDesignerToolWindowState">
-    <option name="myId2Visible">
-      <map>
-        <entry key="com.haulmont.rcb.reactComponents" value="false" />
-        <entry key="com.haulmont.rcb.reactInspector" value="false" />
-        <entry key="com.haulmont.rcb.storybook" value="false" />
-      </map>
-    </option>
-  </component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\data_\Documents\Development\e2e\src\containers\pages\Planning\Sell" />
-      <recent name="C:\Users\data_\Documents\Development\e2e\static" />
-    </key>
-  </component>
   <component name="RunManager">
     <configuration name="e2e" type="Python.DjangoServer" factoryName="Django server">
       <module name="e2e" />
+      <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -100,7 +76,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="launchJavascriptDebuger" value="false" />
       <option name="port" value="8000" />
-      <option name="host" value="" />
+      <option name="host" value="localhost" />
       <option name="additionalOptions" value="" />
       <option name="browserUrl" value="" />
       <option name="runTestServer" value="false" />
@@ -110,142 +86,33 @@
       <method v="2" />
     </configuration>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-5a2391486177-2887949eec09-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-233.13763.11" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="f3b3e131-1067-4e99-acb5-87c2a2a9bd2b" name="Changes" comment="" />
-      <created>1701493654529</created>
+      <changelist id="19ca0cc6-d734-4ce5-b9ff-b949ce0b5f69" name="Changes" comment="" />
+      <created>1707365098217</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1701493654529</updated>
-      <workItem from="1701493657749" duration="270000" />
-      <workItem from="1701522358863" duration="11315000" />
-      <workItem from="1701553266085" duration="3731000" />
-      <workItem from="1701753622653" duration="2489000" />
-      <workItem from="1701756163069" duration="9262000" />
-      <workItem from="1701791150330" duration="18532000" />
-      <workItem from="1701867831375" duration="25021000" />
-      <workItem from="1701899140211" duration="1498000" />
-      <workItem from="1701970836916" duration="11928000" />
-      <workItem from="1702062647339" duration="80000" />
-      <workItem from="1702388173459" duration="969000" />
-      <workItem from="1702490204045" duration="22000" />
-      <workItem from="1702564117495" duration="5673000" />
-      <workItem from="1702571297193" duration="13705000" />
+      <updated>1707365098217</updated>
+      <workItem from="1707365099216" duration="73000" />
+      <workItem from="1708101552181" duration="618000" />
+      <workItem from="1708348434872" duration="110000" />
+      <workItem from="1708353958627" duration="18000" />
+      <workItem from="1708365085681" duration="42000" />
+      <workItem from="1708442480430" duration="21000" />
+      <workItem from="1708442516670" duration="26000" />
+      <workItem from="1708980192840" duration="1720000" />
     </task>
-    <task id="LOCAL-00001" summary="Commit Logistic">
-      <option name="closed" value="true" />
-      <created>1701755351162</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1701755351162</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Commit Recipe">
-      <option name="closed" value="true" />
-      <created>1701789559944</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1701789559944</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Update fix">
-      <option name="closed" value="true" />
-      <created>1701791740528</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1701791740528</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Update fix">
-      <option name="closed" value="true" />
-      <created>1701792376349</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1701792376349</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Update fix">
-      <option name="closed" value="true" />
-      <created>1701887152890</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1701887152890</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Update fix">
-      <option name="closed" value="true" />
-      <created>1701888125627</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1701888125627</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Update sales models and frontend">
-      <option name="closed" value="true" />
-      <created>1701982535168</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1701982535168</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Update sales">
-      <option name="closed" value="true" />
-      <created>1702587023812</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1702587023812</updated>
-    </task>
-    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="master" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <ignored-roots>
-      <path value="$PROJECT_DIR$" />
-    </ignored-roots>
-    <MESSAGE value="Commit Logistic" />
-    <MESSAGE value="Commit Recipe" />
-    <MESSAGE value="Update fix" />
-    <MESSAGE value="Update sales models and frontend" />
-    <MESSAGE value="Update sales" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update sales" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/apps/logistic/models.py</url>
-          <line>568</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

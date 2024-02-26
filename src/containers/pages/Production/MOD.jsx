@@ -31,8 +31,6 @@ const MOD = () => {
                 <Filter setParams={setParams}  exclude={true} action_one={get_mod}
                         reference={tableRef.current}/>
                 <TableMODConditioning reference={tableRef}/>
-
-                />
             </div>
         </div>
     </Layout>);

@@ -7,7 +7,7 @@ import {Helmet} from "react-helmet";
 const TableProduction = ({reference}) => {
     const data = useSelector(state => state.Production.process)
 
-    const columns = ['Lote', 'Fecha', 'Kg logistica', 'Rechazo', '%Rechazo', 'Kg proceso', 'Brix', 'pH', 'Corona', '%', 'Cáscara y tronco', '%', 'Pulpa', '%', 'Kg habilitado', '%', 'Personas', 'Horas', 'CMO']
+    const columns = ['Lote', 'Fecha', 'Kg logistica', 'Rechazo', '%Rechazo', 'Kg proceso', 'Brix', 'pH', 'Residuos Orgánicos','%', 'Kg habilitado', '%', 'Personas', 'Horas', 'CMO']
 
     return (<div className="w-full">
         <Helmet>
@@ -60,13 +60,9 @@ const TableProduction = ({reference}) => {
                             </td>
                             <td className="text-sm bg-white px-6 whitespace-nowrap text-gray-800 font-bold leading-4 text-center ">{Humanize.formatNumber(item?.brix, 2)}</td>
                             <td className="text-sm bg-white px-6 whitespace-nowrap text-gray-800 font-bold leading-4 text-center ">{Humanize.formatNumber(item?.ph, 2)}</td>
-                            <td className="text-sm bg-white px-6 whitespace-nowrap text-gray-800 font-bold leading-4 text-center ">{Humanize.formatNumber(item?.crown, 2)}</td>
-                            <td className="text-sm bg-white px-6 whitespace-nowrap text-gray-800 font-normal leading-4 text-center ">{Humanize.formatNumber((item?.crown / (item?.logistic - item?.reject)) * 100, 2)}</td>
-                            <td className="text-sm bg-white px-6 whitespace-nowrap text-gray-800 font-bold leading-4 text-center ">{Humanize.formatNumber(item?.shell_trunk, 2)}</td>
-                            <td className="text-sm bg-white px-6 whitespace-nowrap text-gray-800 font-normal leading-4 text-center ">{Humanize.formatNumber((item?.shell_trunk / (item?.logistic - item?.reject)) * 100, 2)}</td>
+                            <td className="text-sm bg-white px-6 whitespace-nowrap text-gray-800 font-bold leading-4 text-center ">{Humanize.formatNumber(item?.organic, 2)}</td>
+                            <td className="text-sm bg-white px-6 whitespace-nowrap text-gray-800 font-normal leading-4 text-center ">{Humanize.formatNumber((item?.organic / (item?.logistic - item?.reject)) * 100, 2)}</td>
 
-                            <td className="text-sm bg-white px-6 whitespace-nowrap text-gray-800 font-bold leading-4 text-center ">{Humanize.formatNumber(item?.pulp, 2)}</td>
-                            <td className="text-sm bg-white px-6 whitespace-nowrap text-gray-800 font-normal leading-4 text-center ">{Humanize.formatNumber((item?.pulp / (item?.logistic - item?.reject)) * 100, 2)}</td>
 
                             <td className="text-sm bg-white px-6 whitespace-nowrap text-yellow-800 font-bold leading-4 text-center ">
                                 <p className={"bg-yellow-400 bg-opacity-60 rounded-lg w-full p-2"}>
