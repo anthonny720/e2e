@@ -8,7 +8,7 @@ const TablePacking = ({reference}) => {
     const data = useSelector(state => state.Production.packing_process)
 
 
-    const columns = ['Lote', 'Fecha proceso', 'Fecha envasado', 'Corte', 'Cliente', 'Lote PT', 'Kg total', 'CAT A', 'CAT B', 'CAT C', 'Merma', 'Calidad', 'Agregado', 'Lotes agregados',  'Humedad', 'Personas', 'Horas', 'CMO']
+    const columns = ['Lote', 'Fecha proceso', 'Fecha envasado', 'Corte', 'Cliente',  'Kg total', 'CAT A', 'CAT B', 'CAT C', 'Merma', 'Calidad', 'Agregado', 'Lotes agregados',  'Humedad', 'Personas', 'Horas', 'CMO']
 
     return (<div className="w-full">
         <Helmet>
@@ -76,7 +76,6 @@ const TablePacking = ({reference}) => {
                             <td className="text-sm bg-white px-6 whitespace-nowrap text-white font-normal leading-4 text-center ">
                                 <p className={"bg-green-400 bg-opacity-60 rounded-lg w-full p-2"}>
                                     {Humanize.formatNumber((item?.people * item?.hours * item?.cost), 2)}</p>
-
                             </td>
 
 

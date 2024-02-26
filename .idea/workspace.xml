@@ -6,21 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="19ca0cc6-d734-4ce5-b9ff-b949ce0b5f69" name="Changes" comment="Update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/asset-manifest.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/css/main.737d284a.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/css/main.737d284a.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/js/main.f7ea8af3.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/js/main.f7ea8af3.js.LICENSE.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/js/main.f7ea8af3.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/cerros-grabado-verde.171db28be3cbea5f894c.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/delivery-service.8bc166fb1a2e07368550766f30d029e1.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/firma1.090a91cc9400a54d40d4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/firma2.fb25fb35c6d86112c3aa.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/logo.837271bcd7338d488e72.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/sign-up-form.cd941b2a12cb5b599fdf37c715e6c5e9.svg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Production/Pineapple/TablePacking.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Production/Pineapple/TablePacking.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Production/Pineapple/TableProcess.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Production/Pineapple/TableProcess.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +88,7 @@
       <workItem from="1708442480430" duration="21000" />
       <workItem from="1708442516670" duration="26000" />
       <workItem from="1708980192840" duration="2301000" />
-      <workItem from="1708984290556" duration="506000" />
+      <workItem from="1708984290556" duration="910000" />
     </task>
     <task id="LOCAL-00001" summary="Update">
       <option name="closed" value="true" />
@@ -112,7 +98,15 @@
       <option name="project" value="LOCAL" />
       <updated>1708982220130</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Update">
+      <option name="closed" value="true" />
+      <created>1708984896149</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1708984896149</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
